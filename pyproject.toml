@@ -32,7 +32,6 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.10"
 rich = "^13.7.1"
-typing-extensions = "^4.10.0"
 
 [tool.poetry.group.dev.dependencies]
 bandit             = "^1.7.8"
@@ -338,7 +337,7 @@ min-public-methods = 2
 
 [tool.pylint.exceptions]
 # Exceptions that will emit a warning when caught.
-overgeneral-exceptions = ["BaseException", "Exception"]
+overgeneral-exceptions = ["builtins.Exception"]
 
 [tool.pylint.format]
 # Expected format of line ending, e.g. empty (any line ending), LF or CRLF.

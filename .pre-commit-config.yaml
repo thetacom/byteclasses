@@ -82,7 +82,7 @@ repos:
   rev: v3.1.0
   hooks:
   - id: pylint
-
+    additional_dependencies: [pytest>=8.1.1]
 - repo: https://github.com/regebro/pyroma
   rev: '4.2'
   hooks:

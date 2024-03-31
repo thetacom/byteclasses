@@ -1,1 +1,1 @@
-"""BinLib test suite module."""
+"""Byteclasses test suite module."""
