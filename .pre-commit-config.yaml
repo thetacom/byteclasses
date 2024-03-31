@@ -93,7 +93,7 @@ repos:
   rev: v3.15.2
   hooks:
   - id: pyupgrade
-    args: [--py39-plus]
+    args: [--py310-plus]
 
 - repo: https://github.com/charliermarsh/ruff-pre-commit
   rev: v0.3.3
