@@ -1,0 +1,42 @@
+name: (Pre-)Release
+
+on:
+  create:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  discussions: write
+
+jobs:
+  release:
+    name: Create Package Release
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+    - uses: Gr1N/setup-poetry@v8
+    - run: poetry --version
+    - name: Build package
+      run: poetry build
+    - name: Create Pre-Release
+      if: ${{ endsWith( github.ref_name, 'pre' )}}
+      uses: softprops/action-gh-release@v1
+      with:
+        draft: true
+        prerelease: true
+        files: |
+          dist/*
+    - name: Create Release
+      if: ${{ !endsWith( github.ref_name, 'pre' )}}
+      uses: softprops/action-gh-release@v1
+      with:
+        draft: true
+        prerelease: false
+        files: |
+          dist/*
