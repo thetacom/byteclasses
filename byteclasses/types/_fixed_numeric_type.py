@@ -354,10 +354,10 @@ class _FixedNumericType(_FixedSizeType):
         """Return the value of the instance."""
         if self._data is None:
             raise ValueError("value is None")
-        if not isinstance(self._data, bytearray):
-            raise ValueError("Invalid type for bytearray")
+        if not isinstance(self._data, (bytearray, memoryview)):
+            raise ValueError("Invalid type for internal data property")
         if len(self._data) < len(self):
-            raise ValueError("Internal bytearray too short")
+            raise ValueError("Internal data property too short")
         return unpack(self.fmt, self._data[: len(self)])[0]
 
     @_value.setter

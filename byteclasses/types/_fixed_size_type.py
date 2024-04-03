@@ -78,7 +78,9 @@ class _FixedSizeType(ABC, SupportsBytes):
         elif isinstance(new_value, memoryview):
             if len(new_value) != len(self):
                 raise ValueError(f"Memoryview length ({len(new_value)}) must match type length of {len(self)}")
+            temp = self._data
             self._data = new_value
+            self._data[:] = temp
         else:
             if len(new_value) < len(self):
                 end = len(new_value)

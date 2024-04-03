@@ -45,3 +45,18 @@ def test_int8_value_to_data():
     assert int8.data == b"\x80"
     int8.value = -1
     assert int8.data == b"\xff"
+
+
+def test_int8_data_replacement():
+    """Test replacement of int8 data."""
+    test_mv = memoryview(bytearray(2))
+    int8_1 = Int8(0x12)
+    int8_2 = Int8(0x34)
+    int8_1.data = test_mv[:1]
+    int8_2.data = test_mv[1:]
+    assert int8_1.value == 0x12
+    assert int8_2.value == 0x34
+    assert test_mv == b"\x12\x34"
+    test_mv[:] = b"\x01\x23"
+    assert int8_1.value == 0x01
+    assert int8_2.value == 0x23
