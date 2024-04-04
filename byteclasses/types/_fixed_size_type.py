@@ -71,16 +71,10 @@ class _FixedSizeType(ABC, SupportsBytes):
         return bytes(self._data[: self._length])
 
     @data.setter
-    def data(self, new_value: ByteString | memoryview | None = None) -> None:
+    def data(self, new_value: ByteString | None = None) -> None:
         """Set the byte representation of the instance."""
         if new_value is None:
             self._data[: len(self)] = bytes(len(self))
-        elif isinstance(new_value, memoryview):
-            if len(new_value) != len(self):
-                raise ValueError(f"Memoryview length ({len(new_value)}) must match type length of {len(self)}")
-            temp = self._data
-            self._data = new_value
-            self._data[:] = temp
         else:
             if len(new_value) < len(self):
                 end = len(new_value)
@@ -96,3 +90,19 @@ class _FixedSizeType(ABC, SupportsBytes):
         if self._type_char is NotImplemented:
             raise NotImplementedError(f"Type character not implemented for {self}")
         return self._type_char
+
+    def attach(self, mv: memoryview, retain_value: bool = True) -> None:
+        """Replace internal data and attach provided memoryview.
+
+        Memoryview length must match byte length of fixed length type.
+        """
+        if not isinstance(mv, memoryview):
+            raise TypeError("Only memoryviews can be attached to fixed length types.")
+        mv_len = len(mv)
+        self_len = len(self)
+        if mv_len != len(self):
+            raise ValueError(f"Memoryview length ({mv_len} bytes) must be {self_len} bytes.")
+        temp = self._data
+        self._data = mv
+        if retain_value:
+            self._data[:] = temp
