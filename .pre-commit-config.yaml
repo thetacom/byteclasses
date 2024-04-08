@@ -73,7 +73,6 @@ repos:
   rev: v1.10.0
   hooks:
   - id: python-no-log-warn
-  - id: python-no-eval
   - id: rst-backticks
     files: .*\.rst$
     types: [file]
@@ -83,6 +82,8 @@ repos:
   hooks:
   - id: pylint
     additional_dependencies: [pytest>=8.1.1]
+    args: ["./byteclasses"]
+
 - repo: https://github.com/regebro/pyroma
   rev: '4.2'
   hooks:

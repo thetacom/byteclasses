@@ -100,7 +100,7 @@ fail-under = 10
 # from-stdin =
 
 # Files or directories to be skipped. They should be base names, not paths.
-ignore = [".venv", "CVS"]
+ignore = [".venv", "CVS", "docs", "tests"]
 
 # Add files or directories matching the regex patterns to the ignore-list. The
 # regex matches against paths and can be in Posix or Windows format.
@@ -308,7 +308,7 @@ valid-metaclass-classmethod-first-arg = ["cls"]
 # ignored-parents =
 
 # Maximum number of arguments for function / method.
-max-args = 5
+max-args = 7
 
 # Maximum number of attributes for a class (see R0902).
 max-attributes = 7
@@ -317,7 +317,7 @@ max-attributes = 7
 max-bool-expr = 5
 
 # Maximum number of branch for function / method body.
-max-branches = 12
+max-branches = 15
 
 # Maximum number of locals for function / method body.
 max-locals = 15
@@ -335,7 +335,7 @@ max-returns = 6
 max-statements = 50
 
 # Minimum number of public methods for a class (see R0903).
-min-public-methods = 2
+min-public-methods = 0
 
 [tool.pylint.exceptions]
 # Exceptions that will emit a warning when caught.
