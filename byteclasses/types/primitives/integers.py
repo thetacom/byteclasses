@@ -47,6 +47,37 @@ class _FixedInt(_FixedNumericType):
 
     _signed: bool = NotImplemented
 
+    @cached_property
+    def max(self) -> int:
+        """Return the maximum value."""
+        return (1 << (self._length * 8 - 1)) - 1 if self._signed else (1 << (self._length * 8)) - 1
+
+    @cached_property
+    def min(self) -> int:
+        """Return the minimum value."""
+        return -(1 << (self._length * 8 - 1)) if self._signed else 0
+
+    @property
+    def signed(self) -> bool:
+        """Return whether the signedness."""
+        if self._signed is NotImplemented:
+            raise NotImplementedError
+        return self._signed
+
+    @property
+    def value(self):
+        """Return the value of the instance."""
+        return int(self._value)
+
+    @value.setter
+    def value(self, new_value: Any) -> None:
+        """Set the value of the instance."""
+        if isinstance(new_value, (_FixedInt, int)):
+            value_ = new_value
+        else:
+            raise TypeError("value must be an integer")
+        self._value = value_
+
     def __and__(self, other: Any):
         """Return the bitwise AND of the instance and other."""
         if isinstance(other, _FixedInt):
@@ -155,10 +186,8 @@ class _FixedInt(_FixedNumericType):
         """Return the bitwise XOR of the instance and other."""
         return self.__xor__(other)
 
-    def _validate_value(self, new_value: int | None = None) -> None:
-        if new_value is None:
-            value = self.value
-        elif isinstance(new_value, int):
+    def _validate_value(self, new_value: Any) -> None:
+        if isinstance(new_value, int):
             value = new_value
         else:
             raise TypeError("value must be an integer")
@@ -166,37 +195,6 @@ class _FixedInt(_FixedNumericType):
             raise UnderflowError(f"value below {self.min}")
         if value > self.max:
             raise OverflowError(f"value exceeded {self.max}")
-
-    @cached_property
-    def max(self) -> int:
-        """Return the maximum value."""
-        return (1 << (self._length * 8 - 1)) - 1 if self._signed else (1 << (self._length * 8)) - 1
-
-    @cached_property
-    def min(self) -> int:
-        """Return the minimum value."""
-        return -(1 << (self._length * 8 - 1)) if self._signed else 0
-
-    @property
-    def signed(self) -> bool:
-        """Return whether the signedness."""
-        if self._signed is NotImplemented:
-            raise NotImplementedError
-        return self._signed
-
-    @property
-    def value(self):
-        """Return the value of the instance."""
-        return int(self._value)
-
-    @value.setter
-    def value(self, new_value: Any) -> None:
-        """Set the value of the instance."""
-        if isinstance(new_value, (_FixedInt, int)):
-            value_ = new_value
-        else:
-            raise TypeError("value must be an integer")
-        self._value = value_
 
 
 class Int8(_FixedInt):
@@ -229,15 +227,15 @@ class Bit(UInt8):
     _length: int = calcsize(_type_char)
     _signed: bool = False
 
-    def _validate_value(self, new_value: int | None = None) -> None:
-        if new_value is None:
-            value = self.value
-        elif isinstance(new_value, int):
-            value = new_value
+    def _validate_value(self, new_value: bool | int) -> None:
+        if isinstance(new_value, int):
+            value: int = new_value
+        elif isinstance(new_value, bool):
+            value = int(new_value)
         else:
-            raise TypeError("value must be an integer")
+            raise TypeError("value must be an boolean or integer")
         if value not in (0, 1):
-            raise ValueError(f"value must be 0 or 1, not {value}")
+            raise ValueError(f"value must be 0, 1, or boolean; not {value}")
 
 
 class Int16(_FixedInt):

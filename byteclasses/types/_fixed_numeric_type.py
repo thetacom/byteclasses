@@ -345,7 +345,7 @@ class _FixedNumericType(_FixedSizeType):
         """
         raise NotImplementedError
 
-    def _validate_value(self, new_value: Any | None = None) -> None:
+    def _validate_value(self, new_value: Any) -> None:
         """Validate the value."""
         raise NotImplementedError("_validate_value method not implemented")
 

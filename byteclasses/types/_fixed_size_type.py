@@ -27,24 +27,15 @@ class _FixedSizeType(ABC, SupportsBytes):
     def __getitem__(self, sliced):
         return self._data[sliced]
 
-    # def __get__(self, instance, owner=None):
-    #     """Get the attribute of the owner."""
-    #     return self.value
-
-    # def __set__(self, instance, value):
-    #     """Set the attribute of the owner."""
-    #     self.value = value
-
     def __bytes__(self) -> bytes:
         """Return the byte representation of the instance."""
         return bytes(self._data)
 
-    @classmethod
-    def __len__(cls) -> int:
+    def __len__(self) -> int:
         """Return the byte length of the instance."""
-        if cls._length is NotImplemented:
-            raise NotImplementedError(f"{cls.__name__}._length")
-        return cls._length if cls._length >= 0 else 0
+        if self._length is NotImplemented:
+            raise NotImplementedError(f"{self.__class__.__name__}._length")
+        return self._length if self._length >= 0 else 0
 
     def __str__(self) -> str:
         """Return the byte representation of the instance."""
