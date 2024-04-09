@@ -424,6 +424,7 @@ confidence = ["HIGH", "CONTROL_FLOW", "INFERENCE", "INFERENCE_FAILURE", "UNDEFIN
 # no Warning level messages displayed, use "--disable=all --enable=classes
 # --disable=W".
 disable = [
+    "no-member",
     "raw-checker-failed",
     "bad-inline-option",
     "locally-disabled",
