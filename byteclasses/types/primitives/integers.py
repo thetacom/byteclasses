@@ -1,5 +1,6 @@
 """Fixed size integer types."""
 
+from enum import IntEnum
 from functools import cached_property
 from numbers import Integral
 from struct import calcsize
@@ -220,24 +221,6 @@ UChar = UInt8
 Byte = UInt8
 
 
-class Bit(UInt8):
-    """A boolean analog representing a single bit."""
-
-    _type_char: bytes = TypeChar.UINT8.value
-    _length: int = calcsize(_type_char)
-    _signed: bool = False
-
-    def _validate_value(self, new_value: bool | int) -> None:
-        if isinstance(new_value, int):
-            value: int = new_value
-        elif isinstance(new_value, bool):
-            value = int(new_value)
-        else:
-            raise TypeError("value must be an boolean or integer")
-        if value not in (0, 1):
-            raise ValueError(f"value must be 0, 1, or boolean; not {value}")
-
-
 class Int16(_FixedInt):
     """16-bit signed integer."""
 
@@ -320,3 +303,10 @@ class UInt64(_FixedInt):
 
 
 ULongLong = UInt64
+
+
+class Bit(IntEnum):
+    """A boolean equivalent bit class."""
+
+    FALSE = 0
+    TRUE = 1
