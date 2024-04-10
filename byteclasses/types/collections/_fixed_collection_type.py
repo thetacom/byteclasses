@@ -3,11 +3,13 @@
 import copy
 import inspect
 import sys
+from abc import update_abstractmethods
 from collections.abc import Callable
 from typing import Any, cast
 
 from .._fixed_size_type import _FixedSizeType
 from ._collection_class_spec import _CollectionClassSpec
+from ._collection_params import _CollectionParams
 from ._methods import (
     _build_attach_members_method,
     _build_attach_method,
@@ -47,24 +49,6 @@ __all__ = [
     "is_fixed_collection",
     "FixedSizeCollection",
 ]
-
-
-class _CollectionParams:
-    """Contains the collection parameters for a fixed size collection."""
-
-    __slots__ = (
-        "type",
-        "byte_order",
-    )
-
-    def __init__(self, spec: _CollectionClassSpec) -> None:
-        """Initialize the collection parameters."""
-        self.type = spec.collection_type
-        self.byte_order = spec.byte_order
-
-    def __repr__(self) -> str:
-        """Return a repr string for this collection parameters."""
-        return f"_CollectionParams({self.byte_order=!r})"
 
 
 # _fixed_collection_getstate and _fixed_collection_setstate are needed for pickling classes with slots.
@@ -171,6 +155,7 @@ def _process_class(spec: _CollectionClassSpec) -> FixedSizeCollection:
         raise TypeError(
             f"{spec.collection_type} constructor did not provide all required attributes: " f"{required_attributes}"
         )
+    # Construct and attach fixed collection type specific methods to the class.
     _add_methods(spec, globals_)
     if not getattr(spec.base_cls, "__doc__"):
         # Create a class doc-string.
@@ -187,7 +172,7 @@ def _process_class(spec: _CollectionClassSpec) -> FixedSizeCollection:
     spec.attributes.extend(member_names)
     _add_slots(spec)
 
-    # abc.update_abstractmethods(cls) # Python >3.11
+    update_abstractmethods(spec.base_cls)  # Python >3.11
 
     return cast(FixedSizeCollection, spec.base_cls)
 
@@ -246,11 +231,10 @@ def _add_members(spec: _CollectionClassSpec, members_: dict[str, Member]) -> Non
             raise TypeError(f"Member {member_.name} type not set")
         if spec.allowed_types:
             if not issubclass(member_.type, spec.allowed_types):
-                raise TypeError(f"Member {member_.name} ({member_.type}) is not a supported type.")
+                raise TypeError(f"{member_.name} ({member_.type}) is not a supported member type.")
         else:
-            if not is_fixed_collection(member_) and not issubclass(member_.type, _FixedSizeType):
-                raise TypeError(f"Member {member_.name} ({member_.type}) is not a supported type.")
-    # Construct and attach fixed collection type specific methods to the class.
+            if not (is_fixed_collection(member_.type) or issubclass(member_.type, _FixedSizeType)):
+                raise TypeError(f"{member_.name} ({member_.type}) is not a supported member type.")
     spec.members = member_list
 
 

@@ -190,10 +190,12 @@ def _init_member(
         else:
             # No default factory. Use member type as constructor.
             globals_[default_name] = member_.type
+        if is_fixed_collection(member_.type):
+            factory_params = ""
+        else:
+            factory_params = f"byte_order={repr(byte_order.value)}"
         value = (
-            f"{default_name}(byte_order={repr(byte_order)}) "
-            f"if {member_.name} is _HAS_DEFAULT_FACTORY "
-            f"else {member_.name}"
+            f"{default_name}({factory_params}) " f"if {member_.name} is _HAS_DEFAULT_FACTORY " f"else {member_.name}"
         )
     if member_.name is None:
         raise ValueError("Member name cannot be None.")
@@ -367,6 +369,6 @@ def _is_fixed_collection_instance(obj: Any) -> bool:
 
 
 def is_fixed_collection(obj: Any) -> bool:
-    """Return True if obj is a dataclass or an instance of a fixed collection."""
+    """Return True if obj is a class or instance of a fixed collection."""
     cls = obj if isinstance(obj, type) and not isinstance(obj, GenericAlias) else type(obj)
     return hasattr(cls, _MEMBERS)
