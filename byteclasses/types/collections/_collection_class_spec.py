@@ -4,7 +4,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any
 
-from ...enums import ByteOrder
+from ..._enums import ByteOrder
 from ...types.collections.member import Member
 
 

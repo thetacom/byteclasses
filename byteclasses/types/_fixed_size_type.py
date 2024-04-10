@@ -4,7 +4,7 @@ from abc import ABC
 from collections.abc import ByteString, Iterable
 from typing import SupportsBytes, SupportsIndex
 
-from ..enums import ByteOrder
+from .._enums import ByteOrder
 
 __all__: list[str] = []
 

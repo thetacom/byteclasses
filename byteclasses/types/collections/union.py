@@ -3,7 +3,7 @@
 from collections.abc import Callable
 from typing import Any, overload
 
-from ...enums import ByteOrder
+from ..._enums import ByteOrder
 from ._collection import create_collection
 from ._collection_class_spec import _CollectionClassSpec
 from ._methods import _build_init_method

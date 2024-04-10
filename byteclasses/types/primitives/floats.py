@@ -4,7 +4,7 @@ from numbers import Real
 from struct import calcsize
 from typing import Any
 
-from ...enums import TypeChar
+from ..._enums import TypeChar
 from ...types._fixed_numeric_type import _FixedNumericType
 
 __all__ = [

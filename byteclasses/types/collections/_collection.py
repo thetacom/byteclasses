@@ -3,7 +3,7 @@
 from collections.abc import Callable
 from typing import cast
 
-from ...enums import ByteOrder
+from ..._enums import ByteOrder
 from ...types.collections._fixed_collection_type import _process_class
 from ._collection_class_spec import _CollectionClassSpec
 from .fixed_size_collection_protocol import FixedSizeCollection

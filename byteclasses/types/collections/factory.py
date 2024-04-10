@@ -5,8 +5,7 @@ import types
 from collections.abc import ByteString, Callable, Iterable
 from typing import Any
 
-from byteclasses.enums import ByteOrder
-
+from ..._enums import ByteOrder
 from .member import Member
 from .structure import structure
 from .union import union
@@ -32,15 +31,19 @@ def make_fixed_collection(  # pylint: disable=R0912,R0913,R0914
     of either (name, type) or (name, type, Member) objects.  Member objects are created
     by the equivalent of calling 'member(name, type [, Member-info])'.
 
+    ```python
       C = make_fixed_collection('structure', 'C', [('x', Int8), ('y', Int32, member())],
       bases=(Base,))
+    ```
 
     is equivalent to:
 
+    ```python
       @structure
       class C(Base):
           x: Int8
           y: Int32 = member()
+    ```
 
     For the bases and namespace parameters, see the builtin type() function.
 

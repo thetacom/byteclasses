@@ -15,7 +15,7 @@ from numbers import Integral, Real
 from struct import pack, unpack
 from typing import Any, SupportsIndex
 
-from ..enums import ByteOrder
+from .._enums import ByteOrder
 from ..types._fixed_size_type import _FixedSizeType
 
 __all__: list[str] = []

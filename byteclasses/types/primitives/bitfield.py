@@ -5,7 +5,7 @@ from functools import cached_property
 from struct import calcsize
 from typing import SupportsIndex, overload
 
-from ...enums import ByteOrder, TypeChar
+from ..._enums import ByteOrder, TypeChar
 from .._fixed_size_type import _FixedSizeType
 
 

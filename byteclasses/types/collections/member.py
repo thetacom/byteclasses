@@ -6,7 +6,7 @@ from collections.abc import Callable
 from types import GenericAlias, MappingProxyType, MemberDescriptorType
 from typing import TYPE_CHECKING, Any
 
-from ...enums import ByteOrder
+from ..._enums import ByteOrder
 from ...types._fixed_size_type import _FixedSizeType
 
 if TYPE_CHECKING:
