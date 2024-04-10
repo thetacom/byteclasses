@@ -62,10 +62,11 @@ class _FixedSizeType(ABC, SupportsBytes):
         return bytes(self._data[: self._length])
 
     @data.setter
-    def data(self, new_value: ByteString | None = None) -> None:
+    def data(self, new_value: bytes | bytearray | None = None) -> None:
         """Set the byte representation of the instance."""
         if new_value is None:
-            self._data[: len(self)] = bytes(len(self))
+            # Setting data to None zeroes all data
+            self._data[:] = bytes(len(self))
         else:
             if len(new_value) < len(self):
                 end = len(new_value)

@@ -64,9 +64,9 @@ def make_fixed_collection(  # pylint: disable=R0912,R0913,R0914
                 (
                     name,
                     item_type,
-                ) = item
+                ) = item  # type: ignore
             elif len(item) == 3:
-                name, item_type, spec = item
+                name, item_type, spec = item  # type: ignore
                 defaults[name] = spec
             else:
                 raise TypeError(f"Invalid member: {item!r}")

@@ -247,7 +247,7 @@ def _add_methods(spec: _CollectionClassSpec, globals_: dict[str, Any]):
     else:
         build_hash_method_ = _build_hash_method
 
-    methods: dict[str, Callable] = {
+    methods: dict[str, Callable | None] = {
         "_collection_init": _build_collection_init_method,
         "data": _build_data_property,
         "__bytes__": _build_bytes_method,
