@@ -9,7 +9,7 @@ DOCS_SRC_DIR := $(DOCS_DIR)
 DOCS_BUILD_DIR := $(DOCS_DIR)/_build
 DOCS_SRC_FILES := $(wildcard $(DOCS_SRC_DIR)/*.rst)
 DOCS_SRC_FILES += $(wildcard $(DOCS_SRC_DIR)/*.md)
-DOCS_HTML_DIR := $(BUILD_DIR)/html
+DOCS_HTML_DIR := $(DOCS_BUILD_DIR)/html
 
 build: .venv
 	@echo "*****Packaging $(PKG)*****"
