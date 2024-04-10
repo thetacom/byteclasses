@@ -10,13 +10,14 @@ keywords = ["struct", "structures", "binary", "blobs", "raw", "bytes", "dataclas
 repository = "https://github.com/thetacom/byteclasses"
 authors = ["Justin C <justin@thetacom.info>"]
 readme = "README.md"
+license = "MIT"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Intended Audience :: Information Technology",
     "Intended Audience :: Science/Research",
     "Intended Audience :: System Administrators",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
