@@ -193,9 +193,9 @@ class _FixedInt(_FixedNumericType):
         else:
             raise TypeError("value must be an integer")
         if value < self.min:
-            raise UnderflowError(f"value below {self.min}")
+            raise UnderflowError(f"UnderfowError: value ({value}) below {self.__class__.__name__} min ({self.min})")
         if value > self.max:
-            raise OverflowError(f"value exceeded {self.max}")
+            raise OverflowError(f"OverfowError: value ({value}) exceeded {self.__class__.__name__} max ({self.max})")
 
 
 class Int8(_FixedInt):
