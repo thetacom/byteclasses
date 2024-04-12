@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="../_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="../_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="../_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="../_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="../_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>byteclasses.types package &#8212; Byteclasses 2024 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=83e35b93" />
+    <link rel="stylesheet" type="text/css" href="../_static/material.css?v=79c92029" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <script src="../_static/documentation_options.js?v=6fefd858"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="byteclasses.types.collections package" href="byteclasses.types.collections.html" />
+    <link rel="prev" title="byteclasses package" href="byteclasses.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=blue data-md-color-accent=light-blue>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#api/byteclasses.types" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../index.html" title="Byteclasses 2024 documentation"
+           class="md-header-nav__button md-logo">
+          
+            &nbsp;
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">Byteclasses</span>
+          <span class="md-header-nav__topic"> byteclasses.types package </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="../search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder=""Search""
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            <a href="https://github.com/thetacom/byteclasses/" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Byteclasses
+  </div>
+</a>
+          </div>
+        </div>
+      
+      
+  
+  <script src="../_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "../"versions.json"",
+        target_loc = "../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="../index.html" class="md-tabs__link">Byteclasses 2024 documentation</a></li>
+          <li class="md-tabs__item"><a href="modules.html" class="md-tabs__link">byteclasses</a></li>
+          <li class="md-tabs__item"><a href="byteclasses.html" class="md-tabs__link">byteclasses package</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../index.html" title="Byteclasses 2024 documentation" class="md-nav__button md-logo">
+      
+        <img src="../_static/" alt=" logo" width="48" height="48">
+      
+    </a>
+    <a href="../index.html"
+       title="Byteclasses 2024 documentation">Byteclasses</a>
+  </label>
+    <div class="md-nav__source">
+      <a href="https://github.com/thetacom/byteclasses/" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    Byteclasses
+  </div>
+</a>
+    </div>
+  
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">"Contents"</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#api-byteclasses-types--page-root" class="md-nav__link">byteclasses.types package</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#subpackages" class="md-nav__link">Subpackages</a>
+        </li>
+        <li class="md-nav__item"><a href="#submodules" class="md-nav__link">Submodules</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-byteclasses.types.fixed_size_type_protocol" class="md-nav__link">byteclasses.types.fixed_size_type_protocol module</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#byteclasses.types.fixed_size_type_protocol.FixedSizeType" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">FixedSizeType</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#byteclasses.types.fixed_size_type_protocol.FixedSizeType.attach" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">FixedSizeType.attach()</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#module-byteclasses.types" class="md-nav__link">Module contents</a>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="../_sources/api/byteclasses.types.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="byteclasses-types-package">
+<h1 id="api-byteclasses-types--page-root">byteclasses.types package<a class="headerlink" href="#api-byteclasses-types--page-root" title="Link to this heading">¶</a></h1>
+<section id="subpackages">
+<h2 id="subpackages">Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="byteclasses.types.collections.html">byteclasses.types.collections package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.collections.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.collections.html#module-byteclasses.types.collections.factory">byteclasses.types.collections.factory module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.factory.make_fixed_collection"><code class="docutils literal notranslate"><span class="pre">make_fixed_collection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.collections.html#module-byteclasses.types.collections.fixed_array">byteclasses.types.collections.fixed_array module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.fixed_array.FixedArray"><code class="docutils literal notranslate"><span class="pre">FixedArray</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.fixed_array.FixedArray.data"><code class="docutils literal notranslate"><span class="pre">FixedArray.data</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.collections.html#module-byteclasses.types.collections.fixed_size_collection_protocol">byteclasses.types.collections.fixed_size_collection_protocol module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.fixed_size_collection_protocol.FixedSizeCollection"><code class="docutils literal notranslate"><span class="pre">FixedSizeCollection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.fixed_size_collection_protocol.FixedSizeCollection.attach"><code class="docutils literal notranslate"><span class="pre">FixedSizeCollection.attach()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.fixed_size_collection_protocol.FixedSizeCollection.data"><code class="docutils literal notranslate"><span class="pre">FixedSizeCollection.data</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.fixed_size_collection_protocol.FixedSizeCollectionError"><code class="docutils literal notranslate"><span class="pre">FixedSizeCollectionError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.collections.html#module-byteclasses.types.collections.member">byteclasses.types.collections.member module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.member.Member"><code class="docutils literal notranslate"><span class="pre">Member</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.member.Member.default"><code class="docutils literal notranslate"><span class="pre">Member.default</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.member.Member.default_factory"><code class="docutils literal notranslate"><span class="pre">Member.default_factory</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.member.Member.member_type"><code class="docutils literal notranslate"><span class="pre">Member.member_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.member.Member.metadata"><code class="docutils literal notranslate"><span class="pre">Member.metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.member.Member.name"><code class="docutils literal notranslate"><span class="pre">Member.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.member.Member.type"><code class="docutils literal notranslate"><span class="pre">Member.type</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.member.is_fixed_collection"><code class="docutils literal notranslate"><span class="pre">is_fixed_collection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.member.member"><code class="docutils literal notranslate"><span class="pre">member()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.collections.html#module-byteclasses.types.collections.structure">byteclasses.types.collections.structure module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.structure.structure"><code class="docutils literal notranslate"><span class="pre">structure()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.collections.html#module-byteclasses.types.collections.union">byteclasses.types.collections.union module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.union.union"><code class="docutils literal notranslate"><span class="pre">union()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.collections.html#module-byteclasses.types.collections">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.FixedArray"><code class="docutils literal notranslate"><span class="pre">FixedArray</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.FixedArray.data"><code class="docutils literal notranslate"><span class="pre">FixedArray.data</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.FixedSizeCollection"><code class="docutils literal notranslate"><span class="pre">FixedSizeCollection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.FixedSizeCollection.attach"><code class="docutils literal notranslate"><span class="pre">FixedSizeCollection.attach()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.FixedSizeCollection.data"><code class="docutils literal notranslate"><span class="pre">FixedSizeCollection.data</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.member"><code class="docutils literal notranslate"><span class="pre">member()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.structure"><code class="docutils literal notranslate"><span class="pre">structure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.collections.html#byteclasses.types.collections.union"><code class="docutils literal notranslate"><span class="pre">union()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="byteclasses.types.primitives.html">byteclasses.types.primitives package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.primitives.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.primitives.html#module-byteclasses.types.primitives.bit_pos">byteclasses.types.primitives.bit_pos module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.bit_pos.BitPos"><code class="docutils literal notranslate"><span class="pre">BitPos</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.bit_pos.BitPos.idx"><code class="docutils literal notranslate"><span class="pre">BitPos.idx</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.primitives.html#module-byteclasses.types.primitives.bitfield">byteclasses.types.primitives.bitfield module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.bitfield.BitField"><code class="docutils literal notranslate"><span class="pre">BitField</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.bitfield.BitField.bit_length"><code class="docutils literal notranslate"><span class="pre">BitField.bit_length</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.bitfield.BitField.byte_length"><code class="docutils literal notranslate"><span class="pre">BitField.byte_length</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.bitfield.BitField.clear_bit"><code class="docutils literal notranslate"><span class="pre">BitField.clear_bit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.bitfield.BitField.get_bit"><code class="docutils literal notranslate"><span class="pre">BitField.get_bit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.bitfield.BitField.set_bit"><code class="docutils literal notranslate"><span class="pre">BitField.set_bit()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.primitives.html#module-byteclasses.types.primitives.floats">byteclasses.types.primitives.floats module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.floats.Double"><code class="docutils literal notranslate"><span class="pre">Double</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.floats.Float"><code class="docutils literal notranslate"><span class="pre">Float</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.floats.Float16"><code class="docutils literal notranslate"><span class="pre">Float16</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.floats.Float32"><code class="docutils literal notranslate"><span class="pre">Float32</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.floats.Float64"><code class="docutils literal notranslate"><span class="pre">Float64</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.floats.Half"><code class="docutils literal notranslate"><span class="pre">Half</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.primitives.html#module-byteclasses.types.primitives.integers">byteclasses.types.primitives.integers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Bit"><code class="docutils literal notranslate"><span class="pre">Bit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Bit.FALSE"><code class="docutils literal notranslate"><span class="pre">Bit.FALSE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Bit.TRUE"><code class="docutils literal notranslate"><span class="pre">Bit.TRUE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Byte"><code class="docutils literal notranslate"><span class="pre">Byte</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.DWord"><code class="docutils literal notranslate"><span class="pre">DWord</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Int"><code class="docutils literal notranslate"><span class="pre">Int</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Int16"><code class="docutils literal notranslate"><span class="pre">Int16</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Int32"><code class="docutils literal notranslate"><span class="pre">Int32</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Int64"><code class="docutils literal notranslate"><span class="pre">Int64</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Int8"><code class="docutils literal notranslate"><span class="pre">Int8</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Long"><code class="docutils literal notranslate"><span class="pre">Long</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.LongLong"><code class="docutils literal notranslate"><span class="pre">LongLong</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.SChar"><code class="docutils literal notranslate"><span class="pre">SChar</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Short"><code class="docutils literal notranslate"><span class="pre">Short</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.UChar"><code class="docutils literal notranslate"><span class="pre">UChar</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.UInt"><code class="docutils literal notranslate"><span class="pre">UInt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.UInt16"><code class="docutils literal notranslate"><span class="pre">UInt16</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.UInt32"><code class="docutils literal notranslate"><span class="pre">UInt32</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.UInt64"><code class="docutils literal notranslate"><span class="pre">UInt64</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.UInt8"><code class="docutils literal notranslate"><span class="pre">UInt8</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.ULong"><code class="docutils literal notranslate"><span class="pre">ULong</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.ULongLong"><code class="docutils literal notranslate"><span class="pre">ULongLong</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.UShort"><code class="docutils literal notranslate"><span class="pre">UShort</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Word"><code class="docutils literal notranslate"><span class="pre">Word</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="byteclasses.types.primitives.html#module-byteclasses.types.primitives">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.BitField"><code class="docutils literal notranslate"><span class="pre">BitField</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.BitField.bit_length"><code class="docutils literal notranslate"><span class="pre">BitField.bit_length</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.BitField.byte_length"><code class="docutils literal notranslate"><span class="pre">BitField.byte_length</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.BitField.clear_bit"><code class="docutils literal notranslate"><span class="pre">BitField.clear_bit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.BitField.get_bit"><code class="docutils literal notranslate"><span class="pre">BitField.get_bit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.BitField.set_bit"><code class="docutils literal notranslate"><span class="pre">BitField.set_bit()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.BitPos"><code class="docutils literal notranslate"><span class="pre">BitPos</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="byteclasses.types.primitives.html#byteclasses.types.primitives.BitPos.idx"><code class="docutils literal notranslate"><span class="pre">BitPos.idx</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2 id="submodules">Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-byteclasses.types.fixed_size_type_protocol">
+<span id="byteclasses-types-fixed-size-type-protocol-module"></span><h2 id="module-byteclasses.types.fixed_size_type_protocol">byteclasses.types.fixed_size_type_protocol module<a class="headerlink" href="#module-byteclasses.types.fixed_size_type_protocol" title="Link to this heading">¶</a></h2>
+<p>Fixed Size Type Protocol Classes.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="byteclasses.types.fixed_size_type_protocol.FixedSizeType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.fixed_size_type_protocol.</span></span><span class="sig-name descname"><span class="pre">FixedSizeType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/fixed_size_type_protocol.html#FixedSizeType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.fixed_size_type_protocol.FixedSizeType" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<p>Protocol class for fixed size types.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="byteclasses.types.fixed_size_type_protocol.FixedSizeType.attach">
+<span class="sig-name descname"><span class="pre">attach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">memoryview</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/fixed_size_type_protocol.html#FixedSizeType.attach"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.fixed_size_type_protocol.FixedSizeType.attach" title="Link to this definition">¶</a></dt>
+<dd><p>Attaches memoryview to underlying data attribute.</p>
+</dd></dl>
+</dd></dl>
+</section>
+<section id="module-byteclasses.types">
+<span id="module-contents"></span><h2 id="module-byteclasses.types">Module contents<a class="headerlink" href="#module-byteclasses.types" title="Link to this heading">¶</a></h2>
+<p>Byteclasses Types Module.</p>
+</section>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+            <a href="byteclasses.html" title="byteclasses package"
+               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
+               rel="prev">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+              </div>
+              <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+                <span class="md-flex__ellipsis">
+                  <span
+                      class="md-footer-nav__direction"> "Previous" </span> byteclasses package </span>
+              </div>
+            </a>
+          
+          
+            <a href="byteclasses.types.collections.html" title="byteclasses.types.collections package"
+               class="md-flex md-footer-nav__link md-footer-nav__link--next"
+               rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
+                class="md-flex__ellipsis"> <span
+                class="md-footer-nav__direction"> "Next" </span> byteclasses.types.collections package </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink"><i
+                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2024, Justin Cady.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>
