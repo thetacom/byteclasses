@@ -1,15 +1,15 @@
 .PHONY: clean lint bandit black check mypy pycodestyle ruff test build api-docs docs
-PKG := hexabyte
+PKG := byteclasses
 
 SRC_DIR := $(PKG)
-BUILD_DIR := build
 ARTIFACT_DIR := dist
 TEST_DIR := tests
 DOCS_DIR := docs
-DOCS_SRC_DIR := $(DOCS_DIR)/source
+DOCS_SRC_DIR := $(DOCS_DIR)
+DOCS_BUILD_DIR := $(DOCS_DIR)/_build
 DOCS_SRC_FILES := $(wildcard $(DOCS_SRC_DIR)/*.rst)
 DOCS_SRC_FILES += $(wildcard $(DOCS_SRC_DIR)/*.md)
-DOCS_HTML_DIR := $(BUILD_DIR)/html
+DOCS_HTML_DIR := $(DOCS_BUILD_DIR)/html
 
 build: .venv
 	@echo "*****Packaging $(PKG)*****"
@@ -20,13 +20,13 @@ build: .venv
 	@poetry install -q -n
 
 clean:
-	@rm -rf $(BUILD_DIR) $(ARTIFACT_DIR) .mypy_cache .pytest_cache ./*/__pycache__ reports .coverage
+	@rm -rf $(BUILD_DIR) $(DOCS_BUILD_DIR) .mypy_cache .pytest_cache ./*/__pycache__ reports .coverage
 
 check: .venv
 	@echo "*****Pre-Commit Checks*****"
 	@pre-commit run --all-files
 
-lint: bandit black ruff pydocstyle pycodestyle
+lint: bandit black ruff pycodestyle
 
 analyze: pylint mypy
 
@@ -45,13 +45,9 @@ mypy: .venv
 	@echo "*****Mypy*****"
 	@mypy --pretty --disable-error-code import $(SRC_DIR)
 
-pydocstyle: .venv
-	@echo "*****Pydocstyle*****"
-	@pydocstyle $(SRC_DIR)
-
 pylint: .venv
 	@echo "*****Pylint*****"
-	@pylint .
+	@pylint $(SRC_DIR)
 
 ruff: .venv
 	@echo "*****Ruff*****"
@@ -62,7 +58,7 @@ test: .venv
 	@pytest
 
 api-docs:
-	sphinx-apidoc --ext-autodoc --ext-doctest --ext-todo --ext-coverage --ext-githubpages -o $(DOCS_SRC_DIR) $(SRC_DIR)
+	sphinx-apidoc --ext-autodoc --ext-doctest --ext-todo --ext-coverage --ext-githubpages -o $(DOCS_SRC_DIR)/api $(SRC_DIR)
 
 docs: $(DOCS_SRC_FILES)
 	sphinx-build -b html $(DOCS_SRC_DIR) $(DOCS_HTML_DIR)

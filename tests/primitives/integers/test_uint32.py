@@ -11,7 +11,7 @@ def test_uint32_instance_properties():
     assert uint32.signed is False
     assert uint32.min == 0
     assert uint32.max == 4294967295
-    assert uint32.byte_order == b"@"
+    assert uint32.byte_order.value == b"@"
     assert uint32.endianness == "NATIVE"
     assert uint32.fmt == b"@I"
     uint32.value = 0

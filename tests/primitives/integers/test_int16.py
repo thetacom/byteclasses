@@ -11,7 +11,7 @@ def test_int16_instance_properties():
     assert int16.signed is True
     assert int16.min == -32768
     assert int16.max == 32767
-    assert int16.byte_order == b"@"
+    assert int16.byte_order.value == b"@"
     assert int16.endianness == "NATIVE"
     assert int16.fmt == b"@h"
     int16.value = 0

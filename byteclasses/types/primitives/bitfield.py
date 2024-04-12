@@ -1,11 +1,11 @@
 """BitField Fixed Length Class."""
 
-from collections.abc import ByteString, Iterable, Sequence
+from collections.abc import ByteString, Sequence
 from functools import cached_property
 from struct import calcsize
-from typing import SupportsIndex, overload
+from typing import overload
 
-from ...enums import ByteOrder, TypeChar
+from ..._enums import ByteOrder, TypeChar
 from .._fixed_size_type import _FixedSizeType
 
 
@@ -18,7 +18,7 @@ class BitField(_FixedSizeType):
     def __init__(
         self,
         *,
-        byte_order: Iterable[SupportsIndex] = ByteOrder.NATIVE.value,
+        byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
         data: ByteString | None = None,
     ) -> None:
         """Initialize the instance."""
@@ -30,8 +30,12 @@ class BitField(_FixedSizeType):
         if data:
             self.data = data
 
-    def __repr__(self) -> str:
+    def __str__(self) -> str:
         """Return bitfield string representation."""
+        return "".join(bin(i)[2:].rjust(8, "0")[::-1] for i in self._data)
+
+    def __repr__(self) -> str:
+        """Return bitfield class representation."""
         return f"{self.__class__.__qualname__}(byte_length={self._length}, data={self._data})"
 
     def __getitem__(self, key: int | slice) -> bool | list[bool]:

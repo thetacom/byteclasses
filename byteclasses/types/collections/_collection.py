@@ -3,7 +3,7 @@
 from collections.abc import Callable
 from typing import cast
 
-from ...enums import ByteOrder
+from ..._enums import ByteOrder
 from ...types.collections._fixed_collection_type import _process_class
 from ._collection_class_spec import _CollectionClassSpec
 from .fixed_size_collection_protocol import FixedSizeCollection
@@ -12,7 +12,7 @@ from .fixed_size_collection_protocol import FixedSizeCollection
 def create_collection(
     cls: type | None,
     collection_type: str,
-    byte_order: str | ByteOrder,
+    byte_order: bytes | ByteOrder,
     packed: bool,
     methods: dict[str, Callable],
     allowed_types: tuple[type, ...] | None = None,

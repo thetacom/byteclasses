@@ -5,17 +5,15 @@ The parent class for all fixed size numeric primitive types.
 Implements interfaces that attempt to adhere to the following specifications:
 [A Type Hierarchy for Numbers](https://peps.python.org/pep-3141/)
 [Introducing Abstract Base Classes](https://peps.python.org/pep-3119/)
-
 """
 
 import math
 from abc import abstractmethod
-from collections.abc import Iterable
 from numbers import Integral, Real
 from struct import pack, unpack
-from typing import Any, SupportsIndex
+from typing import Any
 
-from ..enums import ByteOrder
+from .._enums import ByteOrder
 from ..types._fixed_size_type import _FixedSizeType
 
 __all__: list[str] = []
@@ -28,7 +26,7 @@ class _FixedNumericType(_FixedSizeType):
         self,
         value: int | float = 0,
         *,
-        byte_order: Iterable[SupportsIndex] = ByteOrder.NATIVE.value,
+        byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
     ) -> None:
         """Initialize the instance."""
         super().__init__(byte_order)

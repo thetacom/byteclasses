@@ -11,7 +11,7 @@ def test_uint16_instance_properties():
     assert uint16.signed is False
     assert uint16.min == 0
     assert uint16.max == 65535
-    assert uint16.byte_order == b"@"
+    assert uint16.byte_order.value == b"@"
     assert uint16.endianness == "NATIVE"
     assert uint16.fmt == b"@H"
     uint16.value = 0

@@ -3,7 +3,7 @@
 from collections.abc import Callable
 from typing import Any, overload
 
-from ...enums import ByteOrder
+from ..._enums import ByteOrder
 from ._collection import create_collection
 from ._collection_class_spec import _CollectionClassSpec
 from ._methods import _build_init_method
@@ -14,18 +14,18 @@ __all__ = ["structure"]
 
 
 @overload
-def structure(*, byte_order: str | ByteOrder, packed: bool) -> Callable[[type], FixedSizeCollection]: ...
+def structure(*, byte_order: bytes | ByteOrder, packed: bool) -> Callable[[type], FixedSizeCollection]: ...
 
 
 @overload
-def structure(cls: type, /, *, byte_order: str | ByteOrder, packed: bool) -> FixedSizeCollection: ...
+def structure(cls: type, /, *, byte_order: bytes | ByteOrder, packed: bool) -> FixedSizeCollection: ...
 
 
 def structure(
     cls: type | None = None,
     /,
     *,
-    byte_order: str | ByteOrder = ByteOrder.NATIVE,
+    byte_order: bytes | ByteOrder = ByteOrder.NATIVE,
     packed: bool = False,
 ) -> FixedSizeCollection | Callable[[type], FixedSizeCollection]:
     """Return the same class as was passed in.

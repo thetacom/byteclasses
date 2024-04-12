@@ -5,6 +5,6 @@ __pycache__
 .venv
 dist
 .ipynb_checkpoints
-*.ipynb
 .coverage
-site
+docs/_build/*
+public

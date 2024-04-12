@@ -1,6 +1,6 @@
 """Unit tests for byteclasses structure collection types."""
 
-from byteclasses.enums import ByteOrder
+from byteclasses._enums import ByteOrder
 from byteclasses.types.collections.structure import structure
 from byteclasses.types.primitives.integers import Int16, UInt8, UInt64
 
