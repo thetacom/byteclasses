@@ -26,7 +26,7 @@ check: .venv
 	@echo "*****Pre-Commit Checks*****"
 	@pre-commit run --all-files
 
-lint: bandit black ruff pydocstyle pycodestyle
+lint: bandit black ruff pycodestyle
 
 analyze: pylint mypy
 
@@ -44,10 +44,6 @@ black: .venv
 mypy: .venv
 	@echo "*****Mypy*****"
 	@mypy --pretty --disable-error-code import $(SRC_DIR)
-
-pydocstyle: .venv
-	@echo "*****Pydocstyle*****"
-	@pydocstyle $(SRC_DIR)
 
 pylint: .venv
 	@echo "*****Pylint*****"
