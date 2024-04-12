@@ -11,7 +11,7 @@ def test_int32_instance_properties():
     assert int32.signed is True
     assert int32.min == -2147483648
     assert int32.max == 2147483647
-    assert int32.byte_order == b"@"
+    assert int32.byte_order.value == b"@"
     assert int32.endianness == "NATIVE"
     assert int32.fmt == b"@i"
     int32.value = 0

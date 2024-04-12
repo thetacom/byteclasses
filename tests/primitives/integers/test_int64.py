@@ -11,7 +11,7 @@ def test_int64_instance_properties():
     assert int64.signed is True
     assert int64.min == -9223372036854775808
     assert int64.max == 9223372036854775807
-    assert int64.byte_order == b"@"
+    assert int64.byte_order.value == b"@"
     assert int64.endianness == "NATIVE"
     assert int64.fmt == b"@q"
     int64.value = 0

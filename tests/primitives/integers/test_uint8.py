@@ -11,7 +11,7 @@ def test_uint8_instance_properties():
     assert uint8.signed is False
     assert uint8.min == 0
     assert uint8.max == 255
-    assert uint8.byte_order == b"@"
+    assert uint8.byte_order.value == b"@"
     assert uint8.endianness == "NATIVE"
     assert uint8.fmt == b"@B"
     uint8.value = 0

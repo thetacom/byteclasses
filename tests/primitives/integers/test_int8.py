@@ -11,7 +11,7 @@ def test_int8_instance_properties():
     assert int8.signed is True
     assert int8.min == -128
     assert int8.max == 127
-    assert int8.byte_order == b"@"
+    assert int8.byte_order.value == b"@"
     assert int8.endianness == "NATIVE"
     assert int8.fmt == b"@b"
     int8.value = 0
