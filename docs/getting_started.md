@@ -29,5 +29,6 @@ Collection Types - Collection types allow you to combine primitives or other col
 
 ## Attaching external data
 
-External `bytes` can be connected to a byteclass byte providing a `memoryview` slice to the `.attach(mv)` method.
+Byteclasses can be attached to any bytes like external data.
+Use the byteclass `.attach(mv)` method to connect a `memoryview` of the external data to the internal data attribute of the byteclass instance.
 > The length of the `memoryview` must match the length of the item it is being attached to.
