@@ -43,7 +43,9 @@ jobs:
     - run: poetry --version
     - name: Install dependencies
       if: steps.cached-dependencies.outputs.cache-hit != 'true'
-      run: poetry install --no-interaction --no-root
+      run: |
+        sudo apt-get install -y pandoc
+        poetry install --no-interaction --no-root
     - name: Install project
       run: poetry install --no-interaction
     - name: Build
