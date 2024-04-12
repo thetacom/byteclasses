@@ -30,8 +30,12 @@ class BitField(_FixedSizeType):
         if data:
             self.data = data
 
-    def __repr__(self) -> str:
+    def __str__(self) -> str:
         """Return bitfield string representation."""
+        return "".join(bin(i)[2:].rjust(8, "0")[::-1] for i in self._data)
+
+    def __repr__(self) -> str:
+        """Return bitfield class representation."""
         return f"{self.__class__.__qualname__}(byte_length={self._length}, data={self._data})"
 
     def __getitem__(self, key: int | slice) -> bool | list[bool]:
