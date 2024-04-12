@@ -1,9 +1,9 @@
 """BitField Fixed Length Class."""
 
-from collections.abc import ByteString, Iterable, Sequence
+from collections.abc import ByteString, Sequence
 from functools import cached_property
 from struct import calcsize
-from typing import SupportsIndex, overload
+from typing import overload
 
 from ..._enums import ByteOrder, TypeChar
 from .._fixed_size_type import _FixedSizeType
@@ -18,7 +18,7 @@ class BitField(_FixedSizeType):
     def __init__(
         self,
         *,
-        byte_order: Iterable[SupportsIndex] = ByteOrder.NATIVE.value,
+        byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
         data: ByteString | None = None,
     ) -> None:
         """Initialize the instance."""

@@ -1,8 +1,8 @@
 """Abstract fixed size type."""
 
 from abc import ABC
-from collections.abc import ByteString, Iterable
-from typing import SupportsBytes, SupportsIndex
+from collections.abc import ByteString
+from typing import SupportsBytes
 
 from .._enums import ByteOrder
 
@@ -18,10 +18,10 @@ class _FixedSizeType(ABC, SupportsBytes):
 
     def __init__(
         self,
-        byte_order: Iterable[SupportsIndex],
+        byte_order: bytes | ByteOrder,
     ) -> None:
         """Initialize the instance."""
-        self._byte_order: bytes = bytes(byte_order)
+        self._byte_order = ByteOrder(byte_order)
         self._data: bytearray | memoryview = bytearray(len(self))
 
     def __getitem__(self, sliced):
@@ -42,19 +42,24 @@ class _FixedSizeType(ABC, SupportsBytes):
         return f"0x{self.__bytes__().hex()}"
 
     @property
-    def byte_order(self) -> bytes:
+    def byte_order(self) -> ByteOrder:
         """Return the byte order of the instance."""
         return self._byte_order
+
+    @byte_order.setter
+    def byte_order(self, value: bytes | ByteOrder) -> None:
+        """Set new byte order."""
+        self._byte_order = ByteOrder(value)
 
     @property
     def endianness(self) -> str:
         """Return the string name of the byte order for the instance."""
-        return ByteOrder(self._byte_order).name
+        return self._byte_order.name
 
     @property
     def fmt(self) -> bytes:
         """Return the format string for the instance."""
-        return self.byte_order + self.type_char
+        return self.byte_order.value + self.type_char
 
     @property
     def data(self) -> ByteString:

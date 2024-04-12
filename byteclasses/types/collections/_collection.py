@@ -12,7 +12,7 @@ from .fixed_size_collection_protocol import FixedSizeCollection
 def create_collection(
     cls: type | None,
     collection_type: str,
-    byte_order: str | ByteOrder,
+    byte_order: bytes | ByteOrder,
     packed: bool,
     methods: dict[str, Callable],
     allowed_types: tuple[type, ...] | None = None,

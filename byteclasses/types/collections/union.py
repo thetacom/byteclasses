@@ -14,18 +14,18 @@ __all__ = ["union"]
 
 
 @overload
-def union(*, byte_order: str | ByteOrder) -> Callable[[type], FixedSizeCollection]: ...
+def union(*, byte_order: bytes | ByteOrder) -> Callable[[type], FixedSizeCollection]: ...
 
 
 @overload
-def union(cls: type, /, *, byte_order: str | ByteOrder = ByteOrder.NATIVE) -> FixedSizeCollection: ...
+def union(cls: type, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE) -> FixedSizeCollection: ...
 
 
 def union(
     cls: type | None = None,
     /,
     *,
-    byte_order: str | ByteOrder = ByteOrder.NATIVE,
+    byte_order: bytes | ByteOrder = ByteOrder.NATIVE,
 ) -> FixedSizeCollection | Callable[[type], FixedSizeCollection]:
     """Return the same class as was passed in.
 
