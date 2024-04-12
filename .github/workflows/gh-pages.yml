@@ -41,11 +41,11 @@ jobs:
         path: .venv
         key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
     - run: poetry --version
-    - name: Install dependencies
+    - name: Install os dependencies
+      run: sudo apt-get install -y pandoc
+    - name: Install package dependencies
       if: steps.cached-dependencies.outputs.cache-hit != 'true'
-      run: |
-        sudo apt-get install -y pandoc
-        poetry install --no-interaction --no-root
+      run: poetry install --no-interaction --no-root
     - name: Install project
       run: poetry install --no-interaction
     - name: Build
