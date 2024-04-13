@@ -289,6 +289,26 @@
         </li></ul>
             </nav>
         </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.primitives.generics.BitField" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#byteclasses.types.primitives.generics.BitField.bit_length" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField.bit_length</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.primitives.generics.BitField.byte_length" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField.byte_length</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.primitives.generics.BitField.clear_bit" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField.clear_bit()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.primitives.generics.BitField.get_bit" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField.get_bit()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.primitives.generics.BitField.set_bit" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField.set_bit()</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.primitives.generics.BitPos" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitPos</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#byteclasses.types.primitives.generics.BitPos.idx" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitPos.idx</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
         <li class="md-nav__item"><a href="#byteclasses.types.primitives.generics.Byte" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Byte</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#byteclasses.types.primitives.generics.DWord" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">DWord</span></code></a>
@@ -339,29 +359,7 @@
         </li></ul>
             </nav>
         </li>
-        <li class="md-nav__item"><a href="#module-byteclasses.types.primitives" class="md-nav__link">Module contents</a><nav class="md-nav">
-              <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#byteclasses.types.primitives.BitField" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField</span></code></a><nav class="md-nav">
-              <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#byteclasses.types.primitives.BitField.bit_length" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField.bit_length</span></code></a>
-        </li>
-        <li class="md-nav__item"><a href="#byteclasses.types.primitives.BitField.byte_length" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField.byte_length</span></code></a>
-        </li>
-        <li class="md-nav__item"><a href="#byteclasses.types.primitives.BitField.clear_bit" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField.clear_bit()</span></code></a>
-        </li>
-        <li class="md-nav__item"><a href="#byteclasses.types.primitives.BitField.get_bit" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField.get_bit()</span></code></a>
-        </li>
-        <li class="md-nav__item"><a href="#byteclasses.types.primitives.BitField.set_bit" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitField.set_bit()</span></code></a>
-        </li></ul>
-            </nav>
-        </li>
-        <li class="md-nav__item"><a href="#byteclasses.types.primitives.BitPos" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitPos</span></code></a><nav class="md-nav">
-              <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#byteclasses.types.primitives.BitPos.idx" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">BitPos.idx</span></code></a>
-        </li></ul>
-            </nav>
-        </li></ul>
-            </nav>
+        <li class="md-nav__item"><a href="#module-byteclasses.types.primitives" class="md-nav__link">Module contents</a>
         </li></ul>
             </nav>
         </li>
@@ -514,6 +512,47 @@
 <dd></dd></dl>
 </dd></dl>
 <dl class="py class">
+<dt class="sig sig-object py" id="byteclasses.types.primitives.generics.BitField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.primitives.generics.</span></span><span class="sig-name descname"><span class="pre">BitField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">byte_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="byteclasses.html#byteclasses.ByteOrder" title="byteclasses._enums.ByteOrder"><span class="pre">ByteOrder</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">b'@'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ByteString</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/primitives/bitfield.html#BitField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.primitives.generics.BitField" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_FixedSizeType</span></code></p>
+<p>BitField Fixed Size Class.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="byteclasses.types.primitives.generics.BitField.bit_length">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bit_length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#byteclasses.types.primitives.generics.BitField.bit_length" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate instance bit length.</p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="byteclasses.types.primitives.generics.BitField.byte_length">
+<span class="sig-name descname"><span class="pre">byte_length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#byteclasses.types.primitives.generics.BitField.byte_length" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="byteclasses.types.primitives.generics.BitField.clear_bit">
+<span class="sig-name descname"><span class="pre">clear_bit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/primitives/bitfield.html#BitField.clear_bit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.primitives.generics.BitField.clear_bit" title="Link to this definition">¶</a></dt>
+<dd><p>Clear bit in bitfield instance.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="byteclasses.types.primitives.generics.BitField.get_bit">
+<span class="sig-name descname"><span class="pre">get_bit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/byteclasses/types/primitives/bitfield.html#BitField.get_bit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.primitives.generics.BitField.get_bit" title="Link to this definition">¶</a></dt>
+<dd><p>Get bit in bitfield instance.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="byteclasses.types.primitives.generics.BitField.set_bit">
+<span class="sig-name descname"><span class="pre">set_bit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/primitives/bitfield.html#BitField.set_bit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.primitives.generics.BitField.set_bit" title="Link to this definition">¶</a></dt>
+<dd><p>Set bit in bitfield instance.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="byteclasses.types.primitives.generics.BitPos">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.primitives.generics.</span></span><span class="sig-name descname"><span class="pre">BitPos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/primitives/bit_pos.html#BitPos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.primitives.generics.BitPos" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A member class representing a pit position for use in a BitField class.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="byteclasses.types.primitives.generics.BitPos.idx">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">idx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#byteclasses.types.primitives.generics.BitPos.idx" title="Link to this definition">¶</a></dt>
+<dd><p>Return read-only index value.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
 <dt class="sig sig-object py" id="byteclasses.types.primitives.generics.Byte">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.primitives.generics.</span></span><span class="sig-name descname"><span class="pre">Byte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">byte_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="byteclasses.html#byteclasses.ByteOrder" title="byteclasses._enums.ByteOrder"><span class="pre">ByteOrder</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">b'@'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/primitives/generics.html#Byte"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.primitives.generics.Byte" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_FixedSizeGeneric</span></code></p>
@@ -645,47 +684,6 @@
 <section id="module-byteclasses.types.primitives">
 <span id="module-contents"></span><h2 id="module-byteclasses.types.primitives">Module contents<a class="headerlink" href="#module-byteclasses.types.primitives" title="Link to this heading">¶</a></h2>
 <p>Fixed length types for binary data.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="byteclasses.types.primitives.BitField">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.primitives.</span></span><span class="sig-name descname"><span class="pre">BitField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">byte_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="byteclasses.html#byteclasses.ByteOrder" title="byteclasses._enums.ByteOrder"><span class="pre">ByteOrder</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">b'@'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ByteString</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/primitives/bitfield.html#BitField"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.primitives.BitField" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_FixedSizeType</span></code></p>
-<p>BitField Fixed Size Class.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="byteclasses.types.primitives.BitField.bit_length">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bit_length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#byteclasses.types.primitives.BitField.bit_length" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate instance bit length.</p>
-</dd></dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="byteclasses.types.primitives.BitField.byte_length">
-<span class="sig-name descname"><span class="pre">byte_length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#byteclasses.types.primitives.BitField.byte_length" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="byteclasses.types.primitives.BitField.clear_bit">
-<span class="sig-name descname"><span class="pre">clear_bit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/primitives/bitfield.html#BitField.clear_bit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.primitives.BitField.clear_bit" title="Link to this definition">¶</a></dt>
-<dd><p>Clear bit in bitfield instance.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="byteclasses.types.primitives.BitField.get_bit">
-<span class="sig-name descname"><span class="pre">get_bit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/byteclasses/types/primitives/bitfield.html#BitField.get_bit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.primitives.BitField.get_bit" title="Link to this definition">¶</a></dt>
-<dd><p>Get bit in bitfield instance.</p>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="byteclasses.types.primitives.BitField.set_bit">
-<span class="sig-name descname"><span class="pre">set_bit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/primitives/bitfield.html#BitField.set_bit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.primitives.BitField.set_bit" title="Link to this definition">¶</a></dt>
-<dd><p>Set bit in bitfield instance.</p>
-</dd></dl>
-</dd></dl>
-<dl class="py class">
-<dt class="sig sig-object py" id="byteclasses.types.primitives.BitPos">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.primitives.</span></span><span class="sig-name descname"><span class="pre">BitPos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/primitives/bit_pos.html#BitPos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.primitives.BitPos" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A member class representing a pit position for use in a BitField class.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="byteclasses.types.primitives.BitPos.idx">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">idx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#byteclasses.types.primitives.BitPos.idx" title="Link to this definition">¶</a></dt>
-<dd><p>Return read-only index value.</p>
-</dd></dl>
-</dd></dl>
 </section>
 </section>
 

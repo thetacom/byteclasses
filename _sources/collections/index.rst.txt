@@ -6,5 +6,6 @@ Collections
    :maxdepth: 2
 
    fixed_array
-   union
+   string
    structure
+   union

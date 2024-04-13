@@ -304,6 +304,18 @@
         </li></ul>
             </nav>
         </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.collections.String" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">String</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#byteclasses.types.collections.String.data" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">String.data</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.collections.String.null_terminated" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">String.null_terminated</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.collections.String.value" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">String.value</span></code></a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.collections.make_fixed_collection" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">make_fixed_collection()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#byteclasses.types.collections.member" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">member()</span></code></a>
         </li>
         <li class="md-nav__item"><a href="#byteclasses.types.collections.structure" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">structure()</span></code></a>
@@ -516,6 +528,56 @@ collection.</p>
 <dt class="sig sig-object py" id="byteclasses.types.collections.FixedSizeCollection.data">
 <span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytearray</span></em><a class="headerlink" href="#byteclasses.types.collections.FixedSizeCollection.data" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="byteclasses.types.collections.String">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.collections.</span></span><span class="sig-name descname"><span class="pre">String</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">null_terminated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/collections/string.html#String"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.collections.String" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#byteclasses.types.collections.fixed_array.FixedArray" title="byteclasses.types.collections.fixed_array.FixedArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">FixedArray</span></code></a></p>
+<p>A fixed size string collection based on FixedArray.</p>
+<p>Collection members are UChar primitives and are interpreted with a <cite>utf-8</cite> encoding.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="byteclasses.types.collections.String.data">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><a class="headerlink" href="#byteclasses.types.collections.String.data" title="Link to this definition">¶</a></dt>
+<dd><p>Return array data.</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="byteclasses.types.collections.String.null_terminated">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">null_terminated</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#byteclasses.types.collections.String.null_terminated" title="Link to this definition">¶</a></dt>
+<dd><p>Return String null terminated status.</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="byteclasses.types.collections.String.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#byteclasses.types.collections.String.value" title="Link to this definition">¶</a></dt>
+<dd><p>Return String value.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="byteclasses.types.collections.make_fixed_collection">
+<span class="sig-prename descclassname"><span class="pre">byteclasses.types.collections.</span></span><span class="sig-name descname"><span class="pre">make_fixed_collection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">members_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#byteclasses.types.collections.member.Member" title="byteclasses.types.collections.member.Member"><span class="pre">Member</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">namespace</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">byte_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ByteString</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="byteclasses.html#byteclasses.ByteOrder" title="byteclasses._enums.ByteOrder"><span class="pre">ByteOrder</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ByteOrder.NATIVE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/collections/factory.html#make_fixed_collection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.collections.make_fixed_collection" title="Link to this definition">¶</a></dt>
+<dd><p>Return a new dynamically created fixed collection.</p>
+<p>The fixed collection name will be ‘cls_name’.  ‘members’ is an iterable
+of either (name, type) or (name, type, Member) objects.  Member objects are created
+by the equivalent of calling ‘member(name, type [, Member-info])’.</p>
+<dl class="simple">
+<dt><a href="#id17"><span class="problematic" id="id18">``</span></a><a href="#id19"><span class="problematic" id="id20">`</span></a>python</dt><dd><p>C = make_fixed_collection(‘structure’, ‘C’, [(‘x’, Int8), (‘y’, Int32, member())],
+bases=(Base,))</p>
+</dd>
+</dl>
+<p><a href="#id21"><span class="problematic" id="id22">``</span></a><a href="#id23"><span class="problematic" id="id24">`</span></a></p>
+<p>is equivalent to:</p>
+<dl>
+<dt><a href="#id25"><span class="problematic" id="id26">``</span></a><a href="#id27"><span class="problematic" id="id28">`</span></a>python</dt><dd><p>@structure
+class C(Base):</p>
+<blockquote>
+<div><p>x: Int8
+y: Int32 = member()</p>
+</div></blockquote>
+</dd>
+</dl>
+<p><a href="#id29"><span class="problematic" id="id30">``</span></a><a href="#id31"><span class="problematic" id="id32">`</span></a></p>
+<p>For the bases and namespace parameters, see the builtin type() function.</p>
+<p>The parameters byte_order and packed are passed to the decorator based on the
+collection type. The packed parameter is only used for the structure type.</p>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="byteclasses.types.collections.member">
