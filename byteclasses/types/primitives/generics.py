@@ -6,6 +6,7 @@ from typing import Any
 
 from ..._enums import ByteOrder, TypeChar
 from ...types._fixed_size_type import _FixedSizeType
+from .bit_pos import BitField, BitPos
 
 __all__ = [
     "Bit",
@@ -13,6 +14,8 @@ __all__ = [
     "DWord",
     "QWord",
     "Word",
+    "BitField",
+    "BitPos",
 ]
 
 

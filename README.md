@@ -10,7 +10,7 @@ This library is designed for creating custom Python data classes with builtin st
 
 - Collections
   - FixedArray
-  - String**
+  - String
   - Structure
   - Union
 - Primitives
@@ -35,10 +35,10 @@ This library is designed for creating custom Python data classes with builtin st
     - ULong
     - Int64 (LongLong)
     - UInt64 (ULongLong)
-  - Characters**
-    - UChar** (Char)
+  - Characters
+    - UChar (Char)
     - SChar**
 
-> ** Not yet implemented
+> ** Not fully implemented
 
 [C data types](https://en.wikipedia.org/wiki/C_data_types)
