@@ -226,21 +226,17 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <h1 id="modules-byteclasses-types-primitives-integers--page-root">Source code for byteclasses.types.primitives.integers</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Fixed size integer types."""</span>
+<span></span><span class="sd">"""Fixed Size Integer Types."""</span>
 
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntEnum</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Integral</span>
 <span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="n">calcsize</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">cast</span>
 
-<span class="kn">from</span> <span class="nn">..._enums</span> <span class="kn">import</span> <span class="n">TypeChar</span>
+<span class="kn">from</span> <span class="nn">..._enums</span> <span class="kn">import</span> <span class="n">ByteOrder</span><span class="p">,</span> <span class="n">TypeChar</span>
 <span class="kn">from</span> <span class="nn">...types._fixed_numeric_type</span> <span class="kn">import</span> <span class="n">_FixedNumericType</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"Bit"</span><span class="p">,</span>
-    <span class="s2">"Byte"</span><span class="p">,</span>
-    <span class="s2">"DWord"</span><span class="p">,</span>
     <span class="s2">"Int"</span><span class="p">,</span>
     <span class="s2">"Int8"</span><span class="p">,</span>
     <span class="s2">"SChar"</span><span class="p">,</span>
@@ -250,7 +246,6 @@
     <span class="s2">"Short"</span><span class="p">,</span>
     <span class="s2">"UInt16"</span><span class="p">,</span>
     <span class="s2">"UShort"</span><span class="p">,</span>
-    <span class="s2">"Word"</span><span class="p">,</span>
     <span class="s2">"Int32"</span><span class="p">,</span>
     <span class="s2">"UInt32"</span><span class="p">,</span>
     <span class="s2">"UInt"</span><span class="p">,</span>
@@ -276,6 +271,17 @@
 
     <span class="n">_signed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">NotImplemented</span>
 
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">byte_order</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="n">ByteOrder</span> <span class="o">=</span> <span class="n">ByteOrder</span><span class="o">.</span><span class="n">NATIVE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Initialize Fixed Int instance."""</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_signed</span> <span class="ow">is</span> <span class="bp">NotImplemented</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> does not implement '_signed'"</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">byte_order</span><span class="o">=</span><span class="n">byte_order</span><span class="p">)</span>
+
     <span class="nd">@cached_property</span>
     <span class="k">def</span> <span class="nf">max</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Return the maximum value."""</span>
@@ -289,23 +295,17 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">signed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Return whether the signedness."""</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_signed</span> <span class="ow">is</span> <span class="bp">NotImplemented</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_signed</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Return the value of the instance."""</span>
-        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_value</span><span class="p">())</span>
 
     <span class="nd">@value</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""Set the value of the instance."""</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="p">(</span><span class="n">_FixedInt</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
-            <span class="n">value_</span> <span class="o">=</span> <span class="n">new_value</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"value must be an integer"</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_value</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Return the bitwise AND of the instance and other."""</span>
@@ -353,8 +353,6 @@
 
 <span class="sd">        Satisfies the Integral interface.</span>
 <span class="sd">        """</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">_FixedInt</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Integral</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">other</span> <span class="o">&lt;&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
         <span class="k">return</span> <span class="bp">NotImplemented</span>
@@ -393,8 +391,6 @@
 
 <span class="sd">        Satisfies the Integral interface.</span>
 <span class="sd">        """</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">_FixedInt</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">other</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Integral</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">other</span> <span class="o">&gt;&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
         <span class="k">return</span> <span class="bp">NotImplemented</span>
@@ -415,11 +411,7 @@
 <span class="w">        </span><span class="sd">"""Return the bitwise XOR of the instance and other."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__xor__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_validate_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">new_value</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">new_value</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"value must be an integer"</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_validate_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">UnderflowError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"UnderfowError: value (</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">) below </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> min (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
@@ -452,7 +444,6 @@
 
 
 <span class="n">UChar</span> <span class="o">=</span> <span class="n">UInt8</span>
-<span class="n">Byte</span> <span class="o">=</span> <span class="n">UInt8</span>
 
 
 <div class="viewcode-block" id="Int16">
@@ -481,7 +472,6 @@
 
 
 <span class="n">UShort</span> <span class="o">=</span> <span class="n">UInt16</span>
-<span class="n">Word</span> <span class="o">=</span> <span class="n">UInt16</span>
 
 
 <div class="viewcode-block" id="Int32">
@@ -510,7 +500,6 @@
 
 
 <span class="n">UInt</span> <span class="o">=</span> <span class="n">UInt32</span>
-<span class="n">DWord</span> <span class="o">=</span> <span class="n">UInt32</span>
 
 
 <div class="viewcode-block" id="Long">
@@ -561,16 +550,6 @@
 
 
 <span class="n">ULongLong</span> <span class="o">=</span> <span class="n">UInt64</span>
-
-
-<div class="viewcode-block" id="Bit">
-<a class="viewcode-back" href="../../../../api/byteclasses.types.primitives.html#byteclasses.types.primitives.integers.Bit">[docs]</a>
-<span class="k">class</span> <span class="nc">Bit</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""A boolean equivalent bit class."""</span>
-
-    <span class="n">FALSE</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">TRUE</span> <span class="o">=</span> <span class="mi">1</span></div>
-
 </pre></div>
 
           </article>

@@ -20,10 +20,26 @@ byteclasses.types.primitives.bitfield module
    :undoc-members:
    :show-inheritance:
 
+byteclasses.types.primitives.characters module
+----------------------------------------------
+
+.. automodule:: byteclasses.types.primitives.characters
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 byteclasses.types.primitives.floats module
 ------------------------------------------
 
 .. automodule:: byteclasses.types.primitives.floats
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+byteclasses.types.primitives.generics module
+--------------------------------------------
+
+.. automodule:: byteclasses.types.primitives.generics
    :members:
    :undoc-members:
    :show-inheritance:
