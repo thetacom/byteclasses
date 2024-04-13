@@ -2,7 +2,7 @@
 
 import keyword
 import types
-from collections.abc import ByteString, Callable, Iterable
+from collections.abc import ByteString, Iterable
 from typing import Any
 
 from ..._enums import ByteOrder
@@ -98,11 +98,7 @@ def make_fixed_collection(  # pylint: disable=R0912,R0913,R0914
 
     # Apply the normal decorator.
     if collection_type == "structure":
-        handler: Callable = structure
-    elif collection_type == "union":
-        handler = union
-    # elif collection_type == "bitfield":
-    #     handler = bitfield
-    else:
-        raise ValueError(f"Unknown collection type: {collection_type!r}")
-    return handler(cls, byte_order=byte_order, packed=packed)
+        return structure(cls, byte_order=byte_order, packed=packed)
+    if collection_type == "union":
+        return union(cls, byte_order=byte_order)
+    raise ValueError(f"Unknown collection type: {collection_type!r}")
