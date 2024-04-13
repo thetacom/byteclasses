@@ -1,6 +1,5 @@
 """Fixed Size Integer Types."""
 
-from enum import IntEnum
 from functools import cached_property
 from numbers import Integral
 from struct import calcsize
@@ -10,9 +9,6 @@ from ..._enums import ByteOrder, TypeChar
 from ...types._fixed_numeric_type import _FixedNumericType
 
 __all__ = [
-    "Bit",
-    "Byte",
-    "DWord",
     "Int",
     "Int8",
     "SChar",
@@ -22,7 +18,6 @@ __all__ = [
     "Short",
     "UInt16",
     "UShort",
-    "Word",
     "Int32",
     "UInt32",
     "UInt",
@@ -50,7 +45,7 @@ class _FixedInt(_FixedNumericType):
 
     def __init__(
         self,
-        value: int = 0,
+        value=0,
         *,
         byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
     ) -> None:
@@ -215,7 +210,6 @@ class UInt8(_FixedInt):
 
 
 UChar = UInt8
-Byte = UInt8
 
 
 class Int16(_FixedInt):
@@ -238,7 +232,6 @@ class UInt16(_FixedInt):
 
 
 UShort = UInt16
-Word = UInt16
 
 
 class Int32(_FixedInt):
@@ -261,7 +254,6 @@ class UInt32(_FixedInt):
 
 
 UInt = UInt32
-DWord = UInt32
 
 
 class Long(_FixedInt):
@@ -300,10 +292,3 @@ class UInt64(_FixedInt):
 
 
 ULongLong = UInt64
-
-
-class Bit(IntEnum):
-    """A boolean equivalent bit class."""
-
-    FALSE = 0
-    TRUE = 1
