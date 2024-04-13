@@ -2,6 +2,7 @@
 
 from enum import IntEnum
 from struct import calcsize
+from typing import Any
 
 from ..._enums import TypeChar
 from ...types._fixed_size_type import _FixedSizeType
@@ -22,28 +23,42 @@ class Bit(IntEnum):
     TRUE = 1
 
 
-class Byte(_FixedSizeType):
+class _FixedSizeGeneric(_FixedSizeType):
+    """A generic fixed size type."""
+
+    @property
+    def value(self) -> Any:
+        """Return the value of the instance."""
+        return self.data
+
+    @value.setter
+    def value(self, new_value: Any) -> None:
+        """Set the value of the instance."""
+        self.data = new_value
+
+
+class Byte(_FixedSizeGeneric):
     """Generic 8-bit Byte Class."""
 
     _type_char: bytes = TypeChar.BYTE.value
     _length: int = calcsize(_type_char)
 
 
-class Word(_FixedSizeType):
+class Word(_FixedSizeGeneric):
     """Generic 2-byte Word Class."""
 
     _type_char: bytes = TypeChar.WORD.value
     _length: int = calcsize(_type_char)
 
 
-class DWord(_FixedSizeType):
+class DWord(_FixedSizeGeneric):
     """Generic 4-byte Word Class."""
 
     _type_char: bytes = TypeChar.DWORD.value
     _length: int = calcsize(_type_char)
 
 
-class QWord(_FixedSizeType):
+class QWord(_FixedSizeGeneric):
     """Generic 8-byte Word Class."""
 
     _type_char: bytes = TypeChar.QWORD.value
