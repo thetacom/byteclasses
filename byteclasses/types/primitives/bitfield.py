@@ -36,7 +36,7 @@ class BitField(_FixedSizeType):
 
     def __repr__(self) -> str:
         """Return bitfield class representation."""
-        return f"{self.__class__.__qualname__}(byte_length={self._length}, data={self._data})"
+        return f"{self.__class__.__qualname__}(data={bytes(self._data)!r})"
 
     def __getitem__(self, key: int | slice) -> bool | list[bool]:
         """Get bit values based on index or slice."""
@@ -47,32 +47,78 @@ class BitField(_FixedSizeType):
                 raise IndexError(f"index {key} out of range")
             return self.get_bit(key)
         if isinstance(key, slice):
-            return [self.get_bit(idx) for idx in range(key.start, key.stop, key.step)]
+            if key.step is None:
+                step = 1
+            else:
+                step = key.step
+            if key.start is None:
+                if step > 0:
+                    start = 0
+                else:
+                    start = self.bit_length - 1
+            else:
+                start = key.start
+            if key.stop is None:
+                if step > 0:
+                    stop = self.bit_length
+                else:
+                    stop = -1
+            else:
+                stop = key.stop
+            return [self.get_bit(idx) for idx in range(start, stop, step)]
         raise NotImplementedError
 
     @overload
     def __setitem__(self, key: int, value: int | bool) -> None: ...
+
     @overload
     def __setitem__(self, key: slice, value: int | bool | Sequence[int | bool]) -> None: ...
+
     def __setitem__(self, key: int | slice, value: int | bool | Sequence[int | bool]) -> None:
         """Set bit values based on index or slice."""
         if isinstance(key, int):
-            if key < 0:
-                key %= self.bit_length
-            if key >= self.bit_length:
-                raise IndexError(f"index {key} out of range")
-            if not isinstance(value, (int, bool)) or int(value) not in (0, 1):
-                raise TypeError("Can only set bit to 0, 1, True, or False")
-            self.set_bit(key, value)
+            if not isinstance(value, (int, bool)):
+                raise TypeError("Assignment by index only accepts boolean or integer values.")
+            self._set_bit_by_idx(key, value)
         elif isinstance(key, slice):
-            if isinstance(value, (int, bool)):
-                for idx in range(key.start, key.stop, key.step):
-                    self.set_bit(idx, value)
-            elif isinstance(value, Sequence):
-                for idx in range(key.start, key.stop, key.step):
-                    self.set_bit(idx, value[idx])
+            self._set_bits_by_slice(key, value)
         else:
             raise NotImplementedError
+
+    def _set_bit_by_idx(self, idx: int, value: int | bool) -> None:
+        """Set bit from index."""
+        if idx < 0:
+            idx %= self.bit_length
+        if idx >= self.bit_length:
+            raise IndexError(f"index ({idx}) out of range")
+        self.set_bit(idx, bool(value))
+
+    def _set_bits_by_slice(self, slc: slice, value: int | bool | Sequence[int | bool]) -> None:
+        """Set multiple bits with slice."""
+        if slc.step is None:
+            step = 1
+        else:
+            step = slc.step
+        if slc.start is None:
+            if step > 0:
+                start = 0
+            else:
+                start = self.bit_length - 1
+        else:
+            start = slc.start
+        if slc.stop is None:
+            if step > 0:
+                stop = self.bit_length
+            else:
+                stop = -1
+        else:
+            stop = slc.stop
+        if isinstance(value, (int, bool)):
+            for idx in range(start, stop, step):
+                self.set_bit(idx, value)
+        elif isinstance(value, Sequence):
+            for idx in range(start, stop, step):
+                self.set_bit(idx, value[idx])
 
     @cached_property
     def bit_length(self) -> int:
@@ -98,9 +144,7 @@ class BitField(_FixedSizeType):
         """Set bit in bitfield instance."""
         if idx >= self.bit_length or idx < 0:
             raise IndexError("Invalid bit index")
-        binary_value = int(value)
-        if binary_value not in (0, 1):
-            raise ValueError("Invalid bit value")
+        value = int(bool(value))
         byte_idx = idx // 8
         offset = idx % 8
         byte_value = self._data[byte_idx]
