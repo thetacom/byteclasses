@@ -1,6 +1,6 @@
 """Fixed length floating point types."""
 
-from numbers import Real
+from numbers import Number
 from struct import calcsize
 from typing import Any
 
@@ -20,12 +20,10 @@ __all__ = [
 class _FixedFloat(_FixedNumericType):
     """Generic Fixed Size Float."""
 
-    def _validate_value(self, new_value: Any | None = None) -> None:
+    def _validate_value(self, new_value: Number) -> None:
         """Validate the value of the instance."""
-        if new_value is None:
-            new_value = self.value
-        if not isinstance(new_value, Real):
-            raise TypeError(f"value must be a float, not {type(new_value)}")
+        if not isinstance(new_value, (Number, _FixedNumericType)):
+            raise TypeError(f"value must be a float or FixedNumericType, not {type(new_value)}")
 
     @property
     def value(self):
@@ -35,13 +33,8 @@ class _FixedFloat(_FixedNumericType):
     @value.setter
     def value(self, new_value: Any) -> None:
         """Set the value of the instance."""
-        if isinstance(new_value, _FixedNumericType):
-            value_ = float(new_value.value)
-        elif isinstance(new_value, Real):
-            value_ = float(new_value)
-        else:
-            raise TypeError("value must be a Real or FixedNumeric type")
-        self._value = value_
+        self._validate_value(new_value)
+        self._value = float(new_value.value) if isinstance(new_value, _FixedNumericType) else float(new_value)
 
 
 class Float16(_FixedFloat):
