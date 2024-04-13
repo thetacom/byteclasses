@@ -9,25 +9,35 @@ This library is designed for creating custom Python data classes with builtin st
 ## Byte Classes
 
 - Collections
+  - FixedArray
+  - String*
+  - Structure
+  - Union
 - Primitives
+  - Generic
+    - BitField
+    - Byte
+    - Word
+    - DWord
+    - QWord
   - Floats
-  - Integers (FixedInt Metaclass)
+    - Float16 (Half)
+    - Float32 (Float)
+  - Integers
     - Int8
-      - Aliases: SChar
     - UInt8
-      - Aliases: UChar, Byte
-    - Bit
-    - Int16
-      - Aliases: Short
-    - UInt16
-      - Aliases: UShort, Word
-    - Int32
-      - Aliases: Int
-    - UInt32
-      - Aliases: UInt, DWord
+    - Int16 (Short)
+    - UInt16 (UShort)
+    - Int32 (Int)
+    - UInt32 (UInt)
     - Long
     - ULong
-    - Int64
-      - Aliases: LongLong
-    - UInt64
-      - Aliases: ULongLong
+    - Int64 (LongLong)
+    - UInt64 (ULongLong)
+  - Characters**
+    - UChar** (Char)
+    - SChar**
+
+> ** Not yet implemented
+
+[C data types](https://en.wikipedia.org/wiki/C_data_types)
