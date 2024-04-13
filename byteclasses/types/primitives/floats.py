@@ -2,7 +2,7 @@
 
 from numbers import Number
 from struct import calcsize
-from typing import Any
+from typing import Any, cast
 
 from ..._enums import TypeChar
 from ...types._fixed_numeric_type import _FixedNumericType
@@ -20,21 +20,18 @@ __all__ = [
 class _FixedFloat(_FixedNumericType):
     """Generic Fixed Size Float."""
 
-    def _validate_value(self, new_value: Number) -> None:
+    def _validate_value(self, value: Number) -> None:
         """Validate the value of the instance."""
-        if not isinstance(new_value, (Number, _FixedNumericType)):
-            raise TypeError(f"value must be a float or FixedNumericType, not {type(new_value)}")
 
     @property
     def value(self):
         """Return the value of the instance."""
-        return self._value
+        return cast(float, self._get_value())
 
     @value.setter
     def value(self, new_value: Any) -> None:
         """Set the value of the instance."""
-        self._validate_value(new_value)
-        self._value = float(new_value.value) if isinstance(new_value, _FixedNumericType) else float(new_value)
+        self._set_value(new_value, float)
 
 
 class Float16(_FixedFloat):

@@ -6,7 +6,7 @@ from byteclasses.types.primitives.integers import UInt64, UnderflowError
 
 
 def test_uint64_instance_properties():
-    """Test uint64 instance properties."""
+    """Test UInt64 instance properties."""
     uint64 = UInt64(0)
     assert uint64.signed is False
     assert uint64.min == 0
@@ -21,7 +21,7 @@ def test_uint64_instance_properties():
 
 
 def test_uint64_bounds():
-    """Test uint64 bounds."""
+    """Test UInt64 bounds."""
     uint64 = UInt64()
     uint64.value = 18446744073709551615
     assert uint64 == 18446744073709551615
@@ -34,7 +34,7 @@ def test_uint64_bounds():
 
 
 def test_uint64_value_to_data():
-    """Test uint64 value to data."""
+    """Test UInt64 value to data."""
     uint64 = UInt64(0)
     assert uint64.data == b"\x00\x00\x00\x00\x00\x00\x00\x00"
     uint64.value = 1

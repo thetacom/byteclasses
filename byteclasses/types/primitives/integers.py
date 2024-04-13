@@ -1,12 +1,12 @@
-"""Fixed size integer types."""
+"""Fixed Size Integer Types."""
 
 from enum import IntEnum
 from functools import cached_property
 from numbers import Integral
 from struct import calcsize
-from typing import Any
+from typing import Any, cast
 
-from ..._enums import TypeChar
+from ..._enums import ByteOrder, TypeChar
 from ...types._fixed_numeric_type import _FixedNumericType
 
 __all__ = [
@@ -48,6 +48,17 @@ class _FixedInt(_FixedNumericType):
 
     _signed: bool = NotImplemented
 
+    def __init__(
+        self,
+        value: int = 0,
+        *,
+        byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
+    ) -> None:
+        """Initialize Fixed Int instance."""
+        if self._signed is NotImplemented:
+            raise NotImplementedError(f"{self.__class__.__name__} does not implement '_signed'")
+        super().__init__(value, byte_order=byte_order)
+
     @cached_property
     def max(self) -> int:
         """Return the maximum value."""
@@ -61,23 +72,17 @@ class _FixedInt(_FixedNumericType):
     @property
     def signed(self) -> bool:
         """Return whether the signedness."""
-        if self._signed is NotImplemented:
-            raise NotImplementedError
         return self._signed
 
     @property
     def value(self):
         """Return the value of the instance."""
-        return int(self._value)
+        return cast(int, self._get_value())
 
     @value.setter
     def value(self, new_value: Any) -> None:
         """Set the value of the instance."""
-        if isinstance(new_value, (_FixedInt, int)):
-            value_ = new_value
-        else:
-            raise TypeError("value must be an integer")
-        self._value = value_
+        self._set_value(new_value, int)
 
     def __and__(self, other: Any):
         """Return the bitwise AND of the instance and other."""
@@ -125,8 +130,6 @@ class _FixedInt(_FixedNumericType):
 
         Satisfies the Integral interface.
         """
-        if isinstance(other, _FixedInt):
-            return other.value << self.value
         if isinstance(other, Integral):
             return other << self.value
         return NotImplemented
@@ -165,8 +168,6 @@ class _FixedInt(_FixedNumericType):
 
         Satisfies the Integral interface.
         """
-        if isinstance(other, _FixedInt):
-            return other.value >> self.value
         if isinstance(other, Integral):
             return other >> self.value
         return NotImplemented
@@ -187,11 +188,7 @@ class _FixedInt(_FixedNumericType):
         """Return the bitwise XOR of the instance and other."""
         return self.__xor__(other)
 
-    def _validate_value(self, new_value: Any) -> None:
-        if isinstance(new_value, int):
-            value = new_value
-        else:
-            raise TypeError("value must be an integer")
+    def _validate_value(self, value: Any) -> None:
         if value < self.min:
             raise UnderflowError(f"UnderfowError: value ({value}) below {self.__class__.__name__} min ({self.min})")
         if value > self.max:

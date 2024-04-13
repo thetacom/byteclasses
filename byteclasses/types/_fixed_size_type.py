@@ -21,6 +21,10 @@ class _FixedSizeType(ABC, SupportsBytes):
         byte_order: bytes | ByteOrder,
     ) -> None:
         """Initialize the instance."""
+        if self._type_char is NotImplemented:
+            raise NotImplementedError(f"{self.__class__.__name__} does not implement '_type_char'")
+        if self._length is NotImplemented:
+            raise NotImplementedError(f"{self.__class__.__name__} does not implement '_length'")
         self._byte_order = ByteOrder(byte_order)
         self._data: bytearray | memoryview = bytearray(len(self))
 

@@ -9,7 +9,7 @@ Implements interfaces that attempt to adhere to the following specifications:
 
 import math
 from abc import abstractmethod
-from numbers import Integral, Real
+from numbers import Integral, Number, Real
 from struct import pack, unpack
 from typing import Any
 
@@ -32,10 +32,8 @@ class _FixedNumericType(_FixedSizeType):
         super().__init__(byte_order)
         if isinstance(value, _FixedNumericType):
             self.value = value.value
-        elif isinstance(value, Real):
-            self.value = value
         else:
-            raise TypeError(f"Invalid value: {value}")
+            self.value = value
 
     def __str__(self) -> str:
         """Return the numeric representation of the instance."""
@@ -343,12 +341,11 @@ class _FixedNumericType(_FixedSizeType):
         """
         raise NotImplementedError
 
-    def _validate_value(self, new_value: Any) -> None:
+    def _validate_value(self, value: Any) -> None:
         """Validate the value."""
         raise NotImplementedError("_validate_value method not implemented")
 
-    @property
-    def _value(self):
+    def _get_value(self):
         """Return the value of the instance."""
         if self._data is None:
             raise ValueError("value is None")
@@ -358,15 +355,14 @@ class _FixedNumericType(_FixedSizeType):
             raise ValueError("Internal data property too short")
         return unpack(self.fmt, self._data[: len(self)])[0]
 
-    @_value.setter
-    def _value(self, new_value: Any) -> None:
+    def _set_value(self, new_value: Any, val_cls: type) -> None:
         """Set the value of the instance."""
         if isinstance(new_value, _FixedNumericType):
-            value_ = new_value.value
-        elif isinstance(new_value, Real):
-            value_ = new_value
+            value_ = val_cls(new_value.value)
+        elif isinstance(new_value, Number):
+            value_ = val_cls(new_value)
         else:
-            raise TypeError(f"Value cannot be {type(new_value)}")
+            raise TypeError(f"Value cannot be {type(new_value)}, must be number or FixedNumericType")
         self._validate_value(value_)
         self.data = pack(self.fmt, value_)
 

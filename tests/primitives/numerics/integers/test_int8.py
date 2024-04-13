@@ -1,8 +1,56 @@
 """Unit tests for byteclasses primitive integer type constructors."""
 
+import math
+import operator
+
 import pytest
 
-from byteclasses.types.primitives.integers import Int8, UnderflowError
+from byteclasses.types.primitives.integers import Int8, UnderflowError, _FixedInt
+
+
+def test_fixedint_missing_type_char_property():
+    """Test _FixedInt instance with no `_type_char` class attribute."""
+
+    class InvalidInt(_FixedInt):
+        """Invalid Fixed Int Class definition."""
+
+        _length = 1
+        _signed = False
+
+    with pytest.raises(NotImplementedError):
+        _ = InvalidInt()
+
+
+def test_fixedint_missing_length_property():
+    """Test _FixedInt instance with no `_length` class attribute."""
+
+    class InvalidInt(_FixedInt):
+        """Invalid Fixed Int Class definition."""
+
+        _type_char = b"b"
+        _signed = False
+
+    with pytest.raises(NotImplementedError):
+        _ = InvalidInt()
+
+
+def test_fixedint_missing_signed_property():
+    """Test _FixedInt instance with no `_signed` class attribute."""
+
+    class InvalidInt(_FixedInt):
+        """Invalid Fixed Int Class definition."""
+
+        _type_char: bytes = b"b"
+        _length: int = 1
+
+    with pytest.raises(NotImplementedError):
+        _ = InvalidInt()
+
+
+def test_int8_set_bad_value():
+    """Test int8 set bad value."""
+    with pytest.raises(NotImplementedError):
+        _ = _FixedInt()
 
 
 def test_int8_instance_properties():
@@ -31,6 +79,13 @@ def test_int8_bounds():
     assert int8 == -128
     with pytest.raises(UnderflowError):
         int8.value = -129
+
+
+def test_int8_assign_non_int_value():
+    """Test assignment with non-nteger value."""
+    var1 = Int8()
+    var1.value = 1.1
+    assert var1.value == 1
 
 
 def test_int8_value_to_data():
@@ -75,3 +130,23 @@ def test_int8_attach_mv_with_retain():
     test_mv[:] = b"\x01\x00\x23"
     assert int8_1.value == 0x01
     assert int8_2.value == 0x23
+
+
+def test_int8_int_dunder():
+    """Test Int8 __int__ method."""
+    var = Int8(8)
+    assert int(var) == 8
+
+
+def test_int8_truncate():
+    """Test Int8 __trunc__ method."""
+    var1 = Int8(10)
+    result = math.trunc(var1)
+    assert result == 10
+
+
+def test_int8_index():
+    """Test Int8 __index__ method."""
+    var1 = Int8(10)
+    result = operator.index(var1)
+    assert result == 10
