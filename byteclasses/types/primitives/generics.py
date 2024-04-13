@@ -4,7 +4,7 @@ from enum import IntEnum
 from struct import calcsize
 from typing import Any
 
-from ..._enums import TypeChar
+from ..._enums import ByteOrder, TypeChar
 from ...types._fixed_size_type import _FixedSizeType
 
 __all__ = [
@@ -25,6 +25,21 @@ class Bit(IntEnum):
 
 class _FixedSizeGeneric(_FixedSizeType):
     """A generic fixed size type."""
+
+    def __init__(
+        self,
+        value: bytes | None = None,
+        *,
+        byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
+    ) -> None:
+        """Initialize Fixed Size Generic instance."""
+        super().__init__(byte_order=byte_order)
+        if not value:
+            self.value = b"\x00" * len(self)
+        elif isinstance(value, bytes):
+            self.value = value
+        else:
+            raise TypeError(f"Invalid value type ({type(value)}): expected bytes")
 
     @property
     def value(self) -> Any:
