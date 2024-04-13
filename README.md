@@ -10,7 +10,7 @@ This library is designed for creating custom Python data classes with builtin st
 
 - Collections
   - FixedArray
-  - String*
+  - String**
   - Structure
   - Union
 - Primitives
@@ -23,6 +23,7 @@ This library is designed for creating custom Python data classes with builtin st
   - Floats
     - Float16 (Half)
     - Float32 (Float)
+    - Float64 (Double)
   - Integers
     - Int8
     - UInt8
