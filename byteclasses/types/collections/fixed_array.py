@@ -7,6 +7,7 @@ from numbers import Number
 from ..._enums import ByteOrder
 from ...types._fixed_numeric_type import _FixedNumericType
 from ...types._fixed_size_type import _FixedSizeType
+from .member import _MEMBERS
 
 
 class FixedArray:
@@ -47,10 +48,8 @@ class FixedArray:
         item_length = len(item_instance)
         byte_length = item_length * item_count
         self._length = byte_length
-        self._data = bytearray(byte_length)
-        data_mv = memoryview(self._data)
-        for i, idx in enumerate(range(0, self._length, item_length)):
-            self._items[i].attach(data_mv[idx : idx + item_length])
+        self._data = memoryview(bytearray(byte_length))
+        self._attach_members()
 
     def __repr__(self) -> str:
         """Return string representation of fixed array."""
@@ -109,3 +108,21 @@ class FixedArray:
         if len(new_data) != self._length:
             raise ValueError(f"Invalid data length, expected {self._length}, receieved {len(new_data)}")
         self._data[:] = new_data
+
+    def attach(self, mv: memoryview) -> None:
+        """Attach memoryview to underlying data attribute."""
+        if not isinstance(mv, memoryview):
+            raise AttributeError("Only memoryviews can be attached to collection.")
+        if len(mv) != len(self):
+            raise AttributeError(f"Memoryview length ({len(mv)}) must match collection length ({len(self)}).")
+        self._data = mv
+        self._attach_members()
+
+    def _attach_members(self) -> None:
+        """Attach member items to internal data attribute."""
+        item_length = len(self._items[0])
+        for i, idx in enumerate(range(0, self._length, item_length)):
+            self._items[i].attach(self._data[idx : idx + item_length])
+
+
+setattr(FixedArray, _MEMBERS, [])
