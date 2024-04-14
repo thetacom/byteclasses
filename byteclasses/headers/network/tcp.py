@@ -8,6 +8,7 @@ from byteclasses.types.primitives.integers import UInt16, UInt32
 class OffFlag(BitField):
     """Offset and Flag BitField."""
 
+    byte_length = 2
     data_offset = BitPos(0, bit_width=4)
     flags = BitPos(4, bit_width=12)
 
