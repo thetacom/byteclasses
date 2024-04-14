@@ -45,22 +45,13 @@ class BitField(_FixedSizeType):
                 raise IndexError(f"index {key} out of range")
             return self.get_bit(key)
         if isinstance(key, slice):
-            if key.step is None:
-                step = 1
-            else:
-                step = key.step
+            step = 1 if key.step is None else key.step
             if key.start is None:
-                if step > 0:
-                    start = 0
-                else:
-                    start = self.bit_length - 1
+                start = 0 if step > 0 else self.bit_length - 1
             else:
                 start = key.start
             if key.stop is None:
-                if step > 0:
-                    stop = self.bit_length
-                else:
-                    stop = -1
+                stop = self.bit_length if step > 0 else -1
             else:
                 stop = key.stop
             return [self.get_bit(idx) for idx in range(start, stop, step)]

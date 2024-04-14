@@ -17,7 +17,7 @@ class String(FixedArray):
     ) -> None:
         """Initialize String instance."""
         self._null_terminated: bool = null_terminated
-        super().__init__(UChar, item_count=length)
+        super().__init__(length, UChar)
         if data is not None and value is not None:
             raise ValueError("Cannot specify both value and data.")
         if data is not None:
