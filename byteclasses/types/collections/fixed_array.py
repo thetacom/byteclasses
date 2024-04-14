@@ -111,20 +111,20 @@ class FixedArray:
             raise ValueError(f"Invalid data length, expected {self._length}, receieved {len(new_data)}")
         self._data[:] = new_data
 
-    def attach(self, mv: memoryview) -> None:
+    def attach(self, mv: memoryview, retain_value: bool = False) -> None:
         """Attach memoryview to underlying data attribute."""
         if not isinstance(mv, memoryview):
             raise AttributeError("Only memoryviews can be attached to collection.")
         if len(mv) != len(self):
             raise AttributeError(f"Memoryview length ({len(mv)}) must match collection length ({len(self)}).")
         self._data = mv
-        self._attach_members()
+        self._attach_members(retain_value)
 
-    def _attach_members(self) -> None:
+    def _attach_members(self, retain_value: bool = True) -> None:
         """Attach member items to internal data attribute."""
         item_length = len(self._items[0])
         for i, idx in enumerate(range(0, self._length, item_length)):
-            self._items[i].attach(self._data[idx : idx + item_length])
+            self._items[i].attach(self._data[idx : idx + item_length], retain_value)
 
 
 setattr(FixedArray, _MEMBERS, [])

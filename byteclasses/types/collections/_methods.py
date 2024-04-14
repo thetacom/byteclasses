@@ -186,7 +186,7 @@ def _build_collection_init_method(
         # Initialize _data
         _member_assign("_data", "memoryview(bytearray(length))", spec.self_name),
         # Attach members to slices of _data memoryview
-        f"{spec.self_name}._attach_members()",
+        f"{spec.self_name}._attach_members(retain_value=True)",
     ]
     return _create_method(
         "_collection_init",
@@ -222,7 +222,7 @@ def _build_attach_method(
     )
     return _create_method(
         "attach",
-        (spec.self_name, "mv: memoryview"),
+        (spec.self_name, "mv: memoryview", "retain_value: bool = False"),
         body,
         locals_=locals_,
         globals_=globals_,
@@ -247,12 +247,12 @@ def _build_attach_members_method(
         body.append(
             f"{spec.self_name}.{member_.name}.attach("
             f"{spec.self_name}._data[{spec.self_name}._member_offsets[{idx}]:"
-            f"{spec.self_name}._member_offsets[{idx}] + member_lengths[{idx}]])"
+            f"{spec.self_name}._member_offsets[{idx}] + member_lengths[{idx}]], retain_value)"
         )
 
     return _create_method(
         "attach",
-        (spec.self_name,),
+        (spec.self_name, "retain_value: bool = False"),
         body,
         locals_=locals_,
         globals_=globals_,
