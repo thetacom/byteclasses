@@ -10,4 +10,4 @@ class Ethernet:
 
     dst_mac: FixedArray = member(default_factory=lambda: FixedArray(6))  # type: ignore
     src_mac: FixedArray = member(default_factory=lambda: FixedArray(6))  # type: ignore
-    eth_type: UInt16  # type: ignore
+    eth_type: UInt16
