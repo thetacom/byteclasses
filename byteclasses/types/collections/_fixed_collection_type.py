@@ -213,7 +213,8 @@ def _add_members(spec: _CollectionClassSpec, members_: dict[str, Member]) -> Non
                 else:
                     setattr(spec.base_cls, member_.name, deepcopy(member_.default))
         except AttributeError:
-            member_.default_factory = member_.type
+            # Allow missing members to use type annotation as default factory.
+            pass
     # Do we have any Members that don't also have annotations?
     for name, value in spec.base_cls.__dict__.items():
         if isinstance(value, Member) and name not in cls_annotations:

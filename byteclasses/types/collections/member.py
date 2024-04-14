@@ -6,7 +6,6 @@ from collections.abc import Callable
 from types import GenericAlias, MappingProxyType, MemberDescriptorType
 from typing import TYPE_CHECKING, Any
 
-from ..._enums import ByteOrder
 from ...types._fixed_size_type import _FixedSizeType
 
 if TYPE_CHECKING:
@@ -165,16 +164,23 @@ def _init_members(spec: "_CollectionClassSpec", globals_: dict[str, Any]) -> lis
     """Initialize all class members."""
     body: list[str] = []
     for member_ in spec.members:
-        line = _init_member(member_, globals_, spec.byte_order, spec.self_name)
+        line = _init_member(member_, globals_, spec.self_name)
         if line:
-            body.append(line)
+            body.extend(
+                [
+                    line,
+                    "try:",
+                    f"  {spec.self_name}.{member_.name}.byte_order = {spec.byte_order.value!r}",
+                    "except AttributeError:",
+                    "  pass",
+                ]
+            )
     return body
 
 
 def _init_member(
     member_: Member,
     globals_: dict[str, Any],
-    byte_order: ByteOrder,
     self_name: str,
 ) -> str:
     # Return the text of the line in the body of __init__ that will
@@ -190,13 +196,7 @@ def _init_member(
         else:
             # No default factory. Use member type as constructor.
             globals_[default_name] = member_.type
-        if is_fixed_collection(member_.type):
-            factory_params = ""
-        else:
-            factory_params = f"byte_order={repr(byte_order.value)}"
-        value = (
-            f"{default_name}({factory_params}) " f"if {member_.name} is _HAS_DEFAULT_FACTORY " f"else {member_.name}"
-        )
+        value = f"{default_name}() " f"if {member_.name} is _HAS_DEFAULT_FACTORY " f"else {member_.name}"
     if member_.name is None:
         raise ValueError("Member name cannot be None.")
     # Now, actually generate the member assignment.
