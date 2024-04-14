@@ -26,9 +26,7 @@ class BitField(_FixedSizeType):
             raise ValueError("byte_length must be at least 1 byte")
         self._type_char = TypeChar.BYTE.value * self.byte_length
         self._length: int = calcsize(self._type_char)
-        super().__init__(byte_order)
-        if data:
-            self.data = data
+        super().__init__(byte_order=byte_order, data=data)
 
     def __str__(self) -> str:
         """Return bitfield string representation."""

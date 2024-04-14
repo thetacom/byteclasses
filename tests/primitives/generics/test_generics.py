@@ -24,10 +24,22 @@ def test_byte_primitive():
     assert byte.data == DATA_BYTE * expected_length
 
 
-def test_byte_init_with_data():
-    """Test Byte init with data."""
+def test_byte_init_with_value():
+    """Test Byte init with value."""
     byte = Byte(b"\x01")
     assert byte.data == b"\x01"
+
+
+def test_byte_init_with_data():
+    """Test Byte init with data."""
+    byte = Byte(data=b"\x01")
+    assert byte.data == b"\x01"
+
+
+def test_byte_init_with_value_and_data():
+    """Test Byte init with value_and_data."""
+    with pytest.raises(ValueError):
+        _ = Byte(b"\x00", data=b"\x01")
 
 
 def test_byte_init_with_invalid_value():

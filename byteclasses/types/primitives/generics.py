@@ -1,5 +1,6 @@
 """Fixed Size Integer Types."""
 
+from collections.abc import ByteString
 from enum import IntEnum
 from struct import calcsize
 from typing import Any
@@ -31,18 +32,20 @@ class _FixedSizeGeneric(_FixedSizeType):
 
     def __init__(
         self,
-        value: bytes | None = None,
+        value: ByteString | None = None,
         *,
         byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
+        data: ByteString | None = None,
     ) -> None:
         """Initialize Fixed Size Generic instance."""
-        super().__init__(byte_order=byte_order)
-        if not value:
-            self.value = b"\x00" * len(self)
-        elif isinstance(value, bytes):
-            self.value = value
-        else:
-            raise TypeError(f"Invalid value type ({type(value)}): expected bytes")
+        if value is not None and data is not None:
+            raise ValueError("Cannot specify both value and data arguments.")
+        super().__init__(byte_order=byte_order, data=data)
+        if value is not None:
+            if isinstance(value, (bytes, bytearray, memoryview)):
+                self.value = value
+            else:
+                raise TypeError(f"Invalid value type ({type(value)}): expected bytes")
 
     @property
     def value(self) -> Any:

@@ -9,6 +9,7 @@ Implements interfaces that attempt to adhere to the following specifications:
 
 import math
 from abc import abstractmethod
+from collections.abc import ByteString
 from numbers import Integral, Number, Real
 from struct import pack, unpack
 from typing import Any
@@ -24,16 +25,20 @@ class _FixedNumericType(_FixedSizeType):
 
     def __init__(
         self,
-        value: int | float = 0,
+        value: int | float | None = None,
         *,
         byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
+        data: ByteString | None = None,
     ) -> None:
         """Initialize the instance."""
-        super().__init__(byte_order)
-        if isinstance(value, _FixedNumericType):
-            self.value = value.value
-        else:
-            self.value = value
+        if value is not None and data is not None:
+            raise ValueError("Cannot specify both value and data arguments.")
+        super().__init__(byte_order=byte_order, data=data)
+        if value is not None:
+            if isinstance(value, _FixedNumericType):
+                self.value = value.value
+            else:
+                self.value = value
 
     def __str__(self) -> str:
         """Return the numeric representation of the instance."""

@@ -1,5 +1,6 @@
 """Fixed Size Integer Types."""
 
+from collections.abc import ByteString
 from functools import cached_property
 from numbers import Integral
 from struct import calcsize
@@ -45,14 +46,15 @@ class _FixedInt(_FixedNumericType):
 
     def __init__(
         self,
-        value=0,
+        value=None,
         *,
         byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
+        data: ByteString | None = None,
     ) -> None:
         """Initialize Fixed Int instance."""
         if self._signed is NotImplemented:
             raise NotImplementedError(f"{self.__class__.__name__} does not implement '_signed'")
-        super().__init__(value, byte_order=byte_order)
+        super().__init__(value, byte_order=byte_order, data=data)
 
     @cached_property
     def max(self) -> int:
