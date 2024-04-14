@@ -71,8 +71,6 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Complex interface.
         """
-        if isinstance(other, _FixedNumericType):
-            return self.value + other.value
         if isinstance(other, Real):
             return self.value + other
         return NotImplemented
@@ -125,8 +123,6 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Real interface.
         """
-        if isinstance(other, _FixedNumericType):
-            return divmod(other.value, self.value)
         if isinstance(other, Real):
             return divmod(other, self.value)
         return NotImplemented
@@ -155,8 +151,6 @@ class _FixedNumericType(_FixedSizeType):
 
     def __rfloordiv__(self, other: Any):
         """Return the floor division of the instance and other."""
-        if isinstance(other, _FixedNumericType):
-            return other.value // self.value
         if isinstance(other, Real):
             return other // self.value
         return NotImplemented
@@ -222,8 +216,6 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Real interface.
         """
-        if isinstance(other, _FixedNumericType):
-            return other.value % self.value
         if isinstance(other, Real):
             return other % self.value
         return NotImplemented
@@ -244,10 +236,10 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Complex interface.
         """
-        if isinstance(other, _FixedNumericType):
-            return self.value * other.value
         if isinstance(other, Real):
             return self.value * other
+        if isinstance(other, (str, bytes, bytearray)):
+            return other * self.value
         return NotImplemented
 
     def __neg__(self):
@@ -262,7 +254,7 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Real interface.
         """
-        return +self.value
+        return abs(self.value)
 
     def __pow__(self, exponent: Any, modulus=None):
         """Return the power of the instance and other.
@@ -280,8 +272,6 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Complex interface.
         """
-        if isinstance(base, _FixedNumericType):
-            return base.value**self.value
         if isinstance(base, int):
             return base**self.value
         return NotImplemented
@@ -309,8 +299,6 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Complex interface.
         """
-        if isinstance(other, _FixedNumericType):
-            return other.value - self.value
         if isinstance(other, Real):
             return other - self.value
         return NotImplemented
@@ -333,8 +321,6 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Complex interface.
         """
-        if isinstance(other, _FixedNumericType):
-            return other.value / self.value
         if isinstance(other, Real):
             return other / self.value
         return NotImplemented
@@ -344,7 +330,7 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Real interface.
         """
-        raise NotImplementedError
+        raise NotImplementedError("__trunc__ method not implemented")
 
     def _validate_value(self, value: Any) -> None:
         """Validate the value."""
@@ -352,12 +338,6 @@ class _FixedNumericType(_FixedSizeType):
 
     def _get_value(self):
         """Return the value of the instance."""
-        if self._data is None:
-            raise ValueError("value is None")
-        if not isinstance(self._data, (bytearray, memoryview)):
-            raise ValueError("Invalid type for internal data property")
-        if len(self._data) < len(self):
-            raise ValueError("Internal data property too short")
         return unpack(self.fmt, self._data[: len(self)])[0]
 
     def _set_value(self, new_value: Any, val_cls: type) -> None:

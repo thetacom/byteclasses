@@ -209,20 +209,29 @@ def _build_attach_method(
     locals_ = {
         "cls": spec.base_cls,
         "memoryview": memoryview,
+        "bytearray": bytearray,
+        "bytes": bytes,
+        "ByteString": ByteString,
     }
     body = (
-        "if not isinstance(mv, memoryview):",
-        "  raise AttributeError('Only memoryviews can be attached to collection.')",
-        f"if len(mv) != len({spec.self_name}):",
-        "  raise AttributeError(f'Memoryview length ({len(mv)}) must match collection length ({len("
-        + spec.self_name
-        + ")}).')",
+        "data_len = len(new_data)",
+        f"self_len = len({spec.self_name})",
+        f"if data_len != len({spec.self_name}):",
+        "  raise AttributeError(f'Data length ({data_len}) must match collection length ({self_len}).')",
+        "if isinstance(new_data, memoryview):",
+        "  mv: memoryview = new_data",
+        "elif isinstance(new_data, bytearray):",
+        "  mv = memoryview(new_data)",
+        "elif isinstance(new_data, bytes):",
+        "  mv = memoryview(bytearray(new_data))",
+        "else:",
+        "  raise TypeError(f'Unsupported data type ({type(new_data)})')",
         f"{spec.self_name}._data = mv",
-        f"{spec.self_name}._attach_members()",
+        f"{spec.self_name}._attach_members(retain_value)",
     )
     return _create_method(
         "attach",
-        (spec.self_name, "mv: memoryview", "retain_value: bool = False"),
+        (spec.self_name, "new_data: ByteString", "retain_value: bool = False"),
         body,
         locals_=locals_,
         globals_=globals_,

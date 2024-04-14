@@ -40,13 +40,15 @@ class _FixedSizeType(ABC, SupportsBytes):
 
     def __len__(self) -> int:
         """Return the byte length of the instance."""
-        if self._length is NotImplemented:
-            raise NotImplementedError(f"{self.__class__.__name__}._length")
         return self._length if self._length >= 0 else 0
 
     def __str__(self) -> str:
-        """Return the byte representation of the instance."""
-        return f"0x{self.__bytes__().hex()}"
+        """Return the string representation of the instance."""
+        return f"{bytes(self)!r}"
+
+    def __repr__(self) -> str:
+        """Return the raw representation of the instance."""
+        return f"{self.__class__.__name__}(data={bytes(self)!r}, byte_order={self.byte_order.value!r})"
 
     @property
     def byte_order(self) -> ByteOrder:
@@ -91,21 +93,25 @@ class _FixedSizeType(ABC, SupportsBytes):
     @property
     def type_char(self) -> bytes:
         """Return the type character of the class."""
-        if self._type_char is NotImplemented:
-            raise NotImplementedError(f"Type character not implemented for {self}")
         return self._type_char
 
-    def attach(self, mv: memoryview, retain_value: bool = True) -> None:
+    def attach(self, new_data: ByteString, retain_value: bool = True) -> None:
         """Replace internal data and attach provided memoryview.
 
         Memoryview length must match byte length of fixed length type.
         """
-        if not isinstance(mv, memoryview):
-            raise TypeError("Only memoryviews can be attached to fixed length types.")
-        mv_len = len(mv)
+        data_len = len(new_data)
         self_len = len(self)
-        if mv_len != len(self):
-            raise ValueError(f"Memoryview length ({mv_len} bytes) must be {self_len} bytes.")
+        if data_len != self_len:
+            raise ValueError(f"Data length ({data_len} bytes) must be {self_len} bytes.")
+        if isinstance(new_data, memoryview):
+            mv: memoryview = new_data
+        elif isinstance(new_data, bytearray):
+            mv = memoryview(new_data)
+        elif isinstance(new_data, bytes):
+            mv = memoryview(bytearray(new_data))
+        else:
+            raise TypeError(f"Unsupported data type ({type(new_data)})")
         temp = self._data
         self._data = mv
         if retain_value:
