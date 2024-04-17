@@ -1,7 +1,6 @@
 """BitField Fixed Length Class."""
 
 from collections.abc import ByteString, Sequence
-from functools import cached_property
 from struct import calcsize
 from typing import overload
 
@@ -108,11 +107,6 @@ class BitField(_FixedSizeType):
         elif isinstance(value, Sequence):
             for idx in range(start, stop, step):
                 self.set_bit(idx, value[idx])
-
-    @cached_property
-    def bit_length(self) -> int:
-        """Calculate instance bit length."""
-        return self._length * 8
 
     def clear_bit(self, idx: int):
         """Clear bit in bitfield instance."""

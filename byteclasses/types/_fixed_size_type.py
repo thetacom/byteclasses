@@ -2,6 +2,7 @@
 
 from abc import ABC
 from collections.abc import ByteString
+from functools import cached_property
 from typing import SupportsBytes
 
 from .._enums import ByteOrder
@@ -49,6 +50,11 @@ class _FixedSizeType(ABC, SupportsBytes):
     def __repr__(self) -> str:
         """Return the raw representation of the instance."""
         return f"{self.__class__.__name__}(data={bytes(self)!r}, byte_order={self.byte_order.value!r})"
+
+    @cached_property
+    def bit_length(self) -> int:
+        """Return bit length."""
+        return self._length * 8
 
     @property
     def byte_order(self) -> ByteOrder:

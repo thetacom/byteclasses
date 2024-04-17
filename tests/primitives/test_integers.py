@@ -317,6 +317,8 @@ def test_int8_instance_properties():
     assert int8.byte_order.value == b"@"
     assert int8.endianness == "NATIVE"
     assert int8.fmt == b"@b"
+    assert int8.bit_length == 8
+    assert len(int8) == 1
     int8.value = 0
     assert int8 == 0
     int8.value = 1
@@ -359,6 +361,8 @@ def test_uint8_instance_properties():
     assert uint8.byte_order.value == b"@"
     assert uint8.endianness == "NATIVE"
     assert uint8.fmt == b"@B"
+    assert uint8.bit_length == 8
+    assert len(uint8) == 1
     uint8.value = 0
     assert uint8 == 0
     uint8.value = 1
@@ -399,6 +403,8 @@ def test_int16_instance_properties():
     assert int16.byte_order.value == b"@"
     assert int16.endianness == "NATIVE"
     assert int16.fmt == b"@h"
+    assert int16.bit_length == 16
+    assert len(int16) == 2
     int16.value = 0
     assert int16 == 0
     int16.value = 1
@@ -441,6 +447,8 @@ def test_uint16_instance_properties():
     assert uint16.byte_order.value == b"@"
     assert uint16.endianness == "NATIVE"
     assert uint16.fmt == b"@H"
+    assert uint16.bit_length == 16
+    assert len(uint16) == 2
     uint16.value = 0
     assert uint16 == 0
     uint16.value = 1
@@ -479,6 +487,8 @@ def test_int32_instance_properties():
     assert int32.byte_order.value == b"@"
     assert int32.endianness == "NATIVE"
     assert int32.fmt == b"@i"
+    assert int32.bit_length == 32
+    assert len(int32) == 4
     int32.value = 0
     assert int32 == 0
     int32.value = 1
@@ -521,6 +531,8 @@ def test_uint32_instance_properties():
     assert uint32.byte_order.value == b"@"
     assert uint32.endianness == "NATIVE"
     assert uint32.fmt == b"@I"
+    assert uint32.bit_length == 32
+    assert len(uint32) == 4
     uint32.value = 0
     assert uint32 == 0
     uint32.value = 1
@@ -559,6 +571,8 @@ def test_int64_instance_properties():
     assert int64.byte_order.value == b"@"
     assert int64.endianness == "NATIVE"
     assert int64.fmt == b"@q"
+    assert int64.bit_length == 64
+    assert len(int64) == 8
     int64.value = 0
     assert int64 == 0
     int64.value = 1
@@ -601,6 +615,8 @@ def test_uint64_instance_properties():
     assert uint64.byte_order.value == b"@"
     assert uint64.endianness == "NATIVE"
     assert uint64.fmt == b"@Q"
+    assert uint64.bit_length == 64
+    assert len(uint64) == 8
     uint64.value = 0
     assert uint64 == 0
     uint64.value = 1
