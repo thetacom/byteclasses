@@ -12,12 +12,14 @@ from abc import abstractmethod
 from collections.abc import ByteString
 from numbers import Integral, Number, Real
 from struct import pack, unpack
-from typing import Any
+from typing import Any, TypeVar
 
 from .._enums import ByteOrder
 from ..types._fixed_size_type import _FixedSizeType
 
 __all__: list[str] = []
+
+ValType = TypeVar("ValType")  # pylint: disable=C0103
 
 
 class _FixedNumericType(_FixedSizeType):
@@ -332,11 +334,11 @@ class _FixedNumericType(_FixedSizeType):
         """
         raise NotImplementedError("__trunc__ method not implemented")
 
-    def _validate_value(self, value: Any) -> None:
-        """Validate the value."""
-        raise NotImplementedError("_validate_value method not implemented")
+    def _bound_value(self, value: Any) -> Any:
+        """Bound the value."""
+        raise NotImplementedError("_bound_value method not implemented")
 
-    def _get_value(self):
+    def _get_value(self) -> Any:
         """Return the value of the instance."""
         return unpack(self.fmt, self._data[: len(self)])[0]
 
@@ -348,7 +350,7 @@ class _FixedNumericType(_FixedSizeType):
             value_ = val_cls(new_value)
         else:
             raise TypeError(f"Value cannot be {type(new_value)}, must be number or FixedNumericType")
-        self._validate_value(value_)
+        value_ = self._bound_value(value_)
         self.data = pack(self.fmt, value_)
 
     @property

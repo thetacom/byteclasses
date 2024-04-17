@@ -328,6 +328,7 @@ def test_int8_instance_properties():
 def test_int8_bounds():
     """Test int8 bounds."""
     int8 = Int8()
+    assert int8.allow_overflow is False
     int8.value = 127
     assert int8 == 127
     with pytest.raises(OverflowError):
@@ -336,6 +337,18 @@ def test_int8_bounds():
     assert int8 == -128
     with pytest.raises(UnderflowError):
         int8.value = -129
+
+
+def test_int8_bounds_allow_overflow():
+    """Test int8 bounds allow_overflow."""
+    int8 = Int8(allow_overflow=True)
+    assert int8.allow_overflow is True
+    int8.value = 127
+    assert int8 == 127
+    int8.value = 128
+    assert int8 == -128
+    int8.value = -129
+    assert int8 == 127
 
 
 def test_int8_value_to_data():
@@ -372,6 +385,7 @@ def test_uint8_instance_properties():
 def test_uint8_bounds():
     """Test UInt8 bounds."""
     uint8 = UInt8()
+    assert uint8.allow_overflow is False
     uint8.value = 255
     assert uint8 == 255
     with pytest.raises(OverflowError):
@@ -380,6 +394,18 @@ def test_uint8_bounds():
     assert uint8 == 0
     with pytest.raises(UnderflowError):
         uint8.value = -1
+
+
+def test_uint8_bounds_allow_overflow():
+    """Test uint8 bounds allow_overflow."""
+    uint8 = UInt8(allow_overflow=True)
+    assert uint8.allow_overflow is True
+    uint8.value = 255
+    assert uint8 == 255
+    uint8.value = 256
+    assert uint8 == 0
+    uint8.value = -1
+    assert uint8 == 255
 
 
 def test_uint8_value_to_data():

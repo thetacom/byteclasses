@@ -46,25 +46,32 @@ class _FixedInt(_FixedNumericType):
 
     def __init__(
         self,
-        value=None,
+        value: Any | None = None,
         *,
         byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
         data: ByteString | None = None,
+        allow_overflow: bool = False,
     ) -> None:
         """Initialize Fixed Int instance."""
+        self._allow_overflow = allow_overflow
         if self._signed is NotImplemented:
             raise NotImplementedError(f"{self.__class__.__name__} does not implement '_signed'")
         super().__init__(value, byte_order=byte_order, data=data)
 
+    @property
+    def allow_overflow(self) -> bool:
+        """Return allow overflow status."""
+        return self._allow_overflow
+
     @cached_property
     def max(self) -> int:
         """Return the maximum value."""
-        return (1 << (self._length * 8 - 1)) - 1 if self._signed else (1 << (self._length * 8)) - 1
+        return (1 << (self.bit_length - 1)) - 1 if self._signed else (1 << self.bit_length) - 1
 
     @cached_property
     def min(self) -> int:
         """Return the minimum value."""
-        return -(1 << (self._length * 8 - 1)) if self._signed else 0
+        return -(1 << (self.bit_length - 1)) if self._signed else 0
 
     @property
     def signed(self) -> bool:
@@ -72,7 +79,7 @@ class _FixedInt(_FixedNumericType):
         return self._signed
 
     @property
-    def value(self):
+    def value(self) -> int:
         """Return the value of the instance."""
         return cast(int, self._get_value())
 
@@ -185,11 +192,21 @@ class _FixedInt(_FixedNumericType):
         """Return the bitwise XOR of the instance and other."""
         return self.__xor__(other)
 
-    def _validate_value(self, value: Any) -> None:
-        if value < self.min:
-            raise UnderflowError(f"UnderfowError: value ({value}) below {self.__class__.__name__} min ({self.min})")
-        if value > self.max:
-            raise OverflowError(f"OverfowError: value ({value}) exceeded {self.__class__.__name__} max ({self.max})")
+    def _bound_value(self, value: int) -> int:
+        if value < self.min or value > self.max:
+            if self._allow_overflow:
+                mod_value = 1 << self.bit_length
+                if self._signed:
+                    offset = 1 << (self.bit_length - 1)
+                    return ((value + offset) % mod_value) - offset
+                return value % mod_value
+            if value < self.min:
+                raise UnderflowError(f"UnderfowError: value ({value}) below {self.__class__.__name__} min ({self.min})")
+            if value > self.max:
+                raise OverflowError(
+                    f"OverfowError: value ({value}) exceeded {self.__class__.__name__} max ({self.max})"
+                )
+        return value
 
 
 class Int8(_FixedInt):

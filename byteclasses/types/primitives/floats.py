@@ -1,10 +1,10 @@
 """Fixed length floating point types."""
 
-from numbers import Number
+from collections.abc import ByteString
 from struct import calcsize
 from typing import Any, cast
 
-from ..._enums import TypeChar
+from ..._enums import ByteOrder, TypeChar
 from ...types._fixed_numeric_type import _FixedNumericType
 
 __all__ = [
@@ -20,11 +20,22 @@ __all__ = [
 class _FixedFloat(_FixedNumericType):
     """Generic Fixed Size Float."""
 
-    def _validate_value(self, value: Number) -> None:
-        """Validate the value of the instance."""
+    def __init__(
+        self,
+        value: float | None = None,
+        *,
+        byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
+        data: ByteString | None = None,
+    ) -> None:
+        """Initialize Fixed Float instance."""
+        super().__init__(value, byte_order=byte_order, data=data)
+
+    def _bound_value(self, value: float) -> float:
+        """Bound the value of the instance."""
+        return value
 
     @property
-    def value(self):
+    def value(self) -> float:
         """Return the value of the instance."""
         return cast(float, self._get_value())
 
