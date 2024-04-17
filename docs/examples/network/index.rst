@@ -1,5 +1,5 @@
-Advanced Examples
-=================
+Network Handlers
+================
 
 .. toctree::
 

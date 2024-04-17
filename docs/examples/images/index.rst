@@ -1,0 +1,6 @@
+Image Handlers
+==============
+
+.. toctree::
+
+   jpeg

@@ -4,4 +4,7 @@ Examples
 .. toctree::
 
    basic/index
-   advanced/index
+   network/index
+   executables/index
+   documents/index
+   images/index

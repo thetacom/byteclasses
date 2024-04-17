@@ -1,0 +1,6 @@
+Document Handlers
+=================
+
+.. toctree::
+
+   pdf
