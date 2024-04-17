@@ -46,20 +46,20 @@
   
   
   
-    <title>Fixed Size Primitive Examples &#8212; Byteclasses 2024 documentation</title>
+    <title>Integer and Float Primitives &#8212; Byteclasses 2024 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=83e35b93" />
     <link rel="stylesheet" type="text/css" href="../../_static/material.css?v=79c92029" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
     <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
     <script src="../../_static/documentation_options.js?v=6fefd858"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="BitField Primitive Examples" href="bitfield.html" />
+    <link rel="next" title="Character Primitives" href="characters.html" />
     <link rel="prev" title="Basic Examples" href="index.html" />
   
    
@@ -97,7 +97,7 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           <span class="md-header-nav__topic">Byteclasses</span>
-          <span class="md-header-nav__topic"> Fixed Size Primitive Examples </span>
+          <span class="md-header-nav__topic"> Integer and Float Primitives </span>
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
@@ -233,27 +233,27 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  <section id="Fixed-Size-Primitive-Examples">
-<h1 id="examples-basic-primitives--page-root">Fixed Size Primitive Examples<a class="headerlink" href="#examples-basic-primitives--page-root" title="Link to this heading">¶</a></h1>
+  <section id="Integer-and-Float-Primitives">
+<h1 id="examples-basic-primitives--page-root">Integer and Float Primitives<a class="headerlink" href="#examples-basic-primitives--page-root" title="Link to this heading">¶</a></h1>
 <p>Importing fixed length primitive types.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">byteclasses.types.primitives.floats</span> <span class="kn">import</span> <span class="n">Half</span><span class="p">,</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Float16</span><span class="p">,</span> <span class="n">Float32</span><span class="p">,</span> <span class="n">Float64</span><span class="p">,</span> <span class="n">Double</span>
-<span class="kn">from</span> <span class="nn">byteclasses.types.primitives.integers</span> <span class="kn">import</span> <span class="n">Int8</span><span class="p">,</span> <span class="n">Int16</span><span class="p">,</span> <span class="n">Int32</span><span class="p">,</span> <span class="n">Int64</span><span class="p">,</span> <span class="n">UInt8</span><span class="p">,</span> <span class="n">UInt16</span><span class="p">,</span> <span class="n">UInt32</span><span class="p">,</span> <span class="n">UInt64</span><span class="p">,</span> <span class="n">Byte</span><span class="p">,</span> <span class="n">Short</span><span class="p">,</span> <span class="n">UShort</span><span class="p">,</span> <span class="n">Long</span><span class="p">,</span> <span class="n">LongLong</span><span class="p">,</span> <span class="n">ULong</span><span class="p">,</span> <span class="n">ULongLong</span><span class="p">,</span> <span class="n">SChar</span><span class="p">,</span> <span class="n">UChar</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">UInt</span><span class="p">,</span> <span class="n">Word</span><span class="p">,</span> <span class="n">DWord</span>
+<span class="kn">from</span> <span class="nn">byteclasses.types.primitives.integers</span> <span class="kn">import</span> <span class="n">Int8</span><span class="p">,</span> <span class="n">Int16</span><span class="p">,</span> <span class="n">Int32</span><span class="p">,</span> <span class="n">Int64</span><span class="p">,</span> <span class="n">UInt8</span><span class="p">,</span> <span class="n">UInt16</span><span class="p">,</span> <span class="n">UInt32</span><span class="p">,</span> <span class="n">UInt64</span><span class="p">,</span> <span class="n">Short</span><span class="p">,</span> <span class="n">UShort</span><span class="p">,</span> <span class="n">Long</span><span class="p">,</span> <span class="n">LongLong</span><span class="p">,</span> <span class="n">ULong</span><span class="p">,</span> <span class="n">ULongLong</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">UInt</span>
 </pre></div>
 </div>
 </div>
 <p>Fixed Size Primitive Instantiation</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
 
 <span class="n">fixed_integer_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">Int8</span><span class="p">,</span> <span class="n">Int16</span><span class="p">,</span> <span class="n">Int32</span><span class="p">,</span> <span class="n">Int64</span><span class="p">,</span> <span class="n">UInt8</span><span class="p">,</span> <span class="n">UInt16</span><span class="p">,</span> <span class="n">UInt32</span><span class="p">,</span> <span class="n">UInt64</span><span class="p">,</span> <span class="n">Long</span><span class="p">,</span> <span class="n">ULong</span><span class="p">]</span>
-<span class="n">fixed_integer_type_aliases</span> <span class="o">=</span> <span class="p">[</span><span class="n">Byte</span><span class="p">,</span> <span class="n">SChar</span><span class="p">,</span> <span class="n">UChar</span><span class="p">,</span> <span class="n">Short</span><span class="p">,</span> <span class="n">UShort</span><span class="p">,</span> <span class="n">Word</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">UInt</span><span class="p">,</span> <span class="n">DWord</span><span class="p">,</span> <span class="n">LongLong</span><span class="p">,</span> <span class="n">ULongLong</span><span class="p">]</span>
+<span class="n">fixed_integer_type_aliases</span> <span class="o">=</span> <span class="p">[</span><span class="n">Short</span><span class="p">,</span> <span class="n">UShort</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">UInt</span><span class="p">,</span> <span class="n">LongLong</span><span class="p">,</span> <span class="n">ULongLong</span><span class="p">]</span>
 <span class="n">fixed_float_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">Float16</span><span class="p">,</span> <span class="n">Float32</span><span class="p">,</span> <span class="n">Float64</span><span class="p">]</span>
 <span class="n">fixed_float_type_aliases</span> <span class="o">=</span> <span class="p">[</span><span class="n">Half</span><span class="p">,</span> <span class="n">Float</span><span class="p">,</span> <span class="n">Double</span><span class="p">]</span>
 
@@ -268,7 +268,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
@@ -324,17 +324,12 @@
 │<span style="color: #008080; text-decoration-color: #008080">  UInt64(7) </span>│<span style="color: #800080; text-decoration-color: #800080">    7     </span>│      8      │ 0                    │ 18446744073709551615 │ 7     │ b'\x07\x00\x00\x00… │
 │<span style="color: #008080; text-decoration-color: #008080">    Long(8) </span>│<span style="color: #800080; text-decoration-color: #800080">    8     </span>│      8      │ -9223372036854775808 │ 9223372036854775807  │ 8     │ b'\x08\x00\x00\x00… │
 │<span style="color: #008080; text-decoration-color: #008080">   ULong(9) </span>│<span style="color: #800080; text-decoration-color: #800080">    9     </span>│      8      │ 0                    │ 18446744073709551615 │ 9     │ b'\t\x00\x00\x00\x… │
-│<span style="color: #008080; text-decoration-color: #008080">  UInt8(10) </span>│<span style="color: #800080; text-decoration-color: #800080">    10    </span>│      1      │ 0                    │ 255                  │ 10    │ b'\n'               │
-│<span style="color: #008080; text-decoration-color: #008080">   Int8(11) </span>│<span style="color: #800080; text-decoration-color: #800080">    11    </span>│      1      │ -128                 │ 127                  │ 11    │ b'\x0b'             │
-│<span style="color: #008080; text-decoration-color: #008080">  UInt8(12) </span>│<span style="color: #800080; text-decoration-color: #800080">    12    </span>│      1      │ 0                    │ 255                  │ 12    │ b'\x0c'             │
-│<span style="color: #008080; text-decoration-color: #008080">  Int16(13) </span>│<span style="color: #800080; text-decoration-color: #800080">    13    </span>│      2      │ -32768               │ 32767                │ 13    │ b'\r\x00'           │
-│<span style="color: #008080; text-decoration-color: #008080"> UInt16(14) </span>│<span style="color: #800080; text-decoration-color: #800080">    14    </span>│      2      │ 0                    │ 65535                │ 14    │ b'\x0e\x00'         │
-│<span style="color: #008080; text-decoration-color: #008080"> UInt16(15) </span>│<span style="color: #800080; text-decoration-color: #800080">    15    </span>│      2      │ 0                    │ 65535                │ 15    │ b'\x0f\x00'         │
-│<span style="color: #008080; text-decoration-color: #008080">  Int32(16) </span>│<span style="color: #800080; text-decoration-color: #800080">    16    </span>│      4      │ -2147483648          │ 2147483647           │ 16    │ b'\x10\x00\x00\x00' │
-│<span style="color: #008080; text-decoration-color: #008080"> UInt32(17) </span>│<span style="color: #800080; text-decoration-color: #800080">    17    </span>│      4      │ 0                    │ 4294967295           │ 17    │ b'\x11\x00\x00\x00' │
-│<span style="color: #008080; text-decoration-color: #008080"> UInt32(18) </span>│<span style="color: #800080; text-decoration-color: #800080">    18    </span>│      4      │ 0                    │ 4294967295           │ 18    │ b'\x12\x00\x00\x00' │
-│<span style="color: #008080; text-decoration-color: #008080">  Int64(19) </span>│<span style="color: #800080; text-decoration-color: #800080">    19    </span>│      8      │ -9223372036854775808 │ 9223372036854775807  │ 19    │ b'\x13\x00\x00\x00… │
-│<span style="color: #008080; text-decoration-color: #008080"> UInt64(20) </span>│<span style="color: #800080; text-decoration-color: #800080">    20    </span>│      8      │ 0                    │ 18446744073709551615 │ 20    │ b'\x14\x00\x00\x00… │
+│<span style="color: #008080; text-decoration-color: #008080">  Int16(10) </span>│<span style="color: #800080; text-decoration-color: #800080">    10    </span>│      2      │ -32768               │ 32767                │ 10    │ b'\n\x00'           │
+│<span style="color: #008080; text-decoration-color: #008080"> UInt16(11) </span>│<span style="color: #800080; text-decoration-color: #800080">    11    </span>│      2      │ 0                    │ 65535                │ 11    │ b'\x0b\x00'         │
+│<span style="color: #008080; text-decoration-color: #008080">  Int32(12) </span>│<span style="color: #800080; text-decoration-color: #800080">    12    </span>│      4      │ -2147483648          │ 2147483647           │ 12    │ b'\x0c\x00\x00\x00' │
+│<span style="color: #008080; text-decoration-color: #008080"> UInt32(13) </span>│<span style="color: #800080; text-decoration-color: #800080">    13    </span>│      4      │ 0                    │ 4294967295           │ 13    │ b'\r\x00\x00\x00'   │
+│<span style="color: #008080; text-decoration-color: #008080">  Int64(14) </span>│<span style="color: #800080; text-decoration-color: #800080">    14    </span>│      8      │ -9223372036854775808 │ 9223372036854775807  │ 14    │ b'\x0e\x00\x00\x00… │
+│<span style="color: #008080; text-decoration-color: #008080"> UInt64(15) </span>│<span style="color: #800080; text-decoration-color: #800080">    15    </span>│      8      │ 0                    │ 18446744073709551615 │ 15    │ b'\x0f\x00\x00\x00… │
 └────────────┴──────────┴─────────────┴──────────────────────┴──────────────────────┴───────┴─────────────────────┘
 </pre></div>
 </div>
@@ -357,7 +352,7 @@
 </div>
 <p>Numeric byteclasses can be used in math operations just like normal numbers</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">my_ints</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">my_ints</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">my_ints</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">my_ints</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
@@ -373,7 +368,7 @@
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">my_ints</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">my_ints</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -389,7 +384,7 @@
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">my_ints</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">my_ints</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -406,7 +401,7 @@
 </div>
 <p>Each primitive class has built-in bounds checks and will raise an <code class="docutils literal notranslate"><span class="pre">OverflowError</span></code> or <code class="docutils literal notranslate"><span class="pre">UnderflowError</span></code> as appropriate.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">byteclasses.types.primitives.integers</span> <span class="kn">import</span> <span class="n">UnderflowError</span>
@@ -433,7 +428,7 @@ UnderfowError: value (-1) below UInt8 min (0)
 </div>
 <p>Attaching to external data</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="sa">b</span><span class="s2">"</span><span class="se">\x00\x01\x02\x03</span><span class="s2">"</span><span class="p">)</span>
@@ -454,7 +449,7 @@ bytearray(b'\x00\x01\x02\x03') 0 0
 </div>
 <p>Any byteclass instance can be attached to a memoryview of equal size</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_var1</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">mv</span><span class="p">)</span>
@@ -473,7 +468,7 @@ bytearray(b'\x00\x00\x00\x00') 0 0
 </div>
 <p>Changes to data are also represented in any attached byteclass instances</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mv</span><span class="p">[:]</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"</span><span class="se">\x04\x05\x06\x07</span><span class="s2">"</span>
@@ -491,7 +486,7 @@ bytearray(b'\x04\x05\x06\x07') 117835012 117835012
 </div>
 <p>Changes to a primitive’s value or data attribute are also applied to the attached data</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_var1</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">my_var1</span><span class="o">.</span><span class="n">max</span>
@@ -509,7 +504,7 @@ bytearray(b'\xff\xff\xff\x7f') 2147483647 2147483647
 </div>
 <p>Changes to a primitive’s value or data attribute are also applied to the attached data</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_var2</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">my_var2</span><span class="o">.</span><span class="n">max</span>
@@ -551,12 +546,12 @@ bytearray(b'\xff\xff\xff\xff') -1 4294967295
             </a>
           
           
-            <a href="bitfield.html" title="BitField Primitive Examples"
+            <a href="characters.html" title="Character Primitives"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> "Next" </span> BitField Primitive Examples </span>
+                class="md-footer-nav__direction"> "Next" </span> Character Primitives </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
@@ -574,7 +569,7 @@ bytearray(b'\xff\xff\xff\xff') -1 4294967295
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.3.5.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

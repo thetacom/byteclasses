@@ -5,9 +5,9 @@ Fixed size arrays provide a concrete class that accepts an instance of a bytecla
 > `FixedArray` has a minimum qty of two.
 
 ```python
-fa1 = FixedArray(Int16,2)
-fa2 = FixedArray(Int16(2), 2)
-fa3 = FixedArray(Int16(2), 4, byte_order=b"!")
+fa1 = FixedArray(2) # Item type for FixedArrays are UInt8
+fa2 = FixedArray(2, Int16)
+fa3 = FixedArray(4, Int16, byte_order=b"!")
 ```
 
 > The `FixedArray` `byte_order` will override the item `byte_order` regardless if the item `byte_order` is specified.
@@ -17,7 +17,7 @@ fa3 = FixedArray(Int16(2), 4, byte_order=b"!")
 Array items can be accessed by indexing an array. The raw array bytes can be interacted with via the `data` attribute.
 
 ```python
-fa = FixedArray(Int8, 10)
+fa = FixedArray(10, Int8)
 print(fa)
 print(fa.data)
 print(fa[0])

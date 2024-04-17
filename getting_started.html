@@ -49,9 +49,9 @@
     <title>Getting Started &#8212; Byteclasses 2024 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=83e35b93" />
     <link rel="stylesheet" type="text/css" href="_static/material.css?v=79c92029" />
-    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
     <script src="_static/documentation_options.js?v=6fefd858"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -248,22 +248,29 @@ to make handling, parsing, and interpreting raw data a simpler and more inuititi
 <h2 id="primitives"><code class="docutils literal notranslate"><span class="pre">primitives</span></code><a class="headerlink" href="#primitives" title="Link to this heading">¶</a></h2>
 <p>Primitive Types - The primitive types provide the base level elements used to compose larger and more complex data structures.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">integers</span></code> - All integer primitives have a fixed length with a configurable <code class="docutils literal notranslate"><span class="pre">byte_order</span></code>.</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">generics</span></code> - Generic fixed length types.</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">Int8</span></code>, <code class="docutils literal notranslate"><span class="pre">UInt8</span></code>, <code class="docutils literal notranslate"><span class="pre">Int16</span></code>, <code class="docutils literal notranslate"><span class="pre">UInt16</span></code>, <code class="docutils literal notranslate"><span class="pre">Int32</span></code>, <code class="docutils literal notranslate"><span class="pre">Long</span></code>, <code class="docutils literal notranslate"><span class="pre">ULong</span></code>, <code class="docutils literal notranslate"><span class="pre">Int64</span></code>, <code class="docutils literal notranslate"><span class="pre">UInt64</span></code></p></li>
-<li><p>Aliases: <code class="docutils literal notranslate"><span class="pre">SChar</span></code>, <code class="docutils literal notranslate"><span class="pre">UChar</span></code>, <code class="docutils literal notranslate"><span class="pre">Byte</span></code>, <code class="docutils literal notranslate"><span class="pre">Short</span></code>, <code class="docutils literal notranslate"><span class="pre">UShort</span></code>, <code class="docutils literal notranslate"><span class="pre">Word</span></code>, <code class="docutils literal notranslate"><span class="pre">Int</span></code>, <code class="docutils literal notranslate"><span class="pre">UInt</span></code>, <code class="docutils literal notranslate"><span class="pre">DWord</span></code>, <code class="docutils literal notranslate"><span class="pre">LongLong</span></code>, <code class="docutils literal notranslate"><span class="pre">ULongLong</span></code></p></li>
-<li><p>Special: <code class="docutils literal notranslate"><span class="pre">Bit</span></code></p></li>
-</ul>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">floats</span></code> - All float primitives have a fixed length with a configurable <code class="docutils literal notranslate"><span class="pre">byte_order</span></code>.</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">Float16</span></code>, <code class="docutils literal notranslate"><span class="pre">Float32</span></code>, <code class="docutils literal notranslate"><span class="pre">Float64</span></code></p></li>
-<li><p>Aliases: <code class="docutils literal notranslate"><span class="pre">Half</span></code>, <code class="docutils literal notranslate"><span class="pre">Float</span></code>, <code class="docutils literal notranslate"><span class="pre">Double</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Byte</span></code>, <code class="docutils literal notranslate"><span class="pre">Word</span></code>, <code class="docutils literal notranslate"><span class="pre">DWord</span></code>, <code class="docutils literal notranslate"><span class="pre">QWord</span></code></p></li>
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">bitfield</span></code> - A generic primitive for easily extracting bit values from a byte. Fixed length is one (1) byte by default. Can be subclassed for multibyte bitfields.</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">BitField</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BitField</span></code>, <code class="docutils literal notranslate"><span class="pre">BitPos</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">integers</span></code> - All integer primitives have a fixed length with a configurable <code class="docutils literal notranslate"><span class="pre">byte_order</span></code>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Int8</span></code>, <code class="docutils literal notranslate"><span class="pre">UInt8</span></code>, <code class="docutils literal notranslate"><span class="pre">Int16</span></code> (<code class="docutils literal notranslate"><span class="pre">Short</span></code>), <code class="docutils literal notranslate"><span class="pre">UInt16</span></code> (<code class="docutils literal notranslate"><span class="pre">UShort</span></code>), <code class="docutils literal notranslate"><span class="pre">Int32</span></code> (<code class="docutils literal notranslate"><span class="pre">Int</span></code>), <code class="docutils literal notranslate"><span class="pre">UInt32</span></code> (<code class="docutils literal notranslate"><span class="pre">UInt</span></code>), <code class="docutils literal notranslate"><span class="pre">Long</span></code>, <code class="docutils literal notranslate"><span class="pre">ULong</span></code>, <code class="docutils literal notranslate"><span class="pre">Int64</span></code> (<code class="docutils literal notranslate"><span class="pre">LongLong</span></code>), <code class="docutils literal notranslate"><span class="pre">UInt64</span></code> (<code class="docutils literal notranslate"><span class="pre">ULongLong</span></code>)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">floats</span></code> - All float primitives have a fixed length with a configurable <code class="docutils literal notranslate"><span class="pre">byte_order</span></code>.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Float16</span></code> (<code class="docutils literal notranslate"><span class="pre">Half</span></code>), <code class="docutils literal notranslate"><span class="pre">Float32</span></code> (<code class="docutils literal notranslate"><span class="pre">Float</span></code>), <code class="docutils literal notranslate"><span class="pre">Float64</span></code> (<code class="docutils literal notranslate"><span class="pre">Double</span></code>)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">characters</span></code> - Single byte character classes.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">UChar</span></code> (<code class="docutils literal notranslate"><span class="pre">Char</span></code>), <code class="docutils literal notranslate"><span class="pre">SChar</span></code></p></li>
 </ul>
 </li>
 </ul>
@@ -273,16 +280,20 @@ to make handling, parsing, and interpreting raw data a simpler and more inuititi
 <p>Collection Types - Collection types allow you to combine primitives or other collections based on their specified behavior.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">FixedArray</span></code> - A concrete fixed size collection class containing a single primitive type or specified quantity.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Union</span></code> - A dynamic byteclass implemented via the <code class="docutils literal notranslate"><span class="pre">@union</span></code> decorator. Behaves similar to a C <code class="docutils literal notranslate"><span class="pre">union</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">String</span></code> - A specialized subclass of FixedArray to add string convenience methods.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Structure</span></code> - A dynamic byteclass implemented via the <code class="docutils literal notranslate"><span class="pre">@structure</span></code> decorator. Behaves similar to a C <code class="docutils literal notranslate"><span class="pre">struct</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Union</span></code> - A dynamic byteclass implemented via the <code class="docutils literal notranslate"><span class="pre">@union</span></code> decorator. Behaves similar to a C <code class="docutils literal notranslate"><span class="pre">union</span></code>.</p></li>
 </ul>
 </section>
 <section id="attaching-external-data">
 <h2 id="attaching-external-data">Attaching external data<a class="headerlink" href="#attaching-external-data" title="Link to this heading">¶</a></h2>
 <p>Byteclasses can be attached to any bytes like external data.
-Use the byteclass <code class="docutils literal notranslate"><span class="pre">.attach(mv)</span></code> method to connect a <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> of the external data to the internal data attribute of the byteclass instance.</p>
+Use the byteclass <code class="docutils literal notranslate"><span class="pre">.attach(data)</span></code> method to connect a <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> of the external data to the internal data attribute of the byteclass instance.</p>
 <blockquote>
 <div><p>The length of the <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> must match the length of the item it is being attached to.</p>
+</div></blockquote>
+<blockquote>
+<div><p>If a <code class="docutils literal notranslate"><span class="pre">bytes</span></code> or <code class="docutils literal notranslate"><span class="pre">bytearray</span></code> object is passed to <code class="docutils literal notranslate"><span class="pre">attach</span></code>, a <code class="docutils literal notranslate"><span class="pre">bytearray</span></code> <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> will be created. If you intend for byteclasses to all interact with a single data instance, create a <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> of your data and pass to appropriate slice of the <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> to <code class="docutils literal notranslate"><span class="pre">attach</span></code>.</p>
 </div></blockquote>
 </section>
 </section>
@@ -334,7 +345,7 @@ Use the byteclass <code class="docutils literal notranslate"><span class="pre">.
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.3.5.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

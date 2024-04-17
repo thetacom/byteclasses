@@ -46,20 +46,21 @@
   
   
   
-    <title>IPv4 Header Structure &#8212; Byteclasses 2024 documentation</title>
+    <title>IPv4 Header &#8212; Byteclasses 2024 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=83e35b93" />
     <link rel="stylesheet" type="text/css" href="../../_static/material.css?v=79c92029" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
     <script src="../../_static/documentation_options.js?v=6fefd858"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="IPv6 Header Structure" href="ipv6.html" />
-    <link rel="prev" title="Advanced Examples" href="index.html" />
+    <link rel="next" title="IPv6 Header" href="ipv6.html" />
+    <link rel="prev" title="Ethernet Header and Frame" href="ethernet.html" />
   
    
 
@@ -96,7 +97,7 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           <span class="md-header-nav__topic">Byteclasses</span>
-          <span class="md-header-nav__topic"> IPv4 Header Structure </span>
+          <span class="md-header-nav__topic"> IPv4 Header </span>
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
@@ -232,8 +233,144 @@
         <div class="md-content">
           <article class="md-content__inner md-typeset" role="main">
             
-  <section id="IPv4-Header-Structure">
-<h1 id="examples-advanced-ipv4--page-root">IPv4 Header Structure<a class="headerlink" href="#examples-advanced-ipv4--page-root" title="Link to this heading">¶</a></h1>
+  <section id="IPv4-Header">
+<h1 id="examples-advanced-ipv4--page-root">IPv4 Header<a class="headerlink" href="#examples-advanced-ipv4--page-root" title="Link to this heading">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">byteclasses.handlers.network.ipv4_hdr</span> <span class="kn">import</span> <span class="n">IPv4Hdr</span>
+<span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
+<span class="kn">from</span> <span class="nn">rich.table</span> <span class="kn">import</span> <span class="n">Table</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ipv4_hdr</span> <span class="o">=</span> <span class="n">IPv4Hdr</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="sa">b</span><span class="s2">"</span><span class="se">\x45\x00\x00\x34\x1d\x12\x40\x00\x80\x06\xcb\xc3\xc0\xa8\xc8\x87\xc0\xa8\xc8\x15</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="nb">memoryview</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"IPv4 Header"</span><span class="p">)</span>
+
+<span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">"Name"</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">"Value"</span><span class="p">)</span>
+
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"len(ipv4_hdr)"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="p">)))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"str(ipv4_hdr)"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"repr(ipv4_hdr)"</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.ver_ihl"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">ver_ihl</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.ver_ihl.version"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">ver_ihl</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.ver_ihl.ihl"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">ver_ihl</span><span class="o">.</span><span class="n">ihl</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.dscp_ecn"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">dscp_ecn</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.dscp_ecn.dscp"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">dscp_ecn</span><span class="o">.</span><span class="n">dscp</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.dscp_ecn.ecn"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">dscp_ecn</span><span class="o">.</span><span class="n">ecn</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.identification"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">identification</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.flags_off"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">flags_off</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.flags_off.flags"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">flags_off</span><span class="o">.</span><span class="n">flags</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.flags_off.fragment_offset"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">flags_off</span><span class="o">.</span><span class="n">fragment_offset</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.time_to_live"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">time_to_live</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.protocol"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">protocol</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.header_checksum"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">header_checksum</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.src_ip"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">src_ip</span><span class="p">))</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="s2">"ipv4_hdr.dst_ip"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">dst_ip</span><span class="p">))</span>
+
+<span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+<span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                                    IPv4 Header                                                    </span>
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Name                               </span>┃<span style="font-weight: bold"> Value                                                                      </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ len(ipv4_hdr)                      │ 20                                                                         │
+│ str(ipv4_hdr)                      │ IPv4Hdr(ver_ihl=VerIhl(data=b'E'), dscp_ecn=DscpEcn(data=b'\x00'),         │
+│                                    │ total_length=UInt16(52), identification=UInt16(7442),                      │
+│                                    │ flags_off=FlagsOff(data=b'@\x00'), time_to_live=UInt8(128),                │
+│                                    │ protocol=UInt8(6), header_checksum=UInt16(52163),                          │
+│                                    │ src_ip=IPv4Addr(uint8=[UInt8(192), UInt8(168), UInt8(200), UInt8(135)],    │
+│                                    │ uint32=UInt32(3232286855)), dst_ip=IPv4Addr(uint8=[UInt8(192), UInt8(168), │
+│                                    │ UInt8(200), UInt8(21)], uint32=UInt32(3232286741)))                        │
+│ repr(ipv4_hdr)                     │ IPv4Hdr(ver_ihl=VerIhl(data=b'E'), dscp_ecn=DscpEcn(data=b'\x00'),         │
+│                                    │ total_length=UInt16(52), identification=UInt16(7442),                      │
+│                                    │ flags_off=FlagsOff(data=b'@\x00'), time_to_live=UInt8(128),                │
+│                                    │ protocol=UInt8(6), header_checksum=UInt16(52163),                          │
+│                                    │ src_ip=IPv4Addr(uint8=[UInt8(192), UInt8(168), UInt8(200), UInt8(135)],    │
+│                                    │ uint32=UInt32(3232286855)), dst_ip=IPv4Addr(uint8=[UInt8(192), UInt8(168), │
+│                                    │ UInt8(200), UInt8(21)], uint32=UInt32(3232286741)))                        │
+│ ipv4_hdr.ver_ihl                   │ 10100010                                                                   │
+│ ipv4_hdr.ver_ihl.version           │ 5                                                                          │
+│ ipv4_hdr.ver_ihl.ihl               │ 4                                                                          │
+│ ipv4_hdr.dscp_ecn                  │ 00000000                                                                   │
+│ ipv4_hdr.dscp_ecn.dscp             │ 0                                                                          │
+│ ipv4_hdr.dscp_ecn.ecn              │ 0                                                                          │
+│ ipv4_hdr.identification            │ 7442                                                                       │
+│ ipv4_hdr.flags_off                 │ 0000001000000000                                                           │
+│ ipv4_hdr.flags_off.flags           │ 0                                                                          │
+│ ipv4_hdr.flags_off.fragment_offset │ 8                                                                          │
+│ ipv4_hdr.time_to_live              │ 128                                                                        │
+│ ipv4_hdr.protocol                  │ 6                                                                          │
+│ ipv4_hdr.header_checksum           │ 52163                                                                      │
+│ ipv4_hdr.src_ip                    │ IPv4Addr(uint8=[UInt8(192), UInt8(168), UInt8(200), UInt8(135)],           │
+│                                    │ uint32=UInt32(3232286855))                                                 │
+│ ipv4_hdr.dst_ip                    │ IPv4Addr(uint8=[UInt8(192), UInt8(168), UInt8(200), UInt8(21)],            │
+│                                    │ uint32=UInt32(3232286741))                                                 │
+└────────────────────────────────────┴────────────────────────────────────────────────────────────────────────────┘
+</pre></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">src_ip</span><span class="o">.</span><span class="n">uint8</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">192</span><span class="p">,</span><span class="mi">168</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">dst_ip</span><span class="o">.</span><span class="n">uint8</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">127</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">src_ip</span><span class="o">.</span><span class="n">uint32</span><span class="p">),</span> <span class="nb">hex</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">dst_ip</span><span class="o">.</span><span class="n">uint32</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">src_ip</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">dst_ip</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0xc0a80101 0x7f000001
+bytearray(b'\xc0\xa8\x01\x01') bytearray(b'\x7f\x00\x00\x01')
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">src_ip</span><span class="o">.</span><span class="n">uint32</span> <span class="o">=</span> <span class="mh">0xdeadbeef</span>
+<span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">dst_ip</span><span class="o">.</span><span class="n">uint32</span> <span class="o">=</span> <span class="mh">0xcafebabe</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">src_ip</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">dst_ip</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ipv4_hdr</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+bytearray(b'\xde\xad\xbe\xef') bytearray(b'\xca\xfe\xba\xbe')
+bytearray(b'E\x00\x004\x1d\x12@\x00\x80\x06\xcb\xc3\xde\xad\xbe\xef\xca\xfe\xba\xbe')
+</pre></div></div>
+</div>
 </section>
 
 
@@ -246,7 +383,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
           
-            <a href="index.html" title="Advanced Examples"
+            <a href="ethernet.html" title="Ethernet Header and Frame"
                class="md-flex md-footer-nav__link md-footer-nav__link--prev"
                rel="prev">
               <div class="md-flex__cell md-flex__cell--shrink">
@@ -255,17 +392,17 @@
               <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
                 <span class="md-flex__ellipsis">
                   <span
-                      class="md-footer-nav__direction"> "Previous" </span> Advanced Examples </span>
+                      class="md-footer-nav__direction"> "Previous" </span> Ethernet Header and Frame </span>
               </div>
             </a>
           
           
-            <a href="ipv6.html" title="IPv6 Header Structure"
+            <a href="ipv6.html" title="IPv6 Header"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> "Next" </span> IPv6 Header Structure </span>
+                class="md-footer-nav__direction"> "Next" </span> IPv6 Header </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
@@ -283,7 +420,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.3.5.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

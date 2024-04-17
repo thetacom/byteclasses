@@ -49,9 +49,9 @@
     <title>Structure &#8212; Byteclasses 2024 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=83e35b93" />
     <link rel="stylesheet" type="text/css" href="../_static/material.css?v=79c92029" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <script src="../_static/documentation_options.js?v=6fefd858"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -236,21 +236,31 @@
 <span class="k">class</span> <span class="nc">MyStructure</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""My Structure Byteclass."""</span>
 
-    <span class="n">var1</span><span class="p">:</span> <span class="n">UInt64</span> <span class="o">=</span> <span class="n">UInt64</span><span class="p">()</span>
-    <span class="n">var2</span><span class="p">:</span> <span class="n">UInt32</span> <span class="o">=</span> <span class="n">UInt32</span><span class="p">()</span>
+    <span class="n">var1</span><span class="p">:</span> <span class="n">UInt64</span>
+    <span class="n">var2</span><span class="p">:</span> <span class="n">UInt32</span>
 </pre></div>
 </div>
 <p>Similar to a C <code class="docutils literal notranslate"><span class="pre">struct</span></code>, each member of a byteclass <code class="docutils literal notranslate"><span class="pre">structure</span></code> has a sequential offset. By default, <code class="docutils literal notranslate"><span class="pre">structure</span></code> are padded so each member is size aligned. The <code class="docutils literal notranslate"><span class="pre">structure</span></code> decorator accepts a boolean <code class="docutils literal notranslate"><span class="pre">padding</span></code> parameter to override the default padding behavior.</p>
 <p>The length of a Structure byteclass is determined when the class is created based on its members.</p>
 <p>A Structure byteclass can contain both byteclass primitives and other byteclass collections.</p>
 <p>Each Structure member has its own <code class="docutils literal notranslate"><span class="pre">byte_order</span></code>. However, the <code class="docutils literal notranslate"><span class="pre">structure</span></code> decorator accepts a <code class="docutils literal notranslate"><span class="pre">byte_order</span></code> parameter which is used for any members that rely on a <code class="docutils literal notranslate"><span class="pre">default_factory</span></code> for instantiation.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@structure</span><span class="p">(</span><span class="n">byte_order</span><span class="o">=</span><span class="sa">b</span><span class="s2">"&gt;"</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">FactoryStructure</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""A structure byteclass with member using default factory."""</span>
+<blockquote>
+<div><p>If no member value is specified, the member type annotation is used as a <code class="docutils literal notranslate"><span class="pre">default_factory</span></code>.</p>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@structure</span><span class="p">(</span><span class="n">byte_order</span><span class="o">=</span><span class="sa">b</span><span class="s2">"@"</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Structure1</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""A structure byteclass with one member using default factory."""</span>
 
     <span class="n">a</span><span class="p">:</span> <span class="n">UInt64</span> <span class="o">=</span> <span class="n">member</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">UInt64</span><span class="p">)</span>
+
+<span class="nd">@structure</span>
+<span class="k">class</span> <span class="nc">Structure2</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""A structure byteclass with one member using default factory."""</span>
+
+    <span class="n">a</span><span class="p">:</span> <span class="n">UInt64</span>
 </pre></div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Structure1</span></code> and <code class="docutils literal notranslate"><span class="pre">Structure2</span></code> defined above are functionally equivalent.</p>
 </section>
 
 
@@ -300,7 +310,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.3.5.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

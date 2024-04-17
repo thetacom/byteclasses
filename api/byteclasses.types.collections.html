@@ -49,9 +49,9 @@
     <title>byteclasses.types.collections package &#8212; Byteclasses 2024 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=83e35b93" />
     <link rel="stylesheet" type="text/css" href="../_static/material.css?v=79c92029" />
-    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
     <script src="../_static/documentation_options.js?v=6fefd858"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -232,6 +232,8 @@
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#byteclasses.types.collections.fixed_array.FixedArray" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">FixedArray</span></code></a><nav class="md-nav">
               <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#byteclasses.types.collections.fixed_array.FixedArray.attach" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">FixedArray.attach()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#byteclasses.types.collections.fixed_array.FixedArray.data" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">FixedArray.data</span></code></a>
         </li></ul>
             </nav>
@@ -276,6 +278,20 @@
         </li></ul>
             </nav>
         </li>
+        <li class="md-nav__item"><a href="#module-byteclasses.types.collections.string" class="md-nav__link">byteclasses.types.collections.string module</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#byteclasses.types.collections.string.String" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">String</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#byteclasses.types.collections.string.String.data" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">String.data</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.collections.string.String.null_terminated" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">String.null_terminated</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#byteclasses.types.collections.string.String.value" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">String.value</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
         <li class="md-nav__item"><a href="#module-byteclasses.types.collections.structure" class="md-nav__link">byteclasses.types.collections.structure module</a><nav class="md-nav">
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#byteclasses.types.collections.structure.structure" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">structure()</span></code></a>
@@ -292,6 +308,8 @@
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#byteclasses.types.collections.FixedArray" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">FixedArray</span></code></a><nav class="md-nav">
               <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#byteclasses.types.collections.FixedArray.attach" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">FixedArray.attach()</span></code></a>
+        </li>
         <li class="md-nav__item"><a href="#byteclasses.types.collections.FixedArray.data" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">FixedArray.data</span></code></a>
         </li></ul>
             </nav>
@@ -382,9 +400,14 @@ collection type. The packed parameter is only used for the structure type.</p>
 <p>Fixed length byte array types for binary data.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="byteclasses.types.collections.fixed_array.FixedArray">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.collections.fixed_array.</span></span><span class="sig-name descname"><span class="pre">FixedArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_FixedSizeType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">_FixedSizeType</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">byte_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="byteclasses.html#byteclasses.ByteOrder" title="byteclasses._enums.ByteOrder"><span class="pre">ByteOrder</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ByteOrder.NATIVE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/collections/fixed_array.html#FixedArray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.collections.fixed_array.FixedArray" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.collections.fixed_array.</span></span><span class="sig-name descname"><span class="pre">FixedArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item_count:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_type:</span> <span class="pre">type[~byteclasses.types._fixed_size_type._FixedSizeType]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'byteclasses.types.primitives.integers.UInt8'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">byte_order:</span> <span class="pre">bytes</span> <span class="pre">|</span> <span class="pre">~byteclasses._enums.ByteOrder</span> <span class="pre">=</span> <span class="pre">ByteOrder.NATIVE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/collections/fixed_array.html#FixedArray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.collections.fixed_array.FixedArray" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>An fixed length array of a fixed length item.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="byteclasses.types.collections.fixed_array.FixedArray.attach">
+<span class="sig-name descname"><span class="pre">attach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">memoryview</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retain_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/byteclasses/types/collections/fixed_array.html#FixedArray.attach"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.collections.fixed_array.FixedArray.attach" title="Link to this definition">¶</a></dt>
+<dd><p>Attach memoryview to underlying data attribute.</p>
+</dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="byteclasses.types.collections.fixed_array.FixedArray.data">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><a class="headerlink" href="#byteclasses.types.collections.fixed_array.FixedArray.data" title="Link to this definition">¶</a></dt>
@@ -474,6 +497,32 @@ collection.</p>
 <p>It is an error to specify both default and default_factory.</p>
 </dd></dl>
 </section>
+<section id="module-byteclasses.types.collections.string">
+<span id="byteclasses-types-collections-string-module"></span><h2 id="module-byteclasses.types.collections.string">byteclasses.types.collections.string module<a class="headerlink" href="#module-byteclasses.types.collections.string" title="Link to this heading">¶</a></h2>
+<p>Fixed Size String Byteclass.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="byteclasses.types.collections.string.String">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.collections.string.</span></span><span class="sig-name descname"><span class="pre">String</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">null_terminated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/collections/string.html#String"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.collections.string.String" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#byteclasses.types.collections.fixed_array.FixedArray" title="byteclasses.types.collections.fixed_array.FixedArray"><code class="xref py py-class docutils literal notranslate"><span class="pre">FixedArray</span></code></a></p>
+<p>A fixed size string collection based on FixedArray.</p>
+<p>Collection members are UChar primitives and are interpreted with a <cite>utf-8</cite> encoding.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="byteclasses.types.collections.string.String.data">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><a class="headerlink" href="#byteclasses.types.collections.string.String.data" title="Link to this definition">¶</a></dt>
+<dd><p>Return array data.</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="byteclasses.types.collections.string.String.null_terminated">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">null_terminated</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#byteclasses.types.collections.string.String.null_terminated" title="Link to this definition">¶</a></dt>
+<dd><p>Return String null terminated status.</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="byteclasses.types.collections.string.String.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#byteclasses.types.collections.string.String.value" title="Link to this definition">¶</a></dt>
+<dd><p>Return String value.</p>
+</dd></dl>
+</dd></dl>
+</section>
 <section id="module-byteclasses.types.collections.structure">
 <span id="byteclasses-types-collections-structure-module"></span><h2 id="module-byteclasses.types.collections.structure">byteclasses.types.collections.structure module<a class="headerlink" href="#module-byteclasses.types.collections.structure" title="Link to this heading">¶</a></h2>
 <p>Fixed length structure type.</p>
@@ -505,9 +554,14 @@ collection.</p>
 <p>Fixed length colection types.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="byteclasses.types.collections.FixedArray">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.collections.</span></span><span class="sig-name descname"><span class="pre">FixedArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_FixedSizeType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">_FixedSizeType</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">byte_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="byteclasses.html#byteclasses.ByteOrder" title="byteclasses._enums.ByteOrder"><span class="pre">ByteOrder</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ByteOrder.NATIVE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/collections/fixed_array.html#FixedArray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.collections.FixedArray" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">byteclasses.types.collections.</span></span><span class="sig-name descname"><span class="pre">FixedArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item_count:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_type:</span> <span class="pre">type[~byteclasses.types._fixed_size_type._FixedSizeType]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'byteclasses.types.primitives.integers.UInt8'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">byte_order:</span> <span class="pre">bytes</span> <span class="pre">|</span> <span class="pre">~byteclasses._enums.ByteOrder</span> <span class="pre">=</span> <span class="pre">ByteOrder.NATIVE</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/byteclasses/types/collections/fixed_array.html#FixedArray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.collections.FixedArray" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>An fixed length array of a fixed length item.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="byteclasses.types.collections.FixedArray.attach">
+<span class="sig-name descname"><span class="pre">attach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">memoryview</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retain_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/byteclasses/types/collections/fixed_array.html#FixedArray.attach"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#byteclasses.types.collections.FixedArray.attach" title="Link to this definition">¶</a></dt>
+<dd><p>Attach memoryview to underlying data attribute.</p>
+</dd></dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="byteclasses.types.collections.FixedArray.data">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><a class="headerlink" href="#byteclasses.types.collections.FixedArray.data" title="Link to this definition">¶</a></dt>
@@ -653,7 +707,7 @@ collection.</p>
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.3.5.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>
