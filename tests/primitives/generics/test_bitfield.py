@@ -13,6 +13,7 @@ class TestBitField(BitField):
 
     byte_length = 2
     first_bit = BitPos(0)
+    middle_bit = BitPos(8, bit_width=4)
     last_bit = BitPos(15)
 
 
@@ -278,8 +279,8 @@ def test_named_bit_set_with_valid_int():
     assert bf.first_bit is False
 
 
-def test_wide_bitpos():
-    """Test BitPos with non-standard bit width."""
+def test_bitfield_get_wide_bitpos():
+    """Test get BitPos with non-standard bit width."""
 
     class CustomBitField(BitField):
         """Custom BitField with named multi-bit BitPos."""
@@ -297,3 +298,27 @@ def test_wide_bitpos():
     assert bin(cbf.data[0]) == "0b10100101"
     assert cbf.lower == 5
     assert cbf.upper == 10
+
+
+def test_bitfield_set_wide_bitpos():
+    """Test set BitPos with non-standard bit width."""
+
+    class CustomBitField(BitField):
+        """Custom BitField with named multi-bit BitPos."""
+
+        lower = BitPos(0, bit_width=4)
+        upper = BitPos(4, bit_width=4)
+
+    cbf = CustomBitField(data=b"\x00")
+    assert cbf.data == b"\x00"
+    assert bin(cbf.data[0]) == "0b0"
+    cbf.upper = 10
+    assert bin(cbf.data[0]) == "0b10100000"
+    assert cbf.upper == 10
+    assert cbf.lower == 0
+    cbf.lower = 5
+    assert bin(cbf.data[0]) == "0b10100101"
+    assert cbf.upper == 10
+    assert cbf.lower == 5
+    cbf.upper = 16
+    assert bin(cbf.data[0]) == "0b101"

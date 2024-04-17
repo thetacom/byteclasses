@@ -27,7 +27,14 @@ class BitPos:
         """Implement set descriptor."""
         if not isinstance(instance, BitField):
             raise TypeError("BitPos only intended for use on BitField classes.")
-        instance[self.idx] = value
+        if self._bit_width == 1:
+            instance[self.idx] = value
+        else:
+            remaining_bits = value
+            for i in range(self.idx, self.idx + self.bit_width):
+                bit = remaining_bits & 1
+                instance[i] = bit
+                remaining_bits = remaining_bits >> 1
 
     @property
     def bit_width(self) -> int:
