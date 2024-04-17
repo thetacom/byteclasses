@@ -186,7 +186,7 @@ def _build_collection_init_method(
         # Initialize _data
         _member_assign("_data", "memoryview(bytearray(length))", spec.self_name),
         # Attach members to slices of _data memoryview
-        f"{spec.self_name}._attach_members()",
+        f"{spec.self_name}._attach_members(retain_value=True)",
     ]
     return _create_method(
         "_collection_init",
@@ -209,20 +209,29 @@ def _build_attach_method(
     locals_ = {
         "cls": spec.base_cls,
         "memoryview": memoryview,
+        "bytearray": bytearray,
+        "bytes": bytes,
+        "ByteString": ByteString,
     }
     body = (
-        "if not isinstance(mv, memoryview):",
-        "  raise AttributeError('Only memoryviews can be attached to collection.')",
-        f"if len(mv) != len({spec.self_name}):",
-        "  raise AttributeError(f'Memoryview length ({len(mv)}) must match collection length ({len("
-        + spec.self_name
-        + ")}).')",
-        f"{spec.self_name}._data = mv",
-        f"{spec.self_name}._attach_members()",
+        "data_len = len(new_data)",
+        f"self_len = len({spec.self_name})",
+        "if data_len < self_len:",
+        "  raise AttributeError(f'Data length ({data_len}) must greater than or equal to {self_len} bytes.')",
+        "if isinstance(new_data, memoryview):",
+        "  mv: memoryview = new_data",
+        "elif isinstance(new_data, bytearray):",
+        "  mv = memoryview(new_data)",
+        "elif isinstance(new_data, bytes):",
+        "  mv = memoryview(bytearray(new_data))",
+        "else:",
+        "  raise TypeError(f'Unsupported data type ({type(new_data)})')",
+        f"{spec.self_name}._data = mv[:self_len]",
+        f"{spec.self_name}._attach_members(retain_value)",
     )
     return _create_method(
         "attach",
-        (spec.self_name, "mv: memoryview"),
+        (spec.self_name, "new_data: ByteString", "retain_value: bool = False"),
         body,
         locals_=locals_,
         globals_=globals_,
@@ -247,12 +256,12 @@ def _build_attach_members_method(
         body.append(
             f"{spec.self_name}.{member_.name}.attach("
             f"{spec.self_name}._data[{spec.self_name}._member_offsets[{idx}]:"
-            f"{spec.self_name}._member_offsets[{idx}] + member_lengths[{idx}]])"
+            f"{spec.self_name}._member_offsets[{idx}] + member_lengths[{idx}]], retain_value)"
         )
 
     return _create_method(
         "attach",
-        (spec.self_name,),
+        (spec.self_name, "retain_value: bool = False"),
         body,
         locals_=locals_,
         globals_=globals_,

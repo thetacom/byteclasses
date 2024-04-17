@@ -1,10 +1,10 @@
 """Fixed collection types and internal utility functions."""
 
-import copy
 import inspect
 import sys
 from abc import update_abstractmethods
 from collections.abc import Callable
+from copy import deepcopy
 from typing import Any, cast
 
 from .._fixed_size_type import _FixedSizeType
@@ -203,15 +203,18 @@ def _add_members(spec: _CollectionClassSpec, members_: dict[str, Member]) -> Non
         # If the class attribute (which is the default value for this member) exists
         # and is of type 'Member', replace it with the real default.  This is so that
         # normal class introspection sees a real default value, not a Member.
-        if isinstance(getattr(spec.base_cls, member_.name), Member):
-            if member_.default is MISSING:
-                # If there's no default, delete the class attribute.
-                # If we're using a default factory. The class attribute should not
-                # be set at all in the post-processed class.
-                delattr(spec.base_cls, member_.name)
-            else:
-                setattr(spec.base_cls, member_.name, member_.default)
-
+        try:
+            if isinstance(getattr(spec.base_cls, member_.name), Member):
+                if member_.default is MISSING:
+                    # If there's no default, delete the class attribute.
+                    # If we're using a default factory. The class attribute should not
+                    # be set at all in the post-processed class.
+                    delattr(spec.base_cls, member_.name)
+                else:
+                    setattr(spec.base_cls, member_.name, deepcopy(member_.default))
+        except AttributeError:
+            # Allow missing members to use type annotation as default factory.
+            pass
     # Do we have any Members that don't also have annotations?
     for name, value in spec.base_cls.__dict__.items():
         if isinstance(value, Member) and name not in cls_annotations:
@@ -396,7 +399,7 @@ def _as_dict_inner(obj, dict_factory):
         return type(obj)(_as_dict_inner(v, dict_factory) for v in obj)
     if isinstance(obj, dict):
         return type(obj)((_as_dict_inner(k, dict_factory), _as_dict_inner(v, dict_factory)) for k, v in obj.items())
-    return copy.deepcopy(obj)
+    return deepcopy(obj)
 
 
 def collection_as_tuple(obj, *, tuple_factory=tuple):
@@ -450,4 +453,4 @@ def _as_tuple_inner(obj, tuple_factory):
             )
             for k, v in obj.items()
         )
-    return copy.deepcopy(obj)
+    return deepcopy(obj)

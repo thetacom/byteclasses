@@ -36,6 +36,14 @@ byteclasses.types.collections.member module
    :undoc-members:
    :show-inheritance:
 
+byteclasses.types.collections.string module
+-------------------------------------------
+
+.. automodule:: byteclasses.types.collections.string
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 byteclasses.types.collections.structure module
 ----------------------------------------------
 

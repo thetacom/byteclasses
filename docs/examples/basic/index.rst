@@ -4,7 +4,10 @@ Basic Examples
 .. toctree::
 
    primitives
+   characters
+   generics
    bitfield
    fixed_array
-   union
+   string
    structure
+   union

@@ -30,6 +30,8 @@ class UChar(UInt8):
         byte_order: bytes | ByteOrder = ByteOrder.NATIVE.value,
     ) -> None:
         """Initialize UChar instance."""
+        if not isinstance(char, str) or len(char) != 1:
+            raise ValueError("Character value must a single character string.")
         super().__init__(char, byte_order=byte_order)
 
     def __str__(self) -> str:

@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   byteclasses.headers
    byteclasses.types
 
 Submodules

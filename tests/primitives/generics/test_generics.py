@@ -24,10 +24,22 @@ def test_byte_primitive():
     assert byte.data == DATA_BYTE * expected_length
 
 
-def test_byte_init_with_data():
-    """Test Byte init with data."""
+def test_byte_init_with_value():
+    """Test Byte init with value."""
     byte = Byte(b"\x01")
     assert byte.data == b"\x01"
+
+
+def test_byte_init_with_data():
+    """Test Byte init with data."""
+    byte = Byte(data=b"\x01")
+    assert byte.data == b"\x01"
+
+
+def test_byte_init_with_value_and_data():
+    """Test Byte init with value_and_data."""
+    with pytest.raises(ValueError):
+        _ = Byte(b"\x00", data=b"\x01")
 
 
 def test_byte_init_with_invalid_value():
@@ -64,3 +76,15 @@ def test_qword_primitive():
     assert len(qword) == expected_length
     assert qword.value == DATA_BYTE * expected_length
     assert qword.data == DATA_BYTE * expected_length
+
+
+def test_byte_str():
+    """Test Byte __str__ method."""
+    byte = Byte(b"\x01")
+    assert str(byte) == "b'\\x01'"
+
+
+def test_byte_repr():
+    """Test Byte __repr__ method."""
+    byte = Byte(b"\x01")
+    assert repr(byte) == "Byte(data=b'\\x01', byte_order=b'@')"

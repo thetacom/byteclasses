@@ -1,7 +1,6 @@
 """BitField Fixed Length Class."""
 
 from collections.abc import ByteString, Sequence
-from functools import cached_property
 from struct import calcsize
 from typing import overload
 
@@ -26,9 +25,7 @@ class BitField(_FixedSizeType):
             raise ValueError("byte_length must be at least 1 byte")
         self._type_char = TypeChar.BYTE.value * self.byte_length
         self._length: int = calcsize(self._type_char)
-        super().__init__(byte_order)
-        if data:
-            self.data = data
+        super().__init__(byte_order=byte_order, data=data)
 
     def __str__(self) -> str:
         """Return bitfield string representation."""
@@ -47,22 +44,13 @@ class BitField(_FixedSizeType):
                 raise IndexError(f"index {key} out of range")
             return self.get_bit(key)
         if isinstance(key, slice):
-            if key.step is None:
-                step = 1
-            else:
-                step = key.step
+            step = 1 if key.step is None else key.step
             if key.start is None:
-                if step > 0:
-                    start = 0
-                else:
-                    start = self.bit_length - 1
+                start = 0 if step > 0 else self.bit_length - 1
             else:
                 start = key.start
             if key.stop is None:
-                if step > 0:
-                    stop = self.bit_length
-                else:
-                    stop = -1
+                stop = self.bit_length if step > 0 else -1
             else:
                 stop = key.stop
             return [self.get_bit(idx) for idx in range(start, stop, step)]
@@ -119,11 +107,6 @@ class BitField(_FixedSizeType):
         elif isinstance(value, Sequence):
             for idx in range(start, stop, step):
                 self.set_bit(idx, value[idx])
-
-    @cached_property
-    def bit_length(self) -> int:
-        """Calculate instance bit length."""
-        return self._length * 8
 
     def clear_bit(self, idx: int):
         """Clear bit in bitfield instance."""

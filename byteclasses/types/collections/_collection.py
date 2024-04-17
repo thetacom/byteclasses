@@ -18,8 +18,7 @@ def create_collection(
     allowed_types: tuple[type, ...] | None = None,
 ) -> FixedSizeCollection | Callable[[type], FixedSizeCollection]:
     """Create custom collection class."""
-    if isinstance(byte_order, str):
-        byte_order = ByteOrder(bytes(byte_order, encoding="utf8"))
+    byte_order = ByteOrder(byte_order)
 
     def outer_wrapper(cls: type) -> FixedSizeCollection:
         spec = _CollectionClassSpec(

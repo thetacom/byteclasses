@@ -276,3 +276,24 @@ def test_named_bit_set_with_valid_int():
     assert bf.first_bit is True
     bf.first_bit = 0
     assert bf.first_bit is False
+
+
+def test_wide_bitpos():
+    """Test BitPos with non-standard bit width."""
+
+    class CustomBitField(BitField):
+        """Custom BitField with named multi-bit BitPos."""
+
+        lower = BitPos(0, bit_width=4)
+        upper = BitPos(4, bit_width=4)
+
+    cbf = CustomBitField(data=b"\xF0")
+    assert cbf.data == b"\xf0"
+    assert bin(cbf.data[0]) == "0b11110000"
+    assert cbf.lower == 0
+    assert cbf.upper == 15
+    cbf.data = b"\xa5"
+    assert cbf.data == b"\xa5"
+    assert bin(cbf.data[0]) == "0b10100101"
+    assert cbf.lower == 5
+    assert cbf.upper == 10
