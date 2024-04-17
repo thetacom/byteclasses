@@ -36,7 +36,7 @@ class IPv4Addr:
 
 
 @structure(byte_order=b"!", packed=True)
-class IPv4Header:
+class IPv4Hdr:
     """IPv4 Header Structure."""
 
     ver_ihl: VerIhl

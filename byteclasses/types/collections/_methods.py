@@ -216,8 +216,8 @@ def _build_attach_method(
     body = (
         "data_len = len(new_data)",
         f"self_len = len({spec.self_name})",
-        f"if data_len != len({spec.self_name}):",
-        "  raise AttributeError(f'Data length ({data_len}) must match collection length ({self_len}).')",
+        "if data_len < self_len:",
+        "  raise AttributeError(f'Data length ({data_len}) must greater than or equal to {self_len} bytes.')",
         "if isinstance(new_data, memoryview):",
         "  mv: memoryview = new_data",
         "elif isinstance(new_data, bytearray):",
@@ -226,7 +226,7 @@ def _build_attach_method(
         "  mv = memoryview(bytearray(new_data))",
         "else:",
         "  raise TypeError(f'Unsupported data type ({type(new_data)})')",
-        f"{spec.self_name}._data = mv",
+        f"{spec.self_name}._data = mv[:self_len]",
         f"{spec.self_name}._attach_members(retain_value)",
     )
     return _create_method(

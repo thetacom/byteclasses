@@ -14,7 +14,7 @@ class OffFlag(BitField):
 
 
 @structure(byte_order=b"!", packed=True)
-class TCPHeader:
+class TCPHdr:
     """TCP Header Class."""
 
     src_port: UInt16

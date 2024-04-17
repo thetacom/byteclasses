@@ -5,7 +5,7 @@ from byteclasses.types.primitives.integers import UInt16
 
 
 @structure(byte_order=b"!", packed=True)
-class UDPHeader:
+class UDPHdr:
     """UDP Header Class."""
 
     src_port: UInt16

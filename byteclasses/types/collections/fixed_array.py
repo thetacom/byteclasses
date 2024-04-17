@@ -1,6 +1,6 @@
 """Fixed length byte array types for binary data."""
 
-from collections.abc import ByteString, Iterable
+from collections.abc import ByteString, Iterable, Iterator
 from numbers import Number
 
 from ..._enums import ByteOrder
@@ -54,6 +54,10 @@ class FixedArray:
     def __bytes__(self) -> bytes:
         """Return array bytes."""
         return bytes(self._data)
+
+    def __iter__(self) -> Iterator:
+        """Return an item iterator."""
+        return iter(self._items)
 
     def __getitem__(self, key: int | slice) -> _FixedSizeType | list[_FixedSizeType]:
         """Implement getitem descriptor."""

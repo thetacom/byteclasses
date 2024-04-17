@@ -24,7 +24,7 @@ class IPv6Addr:
 
 
 @structure(byte_order=b"!", packed=True)
-class IPv6Header:
+class IPv6Hdr:
     """IPv6 Header Structure."""
 
     vtf: VTF
