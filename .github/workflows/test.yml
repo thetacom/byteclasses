@@ -37,19 +37,18 @@ jobs:
           virtualenvs-in-project: true
           virtualenvs-path: .venv
           installer-parallel: true
-      - name: Load cached venv
-        id: cached-dependencies
-        uses: actions/cache@v4
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+      # - name: Load cached venv
+      #   id: cached-dependencies
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: .venv
+      #     key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - run: poetry --version
-      - name: Install external packages
-        run: sudo apt-get install -y libmagic1
-      - name: Install dependencies
-        if: steps.cached-dependencies.outputs.cache-hit != 'true'
+      - name: Activate virtual environment
+        run: source $VENV
+      - name: Install package and dependencies
+        # if: steps.cached-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
       - name: Run test suite
         run: |
-          source $VENV
           make test
