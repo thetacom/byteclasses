@@ -43,12 +43,10 @@ jobs:
       #   with:
       #     path: .venv
       #     key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
-      - run: poetry --version
-      - name: Activate virtual environment
-        run: source $VENV
       - name: Install package and dependencies
         # if: steps.cached-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
       - name: Run test suite
         run: |
+          poetry shell
           make test
