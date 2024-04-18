@@ -14,14 +14,16 @@ __all__ = ["structure"]
 
 
 @overload
-def structure(*, byte_order: bytes | ByteOrder, packed: bool) -> Callable[[type], FixedSizeCollection]: ...
+def structure(
+    cls: type | None, /, *, byte_order: bytes | ByteOrder, packed: bool
+) -> Callable[[type], FixedSizeCollection]: ...
 
 
 @overload
-def structure(cls: type, /, *, byte_order: bytes | ByteOrder, packed: bool) -> FixedSizeCollection: ...
+def structure(cls: type) -> FixedSizeCollection: ...
 
 
-def structure(
+def structure(  # type: ignore
     cls: type | None = None,
     /,
     *,
