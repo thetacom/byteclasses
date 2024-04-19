@@ -6,6 +6,7 @@ from functools import cached_property
 from typing import SupportsBytes
 
 from .._enums import ByteOrder
+from ..constants import _BYTECLASS
 
 __all__: list[str] = []
 
@@ -122,3 +123,6 @@ class _FixedSizeType(ABC, SupportsBytes):
         self._data = mv
         if retain_value:
             self._data[:] = temp
+
+
+setattr(_FixedSizeType, _BYTECLASS, True)

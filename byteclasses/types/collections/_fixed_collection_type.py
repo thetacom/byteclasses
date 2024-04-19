@@ -7,6 +7,7 @@ from collections.abc import Callable
 from copy import deepcopy
 from typing import Any, cast
 
+from ...constants import _BYTECLASS
 from .._fixed_size_type import _FixedSizeType
 from ._collection_class_spec import _CollectionClassSpec
 from ._collection_params import _CollectionParams
@@ -116,7 +117,7 @@ def _process_class(spec: _CollectionClassSpec) -> FixedSizeCollection:
         # (w.r.t. typing.get_type_hints) but will still function
         # correctly.
         globals_ = {}
-
+    setattr(spec.base_cls, _BYTECLASS, True)
     setattr(
         spec.base_cls,
         _PARAMS,

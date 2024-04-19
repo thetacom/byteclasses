@@ -4,10 +4,12 @@ from collections.abc import ByteString, Iterable, Iterator
 from numbers import Number
 
 from ..._enums import ByteOrder
+from ...constants import _BYTECLASS
 from ...types._fixed_numeric_type import _FixedNumericType
 from ...types._fixed_size_type import _FixedSizeType
+from ...util import is_byteclass
 from ..primitives.integers import UInt8
-from .member import _MEMBERS
+from .member import _MEMBERS, is_fixed_collection
 
 
 class FixedArray:
@@ -16,7 +18,7 @@ class FixedArray:
     def __init__(
         self,
         item_count: int,
-        item_type: type[_FixedSizeType] = UInt8,
+        item_type: type = UInt8,
         /,
         *,
         byte_order: bytes | ByteOrder = ByteOrder.NATIVE,
@@ -30,13 +32,17 @@ class FixedArray:
         self._byte_order: ByteOrder = ByteOrder(byte_order)
         if item_count < 2:
             raise ValueError(f"Invalid item_count: {item_count}; must be >= 2")
-        if isinstance(item_type, type):
-            if issubclass(item_type, _FixedSizeType):
-                self._items = [item_type(byte_order=self._byte_order) for _ in range(item_count)]
-            item_instance = self._items[0]
+        if not isinstance(item_type, type):
+            raise TypeError("Invalid item_type must be a Byteclass not an instance.")
+        if not is_byteclass(item_type):
+            raise TypeError(
+                f"Invalid item type {item_type.__name__}({item_type.__class__.__name__}): Must be a Byteclass type."
+            )
+        if is_fixed_collection(item_type):
+            self._items = [item_type() for _ in range(item_count)]
         else:
-            raise TypeError(f"Invalid item type ({item_type.__class__.__name__}): Must be a FixedSizeType class.")
-        self._type_char: bytes = item_instance.type_char * item_count
+            self._items = [item_type(byte_order=self._byte_order) for _ in range(item_count)]
+        item_instance = self._items[0]
         item_length = len(item_instance)
         byte_length = item_length * item_count
         self._length = byte_length
@@ -131,4 +137,5 @@ class FixedArray:
             self._items[i].attach(self._data[idx : idx + item_length], retain_value)
 
 
+setattr(FixedArray, _BYTECLASS, True)
 setattr(FixedArray, _MEMBERS, [])

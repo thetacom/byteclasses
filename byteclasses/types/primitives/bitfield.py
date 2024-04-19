@@ -138,3 +138,21 @@ class BitField(_FixedSizeType):
             mask = ~(1 << offset)
             byte_value &= mask
         self._data[byte_idx] = byte_value
+
+
+class BitField16(BitField):
+    """16-bit BitField."""
+
+    byte_length = 2
+
+
+class BitField32(BitField):
+    """32-bit BitField."""
+
+    byte_length = 4
+
+
+class BitField64(BitField):
+    """64-bit BitField."""
+
+    byte_length = 8

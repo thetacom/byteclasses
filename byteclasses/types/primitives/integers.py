@@ -18,14 +18,17 @@ __all__ = [
     "Int16",
     "Short",
     "UInt16",
+    "Ptr16",
     "UShort",
     "Int32",
     "UInt32",
     "UInt",
+    "Ptr32",
     "Long",
     "ULong",
     "Int64",
     "UInt64",
+    "Ptr64",
     "LongLong",
     "ULongLong",
 ]
@@ -253,6 +256,21 @@ class UInt16(_FixedInt):
 UShort = UInt16
 
 
+class Ptr16(UInt16):
+    """16-bit Pointer (UInt16).
+
+    String representation displays in hexadecimal.
+    """
+
+    def __str__(self) -> str:
+        """Return Ptr16 string representation."""
+        return f"0x{self.value:04x}"
+
+    def __repr__(self) -> str:
+        """Return the raw representation."""
+        return f"{self.__class__.__name__}({hex(self.value)})"
+
+
 class Int32(_FixedInt):
     """32-bit signed integer."""
 
@@ -273,6 +291,21 @@ class UInt32(_FixedInt):
 
 
 UInt = UInt32
+
+
+class Ptr32(UInt32):
+    """32-bit Pointer (UInt32).
+
+    String representation displays in hexadecimal.
+    """
+
+    def __str__(self) -> str:
+        """Return Ptr32 string representation."""
+        return f"0x{self.value:08x}"
+
+    def __repr__(self) -> str:
+        """Return the raw representation."""
+        return f"{self.__class__.__name__}({hex(self.value)})"
 
 
 class Long(_FixedInt):
@@ -311,3 +344,18 @@ class UInt64(_FixedInt):
 
 
 ULongLong = UInt64
+
+
+class Ptr64(UInt64):
+    """64-bit Pointer (UInt64).
+
+    String representation displays in hexadecimal.
+    """
+
+    def __str__(self) -> str:
+        """Return Ptr64 string representation."""
+        return f"0x{self.value:016x}"
+
+    def __repr__(self) -> str:
+        """Return the raw representation."""
+        return f"{self.__class__.__name__}({hex(self.value)})"
