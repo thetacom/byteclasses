@@ -52,16 +52,9 @@ class SEntry(_DataHandler):
             return hex(self.hdr.sh_type)
 
     @property
-    def flags(self) -> dict[str, bool]:
+    def flags(self):
         """Return SEntry flags property."""
-        return {
-            "WRITE": self.hdr.sh_flags.WRITE,
-            "ALLOC": self.hdr.sh_flags.ALLOC,
-            "EXECINSTR": self.hdr.sh_flags.EXECINSTR,
-            "RELA_LIVEPATCH": self.hdr.sh_flags.RELA_LIVEPATCH,
-            "RO_AFTER_INIT": self.hdr.sh_flags.RO_AFTER_INIT,
-            "MASKPROC": self.hdr.sh_flags.MASKPROC,
-        }
+        return self.hdr.sh_flags
 
     @property
     def addr(self) -> str:

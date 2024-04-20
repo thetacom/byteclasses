@@ -93,32 +93,32 @@ class Elf(_DataHandler):
             return hex(self.hdr.e_version)
 
     @property
-    def flags(self) -> str:
+    def flags(self) -> dict[str, bool | int]:
         """Return Elf Flags property."""
-        return str(self.hdr.e_flags)
+        return self.hdr.e_flags.flags
 
     @property
-    def entry(self) -> str:
+    def entry(self):
         """Return Elf Entry property."""
-        return str(self.hdr.e_entry)
+        return self.hdr.e_entry
 
     @property
-    def prog_hdr_offset(self) -> str:
+    def prog_hdr_offset(self):
         """Return Elf Program Hdr Offset property."""
-        return str(self.hdr.e_phoff)
+        return self.hdr.e_phoff
 
     @property
-    def section_hdr_offset(self) -> str:
+    def section_hdr_offset(self):
         """Return Elf Section Hdr Offset property."""
-        return str(self.hdr.e_shoff)
+        return self.hdr.e_shoff
 
 
 class Elf32(Elf):
     """32-bit Elf Executable Handler."""
 
-    def __init__(self, data: bytes | bytearray = bytearray(b"")) -> None:
+    def __init__(self, elf_data: bytes | bytearray = bytearray(b"")) -> None:
         """Initialize 32-bit Elf Handler instance."""
-        super().__init__(ElfHdr32, data)
+        super().__init__(ElfHdr32, elf_data)
 
     @cached_property
     def pogram_table(self) -> list[PEntry32]:
@@ -148,9 +148,9 @@ class Elf32(Elf):
 class Elf64(Elf):
     """64-bit Elf Executable Handler."""
 
-    def __init__(self, data: bytes | bytearray = bytearray(b"")) -> None:
+    def __init__(self, elf_data: bytes | bytearray = bytearray(b"")) -> None:
         """Initialize 64-bit Elf Handler instance."""
-        super().__init__(ElfHdr64, data)
+        super().__init__(ElfHdr64, elf_data)
 
     @cached_property
     def program_table(self) -> list[PEntry64]:

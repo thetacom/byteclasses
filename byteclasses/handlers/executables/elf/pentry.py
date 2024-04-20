@@ -66,13 +66,9 @@ class PEntry(_DataHandler):
         return str(self.hdr.p_filesz)
 
     @property
-    def flags(self) -> dict[str, bool]:
+    def flags(self):
         """Return PEntry flags property."""
-        return {
-            "read": self.hdr.p_flags.read,
-            "write": self.hdr.p_flags.write,
-            "execute": self.hdr.p_flags.execute,
-        }
+        return self.hdr.p_flags.flags
 
 
 class PEntry32(PEntry):
