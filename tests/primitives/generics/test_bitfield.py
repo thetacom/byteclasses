@@ -2,8 +2,7 @@
 
 import pytest
 
-from byteclasses.types.primitives.bit_pos import BitPos, bitpos2mask, mask2bitpos
-from byteclasses.types.primitives.bitfield import BitField
+from byteclasses.types.primitives.bitfield import BitField, BitPos, bitpos2mask, mask2bitpos
 
 
 class TestBitField(BitField):
@@ -183,10 +182,11 @@ def test_bitfield_invalid_bit_index():
 def test_custom_bitfield_creation():
     """Create custom bitfield."""
 
-    bf = TestBitField()
-    assert bf.bit_length == 16
-    assert len(bf) == 2
-    assert bf.data == b"\x00\x00"
+    tbf = TestBitField()
+    assert tbf.bit_length == 16
+    assert len(tbf) == 2
+    assert tbf.data == b"\x00\x00"
+    assert tbf.flags == {"first_bit": False, "middle_bit": 0, "last_bit": False}
 
 
 def test_bitfield_init_with_data():
@@ -199,9 +199,13 @@ def test_bitfield_init_with_data():
 def test_bitfield_str_dunder():
     """Test BitField __str__."""
     bf = BitField()
-    assert str(bf) == "00000000"
+    assert str(bf) == r"BitField(00000000, flags={})"
     bf.data = b"\x01"
-    assert str(bf) == "10000000"
+    assert str(bf) == r"BitField(10000000, flags={})"
+    tbf = TestBitField()
+    assert str(tbf) == r"TestBitField(0000000000000000, flags={'first_bit': False, 'middle_bit': 0, 'last_bit': False})"
+    tbf.data = b"\x01\x02"
+    assert str(tbf) == r"TestBitField(1000000001000000, flags={'first_bit': True, 'middle_bit': 2, 'last_bit': False})"
 
 
 def test_bitfield_repr_dunder():
@@ -237,6 +241,18 @@ def test_get_named_bit_pos_on_non_bitfield():
         _ = bc.named_bit
 
 
+def test_bit_pos_invalid_bit_width():
+    """Test exception of BitPos with invalid bit_width."""
+    with pytest.raises(ValueError):
+
+        class TestClass(BitField):
+            """Test Class."""
+
+            named_bit = BitPos(0, bit_width=0)
+
+        _ = TestClass()
+
+
 def test_set_named_bit_pos_on_non_bitfield():
     """Test exception when setting named bit from non-bitfield class."""
     with pytest.raises(TypeError):
@@ -252,21 +268,23 @@ def test_set_named_bit_pos_on_non_bitfield():
 
 def test_named_bit_get():
     """Get bitfield bit using named bit."""
-    bf = TestBitField()
-    assert bf.data == b"\x00\x00"
-    assert bf.first_bit is False
-    bf.data = b"\x01\x00"
-    assert bf.first_bit is True
+    tbf = TestBitField()
+    assert tbf.data == b"\x00\x00"
+    assert tbf.first_bit is False
+    tbf.data = b"\x01\x00"
+    assert tbf.first_bit is True
+    assert tbf.flags == {"first_bit": True, "middle_bit": 0, "last_bit": False}
 
 
 def test_named_bit_set_with_bool():
     """Set bitfield bit using named bit and a boolean value."""
-    bf = TestBitField()
-    assert bf.data == b"\x00\x00"
-    bf.first_bit = True
-    assert bf.first_bit is True
-    bf.first_bit = False
-    assert bf.first_bit is False
+    tbf = TestBitField()
+    assert tbf.data == b"\x00\x00"
+    tbf.first_bit = True
+    assert tbf.first_bit is True
+    tbf.first_bit = False
+    assert tbf.first_bit is False
+    assert tbf.flags == {"first_bit": False, "middle_bit": 0, "last_bit": False}
 
 
 def test_named_bit_set_with_valid_int():
@@ -293,11 +311,14 @@ def test_bitfield_get_wide_bitpos():
     assert bin(cbf.data[0]) == "0b11110000"
     assert cbf.lower == 0
     assert cbf.upper == 15
+    assert cbf.flags == {"lower": 0, "upper": 15}
+
     cbf.data = b"\xa5"
     assert cbf.data == b"\xa5"
     assert bin(cbf.data[0]) == "0b10100101"
     assert cbf.lower == 5
     assert cbf.upper == 10
+    assert cbf.flags == {"lower": 5, "upper": 10}
 
 
 def test_bitfield_set_wide_bitpos():
@@ -339,6 +360,15 @@ def test_convert_bit_mask_to_bitpos():
                 assert bit_pos.bit_width == bit_width
                 assert bit_pos.idx == idx
                 val <<= 1
+
+
+def test_convert_invalid_bit_mask_to_bitpos():
+    """Test converting invalid bit mask integers into BitPos instances."""
+    invalid_masks = [0b0, 0b101, 0b1101, 0b1011, 0b10000001]
+
+    for mask in invalid_masks:
+        with pytest.raises(ValueError):
+            _ = mask2bitpos(mask)
 
 
 def test_convert_bitpos_to_bit_mask():
