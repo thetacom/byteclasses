@@ -2,7 +2,7 @@
 
 import pytest
 
-from byteclasses.types.primitives.bit_pos import BitPos
+from byteclasses.types.primitives.bit_pos import BitPos, bitpos2mask, mask2bitpos
 from byteclasses.types.primitives.bitfield import BitField
 
 
@@ -322,3 +322,40 @@ def test_bitfield_set_wide_bitpos():
     assert cbf.lower == 5
     cbf.upper = 16
     assert bin(cbf.data[0]) == "0b101"
+
+
+def test_convert_bit_mask_to_bitpos():
+    """Test converting bit mask integers into BitPos instances."""
+    for bit_width in range(65):
+        val = 0
+        for _ in range(bit_width):
+            val = (val << 1) | 1
+        for idx in range(65 - bit_width):
+            if bit_width == 0:
+                with pytest.raises(ValueError):
+                    bit_pos = mask2bitpos(val)
+            else:
+                bit_pos = mask2bitpos(val)
+                assert bit_pos.bit_width == bit_width
+                assert bit_pos.idx == idx
+                val <<= 1
+
+
+def test_convert_bitpos_to_bit_mask():
+    """Test converting BitPos instances bit mask integers."""
+    assert bitpos2mask(BitPos(0)) == 0x1
+    assert bitpos2mask(BitPos(1)) == 0x2
+    assert bitpos2mask(BitPos(2)) == 0x4
+    assert bitpos2mask(BitPos(3)) == 0x8
+    for bit_width in range(65):
+        val = 0
+        for _ in range(bit_width):
+            val = (val << 1) | 1
+        for idx in range(65 - bit_width):
+            if bit_width == 0:
+                with pytest.raises(ValueError):
+                    bit_pos = BitPos(idx, bit_width=bit_width)
+            else:
+                bit_pos = BitPos(idx, bit_width=bit_width)
+                assert bitpos2mask(bit_pos) == val
+            val <<= 1
