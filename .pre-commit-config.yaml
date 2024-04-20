@@ -83,7 +83,6 @@ repos:
   hooks:
   - id: pylint
     additional_dependencies: [pytest>=8.1.1]
-    args: ["./byteclasses"]
 
 - repo: https://github.com/regebro/pyroma
   rev: '4.2'
