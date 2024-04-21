@@ -17,6 +17,16 @@ from byteclasses.types.primitives.integers import (
     UnderflowError,
     _FixedInt,
 )
+from byteclasses.util import is_byteclass, is_byteclass_instance
+
+
+def test_fixedint_is_byteclass():
+    """Test is_byteclass check."""
+    assert is_byteclass(int) is False
+    assert is_byteclass(Int8()) is False
+    assert is_byteclass(Int8) is True
+    assert is_byteclass_instance(Int8()) is True
+    assert is_byteclass_instance(Int8) is False
 
 
 def test_fixedint_missing_type_char_property():

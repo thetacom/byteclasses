@@ -126,6 +126,30 @@ class BitField(_FixedSizeType):
         else:
             raise NotImplementedError
 
+    @property
+    def flags(self) -> dict[str, bool | int]:
+        """Return a dictionary of all named bit positions."""
+        return {
+            name: getattr(self, name) for name in type(self).__dict__ if isinstance(getattr(type(self), name), BitPos)
+        }
+
+    @property
+    def value(self) -> list[bool | list[bool]]:
+        """Return a boolean value list for all bits within BitField."""
+        return [self[idx] for idx in range(self.bit_length)]
+
+    @value.setter
+    def value(self, new_values: list[bool] | dict[int, bool]):
+        """Set BitField values."""
+        if isinstance(new_values, list):
+            for i, val in enumerate(new_values):
+                self[i] = val
+        elif isinstance(new_values, dict):
+            for key, value in new_values.items():
+                self[key] = value
+        else:
+            raise NotImplementedError()
+
     def _set_bit_by_idx(self, idx: int, value: int | bool) -> None:
         """Set bit from index."""
         if idx < 0:
@@ -191,13 +215,6 @@ class BitField(_FixedSizeType):
             mask = ~(1 << offset)
             byte_value &= mask
         self._data[byte_idx] = byte_value
-
-    @property
-    def flags(self) -> dict[str, bool | int]:
-        """Return a dictionary of all named bit positions."""
-        return {
-            name: getattr(self, name) for name in type(self).__dict__ if isinstance(getattr(type(self), name), BitPos)
-        }
 
 
 class BitField16(BitField):

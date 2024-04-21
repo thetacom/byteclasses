@@ -1,6 +1,6 @@
 """Abstract fixed size type."""
 
-from abc import ABC
+from abc import ABC, abstractmethod
 from collections.abc import ByteString
 from functools import cached_property
 from typing import SupportsBytes
@@ -123,6 +123,16 @@ class _FixedSizeType(ABC, SupportsBytes):
         self._data = mv
         if retain_value:
             self._data[:] = temp
+
+    @property
+    @abstractmethod
+    def value(self):
+        """Get instance value."""
+
+    @value.setter
+    @abstractmethod
+    def value(self):
+        """Set instance value."""
 
 
 setattr(_FixedSizeType, _BYTECLASS, True)
