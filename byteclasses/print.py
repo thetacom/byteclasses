@@ -14,7 +14,7 @@ from .types.collections.member import _MEMBERS, is_fixed_collection
 from .util import is_byteclass_instance
 
 if TYPE_CHECKING:
-    from .console import Console
+    from rich.console import Console
 
 COLOR_NAMES = (
     "bright_black",
@@ -25,6 +25,8 @@ COLOR_NAMES = (
     "bright_magenta",
     "bright_cyan",
 )
+
+FILL_COLOR = "white"
 
 
 def byteclass_info(
@@ -132,19 +134,12 @@ def primitive_table(
     _console.print(table)
 
 
-def _data_str(data: ByteString) -> str:
+def _data_str(data: ByteString, color: str | None = None) -> str:
     """Return a hexedecimal string from a sequence of bytes."""
+    data_str = " ".join([f"{byte_:02x}" for byte_ in data])
+    if color is not None:
+        return f"[{color}]{data_str}[/{color}]"
     return " ".join([f"{byte_:02x}" for byte_ in data])
-
-
-member_colors = cycle(COLOR_NAMES)
-
-
-def _mbr_line(obj, member) -> str:
-    """Generate member line."""
-    attr = getattr(obj, member)
-    data_str = _data_str(attr.data)
-    return data_str
 
 
 def byteclass_inspect(
@@ -174,7 +169,7 @@ def _print_byteclass_collection_panel(obj, *, byte_width: int, console):
     panel_width = line_length + v_offset_width
 
     lines.extend(_generate_header_lines(v_offset_width, byte_width))
-    lines.extend(_generate_collection_lines(obj, v_offset_width, byte_width, line_length))
+    lines.extend(_generate_collection_lines(obj, v_offset_width, byte_width))
 
     _console = get_console() if console is None else console
     byte_panel = Panel("\n".join(lines), title="Byteclass Inspect", width=panel_width)
@@ -190,7 +185,7 @@ def _print_byteclass_primitive_panel(obj, *, byte_width: int, console):
     panel_width = line_length + v_offset_width + panel_padding
 
     lines.extend(_generate_header_lines(v_offset_width, byte_width))
-    lines.extend(_generate_primitive_lines(obj, v_offset_width, byte_width, line_length))
+    lines.extend(_generate_primitive_lines(obj, v_offset_width, byte_width))
 
     _console = get_console() if console is None else console
     byte_panel = Panel("\n".join(lines), title="Byteclass Inspect", width=panel_width)
@@ -205,52 +200,86 @@ def _generate_header_lines(v_offset_width: int, byte_width: int) -> list[str]:
     return [h_offset_line, separator_line]
 
 
-def _generate_collection_lines(obj, v_offset_width: int, byte_width, line_length) -> list[str]:
-    """Generate collection data lines from object."""
-    lines = []
-    v_offset = 0
-    current_line_len = 0
-    data_line = ""
-    for member in getattr(obj, _MEMBERS):
-        color = next(member_colors)
-        mbr_data_line = _mbr_line(obj, member)
-        mbr_line_len = len(mbr_data_line)
-        if current_line_len + mbr_line_len + v_offset_width + 1 < line_length:
-            current_line_len += mbr_line_len + 1
-            data_line += f"|[{color}]" + mbr_data_line + f"[/{color}]"
-        else:
-            remainder = line_length - v_offset_width - current_line_len
-            data_line += f"|[{color}]" + mbr_data_line[: remainder + 1] + f"[/{color}]"
-            lines.append(f"{hex(v_offset).ljust(v_offset_width, ' ')}" + data_line)
-            current_line_len = len(mbr_data_line[remainder + 1 :]) + 1
-            data_line = f"[{color}]" + mbr_data_line[remainder + 1 :] + f"[/{color}]"
-            v_offset += byte_width
+def _generate_data_line(data_str: str, v_offset: int, v_offset_width: int) -> str:
+    """Generate a data line."""
+    return f"{hex(v_offset).ljust(v_offset_width, ' ')}{data_str}"
 
-    if data_line:
-        lines.append(f"{hex(v_offset).ljust(v_offset_width, ' ')}" + data_line)
+
+def _generate_collection_lines(obj, v_offset_width: int, byte_width: int) -> list[str]:
+    """Generate collection data lines from object."""
+    member_colors = cycle(COLOR_NAMES)
+    lines = []
+    curr_offset = 0
+    line_offset = 0
+    data_str = ""
+    for member_name in getattr(obj, _MEMBERS):
+        print(member_name)
+        member = getattr(obj, member_name)
+        color = next(member_colors)
+        mbr_len = len(member)
+        # Insert padding
+        if curr_offset != member.offset:
+            print("Inserting padding")
+            padding_len = member.offset - curr_offset
+            if line_offset + padding_len < byte_width:
+                data_str += (
+                    f"[{FILL_COLOR}]|"
+                    + _data_str(obj.data[curr_offset : member.offset], FILL_COLOR)
+                    + f"[/{FILL_COLOR}]"
+                )
+                curr_offset += padding_len
+                line_offset += padding_len
+            else:
+                part1_len = byte_width - line_offset
+                part2_len = padding_len - part1_len
+                data_str += (
+                    f"[{FILL_COLOR}]|"
+                    + _data_str(obj.data[curr_offset : curr_offset + part1_len], color)
+                    + f"[/{FILL_COLOR}]"
+                )
+                lines.append(_generate_data_line(data_str, (curr_offset // byte_width) * byte_width, v_offset_width))
+                data_str = (
+                    f"[{FILL_COLOR}]|"
+                    + _data_str(obj.data[curr_offset + part1_len : member.offset], color)
+                    + f"[/{FILL_COLOR}]"
+                )
+                curr_offset += padding_len
+                line_offset = part2_len
+
+        if line_offset + mbr_len < byte_width:
+            data_str += f"[{FILL_COLOR}]|[/{FILL_COLOR}]" + _data_str(member.data, color)
+            curr_offset += mbr_len
+            line_offset += mbr_len
+        else:
+            part1_len = byte_width - line_offset
+            part2_len = mbr_len - part1_len
+            data_str += f"[{FILL_COLOR}]|[/{FILL_COLOR}]" + _data_str(member.data[:part1_len], color)
+            lines.append(_generate_data_line(data_str, (curr_offset // byte_width) * byte_width, v_offset_width))
+            data_str = _data_str(member.data[part1_len:], color)
+            curr_offset += mbr_len
+            line_offset = part2_len
+    if data_str:
+        lines.append(_generate_data_line(data_str, (curr_offset // byte_width) * byte_width, v_offset_width))
     return lines
 
 
-def _generate_primitive_lines(obj, v_offset_width: int, byte_width, line_length) -> list[str]:
+def _generate_primitive_lines(obj, v_offset_width: int, byte_width) -> list[str]:
     """Generate primitive data lines from object."""
-    lines = []
-    v_offset = 0
-    current_line_len = 0
-    data_line = ""
+    member_colors = cycle(COLOR_NAMES)
     color = next(member_colors)
-    data_line = _data_str(obj.data)
-    line_len = len(data_line)
-    if current_line_len + line_len + v_offset_width + 1 < line_length:
-        current_line_len += line_len + 1
-        data_line += f"|[{color}]" + data_line + f"[/{color}]"
-    else:
-        remainder = line_length - v_offset_width - current_line_len
-        data_line += f"|[{color}]" + data_line[: remainder + 1] + f"[/{color}]"
-        lines.append(f"{hex(v_offset).ljust(v_offset_width, ' ')}" + data_line)
-        current_line_len = len(data_line[remainder + 1 :]) + 1
-        data_line = f"[{color}]" + data_line[remainder + 1 :] + f"[/{color}]"
-        v_offset += byte_width
-
-    if data_line:
-        lines.append(f"{hex(v_offset).ljust(v_offset_width, ' ')}" + data_line)
+    lines = []
+    obj_len = len(obj)
+    curr_offset = 0
+    while curr_offset < obj_len:
+        if obj_len - curr_offset < byte_width:
+            data_str = f"[{FILL_COLOR}]|[/{FILL_COLOR}]" + _data_str(obj.data[curr_offset:], color)
+            curr_offset = obj_len
+        else:
+            data_str = f"[{FILL_COLOR}]|[/{FILL_COLOR}]" + _data_str(
+                obj.data[curr_offset : curr_offset + byte_width], color
+            )
+            lines.append(_generate_data_line(data_str, (curr_offset // byte_width) * byte_width, v_offset_width))
+            curr_offset += byte_width
+    if data_str:
+        lines.append(_generate_data_line(data_str, (curr_offset // byte_width) * byte_width, v_offset_width))
     return lines
