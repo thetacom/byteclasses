@@ -75,6 +75,8 @@ class BitField(_FixedSizeType):
             raise ValueError("byte_length must be at least 1 byte")
         self._type_char = TypeChar.BYTE.value * self.byte_length
         self._length: int = calcsize(self._type_char)
+        if data is not None and len(data) != self._length:
+            raise ValueError(f"Data length must be {self._length} bytes")
         super().__init__(byte_order=byte_order, data=data)
 
     def __str__(self) -> str:
