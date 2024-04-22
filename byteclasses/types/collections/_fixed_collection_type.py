@@ -123,7 +123,7 @@ def _process_class(spec: _CollectionClassSpec) -> FixedSizeCollection:
         _PARAMS,
         _CollectionParams(spec),
     )
-    spec.attributes.extend(["_length", "_data", "_member_offsets"])
+    spec.attributes.extend(["_length", "_data"])
     # Find our base classes in reverse MRO order, and exclude
     # ourselves.  In reversed order so that more derived classes
     # override earlier member definitions in base classes.

@@ -164,17 +164,16 @@ def _init_members(spec: "_CollectionClassSpec", globals_: dict[str, Any]) -> lis
     """Initialize all class members."""
     body: list[str] = []
     for member_ in spec.members:
-        line = _init_member(member_, globals_, spec.self_name)
-        if line:
-            body.extend(
-                [
-                    line,
-                    "try:",
-                    f"  {spec.self_name}.{member_.name}.byte_order = {spec.byte_order.value!r}",
-                    "except AttributeError:",
-                    "  pass",
-                ]
-            )
+        init_line = _init_member(member_, globals_, spec.self_name)
+        body.extend(
+            [
+                init_line,
+                "try:",
+                f"  {spec.self_name}.{member_.name}.byte_order = {spec.byte_order.value!r}",
+                "except AttributeError:",
+                "  pass",
+            ]
+        )
     return body
 
 

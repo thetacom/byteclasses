@@ -182,7 +182,6 @@ def _build_collection_init_method(
     }
     body = [
         _member_assign("_length", "length", spec.self_name),
-        _member_assign("_member_offsets", "member_offsets", spec.self_name),
         # Initialize _data
         _member_assign("_data", "memoryview(bytearray(length))", spec.self_name),
         # Attach members to slices of _data memoryview
@@ -190,7 +189,7 @@ def _build_collection_init_method(
     ]
     return _create_method(
         "_collection_init",
-        (spec.self_name, "length: int, member_offsets: list[int]"),
+        (spec.self_name, "length: int"),
         body,
         locals_=locals_,
         globals_=globals_,
@@ -252,11 +251,11 @@ def _build_attach_members_method(
     }
     lengths_str = "[" + ",".join(f"len(self.{member_.name})" for member_ in spec.members) + "]"
     body: list[str] = [f"member_lengths = {lengths_str}"]
-    for idx, member_ in enumerate(spec.members):
+    for member_ in spec.members:
         body.append(
             f"{spec.self_name}.{member_.name}.attach("
-            f"{spec.self_name}._data[{spec.self_name}._member_offsets[{idx}]:"
-            f"{spec.self_name}._member_offsets[{idx}] + member_lengths[{idx}]], retain_value)"
+            f"{spec.self_name}._data[{spec.self_name}.{member_.name}.offset:"
+            f"{spec.self_name}.{member_.name}.offset + len({spec.self_name}.{member_.name})], retain_value)"
         )
 
     return _create_method(

@@ -48,16 +48,18 @@ def _build_union_init_method(
 
     body = []
     body.extend(_init_members(spec, globals_))
-    # Collect union member lengths
-    lengths_str = "[" + ",".join(f"len(self.{member_.name})" for member_ in spec.members) + "]"
 
     # Initialize union member offsets to 0
+    for member_ in spec.members:
+        body.append(f"{spec.self_name}.{member_.name}.offset = 0")
+
+    # Collect union member lengths
+    lengths_str = "[" + ",".join(f"len(self.{member_.name})" for member_ in spec.members) + "]"
     body.extend(
         [
             f"member_lengths = {lengths_str}",
-            "member_offsets = [0 for _ in member_lengths]",
             "collection_length = max(member_lengths)",
-            f"{spec.self_name}._collection_init(collection_length, member_offsets)",
+            f"{spec.self_name}._collection_init(collection_length)",
         ]
     )
 
