@@ -2,14 +2,14 @@
 
 from collections.abc import ByteString, Iterable, Iterator
 from numbers import Number
+from typing import overload
 
 from ..._enums import ByteOrder
-from ...constants import _BYTECLASS
+from ...constants import _BYTECLASS, _MEMBERS
 from ...types._fixed_numeric_type import _FixedNumericType
 from ...types._fixed_size_type import _FixedSizeType
-from ...util import is_byteclass
+from ...util import is_byteclass, is_byteclass_collection
 from ..primitives.integers import UInt8
-from .member import _MEMBERS, is_fixed_collection
 
 
 class FixedArray:
@@ -38,12 +38,16 @@ class FixedArray:
             raise TypeError(
                 f"Invalid item type {item_type.__name__}({item_type.__class__.__name__}): Must be a Byteclass type."
             )
-        if is_fixed_collection(item_type):
-            self._items = [item_type() for _ in range(item_count)]
+        if is_byteclass_collection(item_type):
+            self._items: tuple[_FixedSizeType] = tuple(item_type() for _ in range(item_count))
         else:
-            self._items = [item_type(byte_order=self._byte_order) for _ in range(item_count)]
+            self._items = tuple(item_type(byte_order=self._byte_order) for _ in range(item_count))
         item_instance = self._items[0]
         item_length = len(item_instance)
+        offset = 0
+        for item in self._items:
+            item.offset = offset
+            offset += item_length
         byte_length = item_length * item_count
         self._length = byte_length
         self._data = memoryview(bytearray(byte_length))
@@ -65,7 +69,13 @@ class FixedArray:
         """Return an item iterator."""
         return iter(self._items)
 
-    def __getitem__(self, key: int | slice) -> _FixedSizeType | list[_FixedSizeType]:
+    @overload
+    def __getitem__(self, key: int) -> _FixedSizeType: ...
+
+    @overload
+    def __getitem__(self, key: slice) -> tuple[_FixedSizeType]: ...
+
+    def __getitem__(self, key: int | slice) -> _FixedSizeType | tuple[_FixedSizeType]:
         """Implement getitem descriptor."""
         if isinstance(key, (int, slice)):
             return self._items[key]
@@ -76,8 +86,7 @@ class FixedArray:
         if isinstance(key, int):
             item = self._items[key]
             if isinstance(value, Number) and isinstance(item, _FixedNumericType):
-                item.value = value
-                self._items[key] = item
+                self._items[key].value = value
             elif isinstance(value, _FixedSizeType) and type(self._items[key] == type(value)):
                 self._items[key].data = value.data
             elif isinstance(value, (bytes, bytearray)):
@@ -120,6 +129,16 @@ class FixedArray:
         if len(new_data) != self._length:
             raise ValueError(f"Invalid data length, expected {self._length}, receieved {len(new_data)}")
         self._data[:] = new_data
+
+    @property
+    def item_count(self) -> int:
+        """Return array item count."""
+        return len(self._items)
+
+    @property
+    def items(self) -> tuple:
+        """Return array item count."""
+        return self._items
 
     def attach(self, mv: memoryview, retain_value: bool = False) -> None:
         """Attach memoryview to underlying data attribute."""

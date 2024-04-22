@@ -181,6 +181,7 @@ def _build_collection_init_method(
         "cls": spec.base_cls,
     }
     body = [
+        _member_assign("offset", "0", spec.self_name),
         _member_assign("_length", "length", spec.self_name),
         # Initialize _data
         _member_assign("_data", "memoryview(bytearray(length))", spec.self_name),

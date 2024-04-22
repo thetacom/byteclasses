@@ -9,9 +9,10 @@ from rich.pretty import get_console  # pylint: disable=E0401
 from rich.table import Table  # pylint: disable=E0401
 from rich.text import Text  # pylint: disable=E0401
 
+from .constants import _MEMBERS, _PARAMS
 from .types._fixed_size_type import _FixedSizeType
-from .types.collections.member import _MEMBERS, is_fixed_collection
-from .util import is_byteclass_instance
+from .types.collections.fixed_array import FixedArray
+from .util import is_byteclass_collection, is_byteclass_instance, is_byteclass_primitive
 
 if TYPE_CHECKING:
     from rich.console import Console
@@ -37,7 +38,7 @@ def byteclass_info(
 ) -> None:
     """Print byteclass collection in a table."""
     if not is_byteclass_instance(obj):
-        raise TypeError("Object is not a byteclass object.")
+        raise TypeError("Object is not a byteclass instance.")
     table = Table(title="Byteclass Info")
     table.add_column("Property")
     table.add_column("Value")
@@ -45,6 +46,9 @@ def byteclass_info(
     colors = cycle(COLOR_NAMES)
     properties = {
         "type()": obj.__class__.__name__,
+        "is_byteclass()": is_byteclass_instance(obj),
+        "is_byteclass_collection()": is_byteclass_collection(obj),
+        "is_byteclass_primitive()": is_byteclass_primitive(obj),
         "mro": " -> ".join([cls.__name__ for cls in obj.__class__.__mro__]),
         "len()": len(obj),
         "str()": str(obj),
@@ -59,11 +63,6 @@ def byteclass_info(
     _console.print(table)
 
 
-def _info_line(name: str, val: str, color: str) -> str:
-    """Generate an info line."""
-    return f"[{color}][bold]{name.title()}:[/bold] {val}[/{color}]\n"
-
-
 def byteclass_table(
     obj: Any,
     /,
@@ -75,8 +74,11 @@ def byteclass_table(
     """Print byteclass instance in a table."""
     if not is_byteclass_instance(obj):
         raise TypeError("Object is not a byteclass instance.")
-    if is_fixed_collection(obj):
-        collection_table(obj, show_data=show_data, title=title, console=console)
+    if is_byteclass_collection(obj):
+        if isinstance(obj, FixedArray):
+            fixed_array_table(obj, show_data=show_data, title=title, console=console)
+        else:
+            collection_table(obj, show_data=show_data, title=title, console=console)
     else:
         primitive_table(obj, show_data=show_data, title=title, console=console)
 
@@ -90,7 +92,7 @@ def collection_table(
     console: Optional["Console"] = None,
 ) -> None:
     """Print byteclass collection in a table."""
-    if not is_fixed_collection(obj):
+    if not is_byteclass_collection(obj):
         raise TypeError("Object is not a byteclass collection.")
     table = Table(title=title) if title else Table(title=obj.__class__.__name__)
     table.add_column("Member")
@@ -99,12 +101,44 @@ def collection_table(
         table.add_column("Data")
 
     colors = cycle(COLOR_NAMES)
-    for member in getattr(obj, _MEMBERS):
-        attr = getattr(obj, member)
+    for member_name in getattr(obj, _MEMBERS):
+        member = getattr(obj, member_name)
+        if not is_byteclass_instance(member):
+            continue
         if show_data:
-            table.add_row(Text(member, style="bold"), str(attr), str(attr.data), style=next(colors))
+            table.add_row(Text(member_name, style="bold"), str(member), str(member.data), style=next(colors))
         else:
-            table.add_row(Text(member, style="bold"), str(attr), style=next(colors))
+            table.add_row(Text(member_name, style="bold"), str(member), style=next(colors))
+
+    _console = get_console() if console is None else console
+    _console.print(table)
+
+
+def fixed_array_table(
+    obj: Any,
+    /,
+    *,
+    show_data: bool = True,
+    title: str | None = None,
+    console: Optional["Console"] = None,
+) -> None:
+    """Print byteclass fixed array in a table."""
+    if not isinstance(obj, FixedArray):
+        raise TypeError("Object is not a byteclass FixedArray.")
+    table = Table(title=title) if title else Table(title=obj.__class__.__name__)
+    table.add_column("Member")
+    table.add_column("Value")
+    if show_data:
+        table.add_column("Data")
+
+    colors = cycle(COLOR_NAMES)
+    item_count = obj.item_count
+    for i in range(item_count):
+        attr = obj[i]
+        if show_data:
+            table.add_row(Text(str(i), style="bold"), str(attr), str(attr.data), style=next(colors))
+        else:
+            table.add_row(Text(str(i), style="bold"), str(attr), style=next(colors))
 
     _console = get_console() if console is None else console
     _console.print(table)
@@ -147,29 +181,65 @@ def byteclass_inspect(
     /,
     *,
     legend: bool = True,
-    byte_width: int = 32,
+    byte_width: int = 16,
     console: Optional["Console"] = None,
 ) -> None:
     """Print byteclass collection in a table."""
     if not is_byteclass_instance(obj):
         raise TypeError("Object is not a byteclass instance.")
-    if is_fixed_collection(obj):
-        _print_byteclass_collection_panel(obj, byte_width=byte_width, console=console)
+    if is_byteclass_collection(obj):
+        if isinstance(obj, FixedArray):
+            print_table_func = _print_byteclass_array_panel
+        elif getattr(obj, _PARAMS).type == "structure":
+            print_table_func = _print_byteclass_structure_panel
+        else:
+            print_table_func = _print_byteclass_union_panel
     else:
-        _print_byteclass_primitive_panel(obj, byte_width=byte_width, console=console)
+        print_table_func = _print_byteclass_primitive_panel
+    print_table_func(obj, byte_width=byte_width, console=console)
     if legend:
         byteclass_table(obj, show_data=False, title="Legend")
 
 
-def _print_byteclass_collection_panel(obj, *, byte_width: int, console):
-    """Print a byteview of collection object data to console."""
+def _print_byteclass_structure_panel(obj, *, byte_width: int, console):
+    """Print a byteview of structure object data to console."""
     lines = []
     v_offset_width = len(hex(len(obj))) + 1
     line_length = byte_width * 3 + 4
     panel_width = line_length + v_offset_width
 
     lines.extend(_generate_header_lines(v_offset_width, byte_width))
-    lines.extend(_generate_collection_lines(obj, v_offset_width, byte_width))
+    lines.extend(_generate_structure_lines(obj, v_offset_width, byte_width))
+
+    _console = get_console() if console is None else console
+    byte_panel = Panel("\n".join(lines), title="Byteclass Inspect", width=panel_width)
+    _console.print(byte_panel)
+
+
+def _print_byteclass_union_panel(obj, *, byte_width: int, console):
+    """Print a byteview of union object data to console."""
+    lines = []
+    v_offset_width = len(hex(len(obj))) + 1
+    line_length = byte_width * 3 + 4
+    panel_width = line_length + v_offset_width
+
+    lines.extend(_generate_header_lines(v_offset_width, byte_width))
+    lines.extend(_generate_union_lines(obj, v_offset_width, byte_width))
+
+    _console = get_console() if console is None else console
+    byte_panel = Panel("\n".join(lines), title="Byteclass Inspect", width=panel_width)
+    _console.print(byte_panel)
+
+
+def _print_byteclass_array_panel(obj, *, byte_width: int, console):
+    """Print a byteview of FixedArray object data to console."""
+    lines = []
+    v_offset_width = len(hex(len(obj))) + 1
+    line_length = byte_width * 3 + 4
+    panel_width = line_length + v_offset_width
+
+    lines.extend(_generate_header_lines(v_offset_width, byte_width))
+    lines.extend(_generate_array_lines(obj, v_offset_width, byte_width))
 
     _console = get_console() if console is None else console
     byte_panel = Panel("\n".join(lines), title="Byteclass Inspect", width=panel_width)
@@ -205,21 +275,111 @@ def _generate_data_line(data_str: str, v_offset: int, v_offset_width: int) -> st
     return f"{hex(v_offset).ljust(v_offset_width, ' ')}{data_str}"
 
 
-def _generate_collection_lines(obj, v_offset_width: int, byte_width: int) -> list[str]:
-    """Generate collection data lines from object."""
+def _generate_structure_lines(obj, v_offset_width: int, byte_width: int) -> list[str]:
+    """Generate structure data lines from object."""
     member_colors = cycle(COLOR_NAMES)
     lines = []
     curr_offset = 0
     line_offset = 0
     data_str = ""
     for member_name in getattr(obj, _MEMBERS):
-        print(member_name)
         member = getattr(obj, member_name)
+        if not is_byteclass_instance(member):
+            continue
         color = next(member_colors)
         mbr_len = len(member)
         # Insert padding
         if curr_offset != member.offset:
-            print("Inserting padding")
+            padding_len = member.offset - curr_offset
+            if line_offset + padding_len < byte_width:
+                data_str += (
+                    f"[{FILL_COLOR}]|"
+                    + _data_str(obj.data[curr_offset : member.offset], FILL_COLOR)
+                    + f"[/{FILL_COLOR}]"
+                )
+                curr_offset += padding_len
+                line_offset += padding_len
+            else:
+                part1_len = byte_width - line_offset
+                part2_len = padding_len - part1_len
+                data_str += (
+                    f"[{FILL_COLOR}]|"
+                    + _data_str(obj.data[curr_offset : curr_offset + part1_len], color)
+                    + f"[/{FILL_COLOR}]"
+                )
+                lines.append(_generate_data_line(data_str, (curr_offset // byte_width) * byte_width, v_offset_width))
+                data_str = (
+                    f"[{FILL_COLOR}]|"
+                    + _data_str(obj.data[curr_offset + part1_len : member.offset], color)
+                    + f"[/{FILL_COLOR}]"
+                )
+                curr_offset += padding_len
+                line_offset = part2_len
+
+        if line_offset + mbr_len < byte_width:
+            data_str += f"[{FILL_COLOR}]|[/{FILL_COLOR}]" + _data_str(member.data, color)
+            curr_offset += mbr_len
+            line_offset += mbr_len
+        else:
+            part1_len = byte_width - line_offset
+            part2_len = mbr_len - part1_len
+            data_str += f"[{FILL_COLOR}]|[/{FILL_COLOR}]" + _data_str(member.data[:part1_len], color)
+            lines.append(_generate_data_line(data_str, (curr_offset // byte_width) * byte_width, v_offset_width))
+            data_str = _data_str(member.data[part1_len:], color)
+            curr_offset += mbr_len
+            line_offset = part2_len
+    if data_str:
+        lines.append(_generate_data_line(data_str, (curr_offset // byte_width) * byte_width, v_offset_width))
+    return lines
+
+
+def _generate_union_lines(obj, v_offset_width: int, byte_width: int) -> list[str]:
+    """Generate union data lines from object."""
+    lines = []
+    curr_offset = 0
+    data_str = ""
+    members_data = []
+    for member_name in getattr(obj, _MEMBERS):
+        member = getattr(obj, member_name)
+        if not is_byteclass_instance(member):
+            continue
+        members_data.append(member.data)
+
+    finished = False
+    while not finished:
+        member_colors = cycle(COLOR_NAMES)
+        for i, data in enumerate(members_data):
+            color = next(member_colors)
+            mbr_len = len(member)
+            data_str = "" if curr_offset > 0 else f"[{FILL_COLOR}]|[/{FILL_COLOR}]"
+            if mbr_len != 0 and mbr_len <= byte_width:
+                data_str += _data_str(members_data[i], color)
+                lines.append(_generate_data_line(data_str, (curr_offset // byte_width) * byte_width, v_offset_width))
+                members_data[i] = b""
+            else:
+                data_str += _data_str(members_data[i][:byte_width], color)
+                lines.append(_generate_data_line(data_str, (curr_offset // byte_width) * byte_width, v_offset_width))
+                members_data[i] = members_data[i][byte_width:]
+        curr_offset += byte_width
+        finished = all(len(data) == 0 for data in members_data)
+
+    return lines
+
+
+def _generate_array_lines(obj: FixedArray, v_offset_width: int, byte_width: int) -> list[str]:  # pylint: disable=R0914
+    """Generate FixedArray data lines from object."""
+    member_colors = cycle(COLOR_NAMES)
+    lines = []
+    curr_offset = 0
+    line_offset = 0
+    data_str = ""
+    item_count = obj.item_count
+    for i in range(item_count):
+        member = obj[i]
+        color = next(member_colors)
+        mbr_len = len(member)
+        # Insert padding
+        if curr_offset != member.offset:
             padding_len = member.offset - curr_offset
             if line_offset + padding_len < byte_width:
                 data_str += (

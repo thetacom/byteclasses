@@ -20,6 +20,7 @@ class _FixedSizeType(ABC, SupportsBytes):
 
     def __init__(self, *, byte_order: bytes | ByteOrder, data: ByteString | None = None) -> None:
         """Initialize the instance."""
+        self.offset = 0
         if self._type_char is NotImplemented:
             raise NotImplementedError(f"{self.__class__.__name__} does not implement '_type_char'")
         if self._length is NotImplemented:

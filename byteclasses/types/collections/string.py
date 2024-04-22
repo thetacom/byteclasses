@@ -50,7 +50,7 @@ class String(FixedArray):
     @property
     def value(self) -> str:
         """Return String value."""
-        return bytes(self._data).decode(encoding="utf8").rstrip("\x00")
+        return "".join([item.value for item in self._items]).rstrip("\x00")
 
     @value.setter
     def value(self, new_value: str) -> None:
