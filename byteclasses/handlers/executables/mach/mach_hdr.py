@@ -8,6 +8,7 @@ from enum import IntEnum
 
 from ....types.collections import structure
 from ....types.primitives.bitfield import BitField32, mask2bitpos
+from ....types.primitives.generics import DWord
 from ....types.primitives.integers import Int32, UInt32
 
 __all__ = [
@@ -18,8 +19,8 @@ __all__ = [
     "MH_MAGIC64",
 ]
 
-MH_MAGIC32 = 0xFEEDFACE
-MH_MAGIC64 = 0xFEEDFACF
+MH_MAGIC32 = b"\xce\xfa\xed\xfe"  # 0xFEEDFACE
+MH_MAGIC64 = b"\xcf\xfa\xed\xfe"  # 0xFEEDFACF
 
 
 class CPUArchMask(IntEnum):
@@ -154,7 +155,7 @@ class MachFlags32(BitField32):
 class MachHdr32:
     """32-bit MacOS Executable."""
 
-    magic: UInt32
+    magic: DWord
     cputype: Int32
     cpusubtype: Int32
     filetype: UInt32
@@ -167,7 +168,7 @@ class MachHdr32:
 class MachHdr64:
     """64-bit MacOS Executable."""
 
-    magic: UInt32
+    magic: DWord
     cputype: Int32
     cpusubtype: Int32
     filetype: UInt32
