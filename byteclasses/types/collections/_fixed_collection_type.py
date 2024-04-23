@@ -7,6 +7,8 @@ from collections.abc import Callable
 from copy import deepcopy
 from typing import Any, cast
 
+from ...constants import _BYTECLASS, _MEMBERS, _PARAMS
+from ...util import is_byteclass_collection, is_byteclass_collection_instance
 from .._fixed_size_type import _FixedSizeType
 from ._collection_class_spec import _CollectionClassSpec
 from ._collection_params import _CollectionParams
@@ -28,17 +30,7 @@ from ._methods import (
 )
 from ._util import _set_new_attribute, _set_qualname, _tuple_str
 from .fixed_size_collection_protocol import FixedSizeCollection, FixedSizeCollectionError
-from .member import (
-    _MEMBER,
-    _MEMBERS,
-    _PARAMS,
-    MISSING,
-    Member,
-    _get_member,
-    _is_fixed_collection_instance,
-    _MissingType,
-    is_fixed_collection,
-)
+from .member import _MEMBER, MISSING, Member, _get_member, _MissingType
 
 __all__ = [
     "FixedSizeCollectionError",
@@ -46,7 +38,7 @@ __all__ = [
     "members",
     "collection_as_dict",
     "collection_as_tuple",
-    "is_fixed_collection",
+    "is_byteclass_collection",
     "FixedSizeCollection",
 ]
 
@@ -116,13 +108,13 @@ def _process_class(spec: _CollectionClassSpec) -> FixedSizeCollection:
         # (w.r.t. typing.get_type_hints) but will still function
         # correctly.
         globals_ = {}
-
+    setattr(spec.base_cls, _BYTECLASS, True)
     setattr(
         spec.base_cls,
         _PARAMS,
         _CollectionParams(spec),
     )
-    spec.attributes.extend(["_length", "_data", "_member_offsets"])
+    spec.attributes.extend(["offset", "_length", "_data"])
     # Find our base classes in reverse MRO order, and exclude
     # ourselves.  In reversed order so that more derived classes
     # override earlier member definitions in base classes.
@@ -236,7 +228,7 @@ def _add_members(spec: _CollectionClassSpec, members_: dict[str, Member]) -> Non
             if not issubclass(member_.type, spec.allowed_types):
                 raise TypeError(f"{member_.name} ({member_.type}) is not a supported member type.")
         else:
-            if not (is_fixed_collection(member_.type) or issubclass(member_.type, _FixedSizeType)):
+            if not (is_byteclass_collection(member_.type) or issubclass(member_.type, _FixedSizeType)):
                 raise TypeError(f"{member_.name} ({member_.type}) is not a supported member type.")
     spec.members = member_list
 
@@ -359,13 +351,13 @@ def collection_as_dict(obj, *, dict_factory=dict):
     dataclass instances. This will also look into built-in containers:
     tuples, lists, and dicts.
     """
-    if not _is_fixed_collection_instance(obj):
+    if not is_byteclass_collection_instance(obj):
         raise TypeError("as_dict() should be called on fixed collection instances")
     return _as_dict_inner(obj, dict_factory)
 
 
 def _as_dict_inner(obj, dict_factory):
-    if _is_fixed_collection_instance(obj):
+    if is_byteclass_collection_instance(obj):
         result = []
         for member_ in members(obj):
             value = _as_dict_inner(getattr(obj, member_.name), dict_factory)
@@ -420,13 +412,13 @@ def collection_as_tuple(obj, *, tuple_factory=tuple):
     dataclass instances. This will also look into built-in containers:
     tuples, lists, and dicts.
     """
-    if not _is_fixed_collection_instance(obj):
+    if not is_byteclass_collection_instance(obj):
         raise TypeError("astuple() should be called on fixed collection instances")
     return _as_tuple_inner(obj, tuple_factory)
 
 
 def _as_tuple_inner(obj, tuple_factory):
-    if _is_fixed_collection_instance(obj):
+    if is_byteclass_collection_instance(obj):
         result = []
         for member_ in members(obj):
             value = _as_tuple_inner(getattr(obj, member_.name), tuple_factory)

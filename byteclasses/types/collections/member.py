@@ -7,6 +7,7 @@ from types import GenericAlias, MappingProxyType, MemberDescriptorType
 from typing import TYPE_CHECKING, Any
 
 from ...types._fixed_size_type import _FixedSizeType
+from ...util import is_byteclass_collection
 
 if TYPE_CHECKING:
     from ._collection_class_spec import _CollectionClassSpec
@@ -23,14 +24,6 @@ class _MemberBase:  # pylint: disable=R0903
     def __repr__(self):
         return self.name
 
-
-# The name of an attribute on the class where we store the Member objects.
-# Also used to check if a class is a Fixed Size Collection Class.
-_MEMBERS = "__collection_members__"
-
-# The name of an attribute on the class that stores the parameters to
-# fixed collection.
-_PARAMS = "__collection_params__"
 
 # String regex that string annotations for ClassVar or InitVar must match.
 # Allows "identifier.identifier[" or "identifier[".
@@ -164,17 +157,16 @@ def _init_members(spec: "_CollectionClassSpec", globals_: dict[str, Any]) -> lis
     """Initialize all class members."""
     body: list[str] = []
     for member_ in spec.members:
-        line = _init_member(member_, globals_, spec.self_name)
-        if line:
-            body.extend(
-                [
-                    line,
-                    "try:",
-                    f"  {spec.self_name}.{member_.name}.byte_order = {spec.byte_order.value!r}",
-                    "except AttributeError:",
-                    "  pass",
-                ]
-            )
+        init_line = _init_member(member_, globals_, spec.self_name)
+        body.extend(
+            [
+                init_line,
+                "try:",
+                f"  {spec.self_name}.{member_.name}.byte_order = {spec.byte_order.value!r}",
+                "except AttributeError:",
+                "  pass",
+            ]
+        )
     return body
 
 
@@ -353,7 +345,7 @@ def _get_member(cls: type, a_name: str, a_type: type):
     # For real members, disallow any non fixed types
     if member_.member_type is _MEMBER:
         # Verify that the type is fixed.
-        if not issubclass(member_.type, _FixedSizeType) and not is_fixed_collection(member_.type):
+        if not issubclass(member_.type, _FixedSizeType) and not is_byteclass_collection(member_.type):
             raise TypeError(f"member {member_.name} has invalid type {member_.type!r}")
         # Verify the default is the same type as the field.
         if member_.default is not MISSING and not isinstance(member_.default, member_.type):
@@ -361,14 +353,3 @@ def _get_member(cls: type, a_name: str, a_type: type):
                 f"member {member_.name} ({type(member_.default)}) default value " f"must be of type {member_.type!r}"
             )
     return member_
-
-
-def _is_fixed_collection_instance(obj: Any) -> bool:
-    """Return True if obj is an instance of a fixed collection."""
-    return hasattr(type(obj), _MEMBERS)
-
-
-def is_fixed_collection(obj: Any) -> bool:
-    """Return True if obj is a class or instance of a fixed collection."""
-    cls = obj if isinstance(obj, type) and not isinstance(obj, GenericAlias) else type(obj)
-    return hasattr(cls, _MEMBERS)

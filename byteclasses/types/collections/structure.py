@@ -14,14 +14,18 @@ __all__ = ["structure"]
 
 
 @overload
-def structure(*, byte_order: bytes | ByteOrder, packed: bool) -> Callable[[type], FixedSizeCollection]: ...
+def structure(
+    cls: None = None, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE, packed: bool = False
+) -> Callable[[type], FixedSizeCollection]: ...
 
 
 @overload
-def structure(cls: type, /, *, byte_order: bytes | ByteOrder, packed: bool) -> FixedSizeCollection: ...
-
-
 def structure(
+    cls: type, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE, packed: bool = False
+) -> FixedSizeCollection: ...
+
+
+def structure(  # type: ignore
     cls: type | None = None,
     /,
     *,
@@ -48,32 +52,25 @@ def _build_structure_init_method(
     """Create structure init function."""
     body: list[str] = []
     body.extend(_init_members(spec, globals_))
-    # Collect structure member lengths
-    lengths_str = "[" + ",".join(f"len(self.{member_.name})" for member_ in spec.members) + "]"
 
     # Calculate structure member offsets
-    body.extend(
-        [
-            f"member_lengths = {lengths_str}",
-            "member_offsets = []",
-            "collection_length = 0",
-            "for l in member_lengths:",
-        ]
-    )
-    if not spec.packed:  # Insert padding to keep members aligned if not packed
+    body.append("collection_length = 0")
+    for member_ in spec.members:
+        body.append(f"mbr_len = len({spec.self_name}.{member_.name})")
+        if not spec.packed:  # Insert padding to keep members aligned if not packed
+            body.extend(
+                [
+                    "if collection_length % mbr_len != 0:",
+                    "  padding = mbr_len - (collection_length % mbr_len)",
+                    "  collection_length += padding",
+                ]
+            )
         body.extend(
             [
-                "  if collection_length % l != 0:",
-                "    padding = l - (collection_length % l)",
-                "    collection_length += padding",
+                f"{spec.self_name}.{member_.name}.offset = collection_length",
+                "collection_length += mbr_len",
             ]
         )
-    body.extend(
-        [
-            "  member_offsets.append(collection_length)",
-            "  collection_length += l",
-            f"{spec.self_name}._collection_init(collection_length, member_offsets)",
-        ]
-    )
 
+    body.append(f"{spec.self_name}._collection_init(collection_length)")
     return _build_init_method(spec, body, globals_)

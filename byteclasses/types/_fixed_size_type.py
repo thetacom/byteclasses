@@ -1,11 +1,12 @@
 """Abstract fixed size type."""
 
-from abc import ABC
+from abc import ABC, abstractmethod
 from collections.abc import ByteString
 from functools import cached_property
 from typing import SupportsBytes
 
 from .._enums import ByteOrder
+from ..constants import _BYTECLASS
 
 __all__: list[str] = []
 
@@ -19,6 +20,7 @@ class _FixedSizeType(ABC, SupportsBytes):
 
     def __init__(self, *, byte_order: bytes | ByteOrder, data: ByteString | None = None) -> None:
         """Initialize the instance."""
+        self.offset = 0
         if self._type_char is NotImplemented:
             raise NotImplementedError(f"{self.__class__.__name__} does not implement '_type_char'")
         if self._length is NotImplemented:
@@ -122,3 +124,16 @@ class _FixedSizeType(ABC, SupportsBytes):
         self._data = mv
         if retain_value:
             self._data[:] = temp
+
+    @property
+    @abstractmethod
+    def value(self):
+        """Get instance value."""
+
+    @value.setter
+    @abstractmethod
+    def value(self):
+        """Set instance value."""
+
+
+setattr(_FixedSizeType, _BYTECLASS, True)

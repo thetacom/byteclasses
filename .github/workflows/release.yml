@@ -15,18 +15,18 @@ jobs:
     name: Create Package Release
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: '3.10'
-    - uses: Gr1N/setup-poetry@v8
+    - uses: Gr1N/setup-poetry@v9
     - run: poetry --version
     - name: Build package
       run: poetry build
     - name: Create Pre-Release
       if: ${{ endsWith( github.ref_name, 'pre' )}}
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         draft: true
         prerelease: true
@@ -34,7 +34,7 @@ jobs:
           dist/*
     - name: Create Release
       if: ${{ !endsWith( github.ref_name, 'pre' )}}
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         draft: true
         prerelease: false
