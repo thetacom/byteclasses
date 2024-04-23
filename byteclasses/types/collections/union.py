@@ -14,11 +14,13 @@ __all__ = ["union"]
 
 
 @overload
-def union(cls: type | None, /, *, byte_order: bytes | ByteOrder) -> Callable[[type], FixedSizeCollection]: ...
+def union(
+    cls: None = None, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE
+) -> Callable[[type], FixedSizeCollection]: ...
 
 
 @overload
-def union(cls: type) -> FixedSizeCollection: ...
+def union(cls: type, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE) -> FixedSizeCollection: ...
 
 
 def union(  # type: ignore

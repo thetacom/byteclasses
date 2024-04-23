@@ -15,12 +15,14 @@ __all__ = ["structure"]
 
 @overload
 def structure(
-    cls: type | None, /, *, byte_order: bytes | ByteOrder, packed: bool
+    cls: None = None, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE, packed: bool = False
 ) -> Callable[[type], FixedSizeCollection]: ...
 
 
 @overload
-def structure(cls: type) -> FixedSizeCollection: ...
+def structure(
+    cls: type, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE, packed: bool = False
+) -> FixedSizeCollection: ...
 
 
 def structure(  # type: ignore
