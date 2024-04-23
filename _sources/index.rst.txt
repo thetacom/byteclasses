@@ -12,12 +12,6 @@ A Python package for handling binary data using dataclass like classes.
    collections/index
    examples/index
 
-.. toctree::
-   :maxdepth: 2
-   :caption: API:
-
-   api/modules
-
 Indices and tables
 ==================
 

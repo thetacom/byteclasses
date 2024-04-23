@@ -235,7 +235,11 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="basic/index.html">Basic Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basic/primitives.html">Integer and Float Primitives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/primitives.html">Integer and Float Primitives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic/primitives.html#Override-Overflow-Protection">Override Overflow Protection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/primitives.html#Attaching-to-external-data">Attaching to external data</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="basic/characters.html">Character Primitives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basic/generics.html">Generic Primitives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basic/bitfield.html">BitField Primitive</a></li>
@@ -245,12 +249,26 @@
 <li class="toctree-l2"><a class="reference internal" href="basic/union.html">Union Collection</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="advanced/index.html">Advanced Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="advanced/ethernet.html">Ethernet Header and Frame</a></li>
-<li class="toctree-l2"><a class="reference internal" href="advanced/ipv4.html">IPv4 Header</a></li>
-<li class="toctree-l2"><a class="reference internal" href="advanced/ipv6.html">IPv6 Header</a></li>
-<li class="toctree-l2"><a class="reference internal" href="advanced/tcp.html">TCP Header</a></li>
-<li class="toctree-l2"><a class="reference internal" href="advanced/udp.html">UDP Header</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network/index.html">Network Handlers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="network/ethernet.html">Ethernet Header and Frame</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network/ipv4.html">IPv4 Header</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network/ipv6.html">IPv6 Header</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network/tcp.html">TCP Header</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network/udp.html">UDP Header</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="executables/index.html">Executable Handlers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="executables/elf.html">64-bit Elf Header and Data Handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executables/pe.html">Windows Executable Header and Data Handler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executables/mach-o.html">MacOS Executable Header and Data Handler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documents/index.html">Document Handlers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="documents/pdf.html">PDF Document Header and Data Handler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="images/index.html">Image Handlers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="images/jpeg.html">JPEG Image Header and Data Handler</a></li>
 </ul>
 </li>
 </ul>
@@ -304,7 +322,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.3.5.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

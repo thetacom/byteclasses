@@ -271,11 +271,13 @@
 
     <span class="n">byte_length</span> <span class="o">=</span> <span class="mi">2</span>
 
-    <span class="n">first</span><span class="p">:</span> <span class="n">BitPos</span> <span class="o">=</span> <span class="n">BitPos</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">last</span><span class="p">:</span> <span class="n">BitPos</span> <span class="o">=</span> <span class="n">BitPos</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">first</span> <span class="o">=</span> <span class="n">BitPos</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">middle</span> <span class="o">=</span> <span class="n">BitPos</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">bit_width</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">last</span> <span class="o">=</span> <span class="n">BitPos</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
 
 <span class="n">bv</span> <span class="o">=</span> <span class="n">MyBitField</span><span class="p">()</span>
 <span class="n">bv</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">bv</span><span class="o">.</span><span class="n">middle</span> <span class="o">=</span> <span class="mb">0b1010</span>
 <span class="n">bv</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 </div>
@@ -329,7 +331,7 @@
               
           </div>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.3.5.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>

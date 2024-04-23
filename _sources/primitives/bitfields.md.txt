@@ -41,10 +41,12 @@ class MyBitField(ByteField):
 
     byte_length = 2
 
-    first: BitPos = BitPos(0)
-    last: BitPos = BitPos(15)
+    first = BitPos(0)
+    middle = BitPos(8, bit_width = 4)
+    last = BitPos(15)
 
 bv = MyBitField()
 bv.first = 1
+bv.middle = 0b1010
 bv.last = True
 ```
