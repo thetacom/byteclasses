@@ -1,0 +1,61 @@
+"""Test suite for ByteEnum class."""
+
+from enum import Enum, IntEnum
+
+import pytest
+
+from byteclasses.types.primitives.byte_enum import ByteEnum
+from byteclasses.types.primitives.integers import UInt8, UInt16, UInt32, UInt64
+
+INT_CLASSES = [UInt8, UInt16, UInt32, UInt64]
+
+
+class TestEnum(IntEnum):
+    """IntEnum class for use in ByteEnum tests."""
+
+    __test__ = False
+
+    ZERO = 0
+    ONE = 0b1
+    TWO = 0x2
+    FOUR = 0x4
+    UINT8_MAX = 0xFF
+    UINT16_MAX = 0xFFFF
+    UINT32_MAX = 0xFFFFFFFF
+    UINT64_MAX = 0xFFFFFFFFFFFFFFFF
+
+
+def test_byte_enum_creation():
+    """Test ByteEnum Creation."""
+    expected_len = 1
+    expected_names = ["UINT8_MAX", "UINT16_MAX", "UINT32_MAX", "UINT64_MAX"]
+    for int_cls, name in zip(INT_CLASSES, expected_names):
+        var = ByteEnum(TestEnum, int_cls)
+        assert isinstance(var, ByteEnum)
+        assert var.value == 0
+        assert len(var) == expected_len
+        assert str(var) == "ZERO"
+        assert repr(var) == "<TestEnum.ZERO: 0>"
+        var.value = 3
+        assert str(var) == "UNKNOWN(0x3)"
+        assert repr(var) == "<UNKNOWN: 0x3>"
+        new_val = var._int.max  # pylint: disable=W0212
+        var.value = new_val
+        assert str(var) == name
+        assert repr(var) == f"<TestEnum.{name}: {new_val}>"
+        expected_len *= 2
+
+
+def test_byte_enum_creation_invalid_params():
+    """Test ByteEnum Creation with invalid params."""
+
+    class BadEnum(Enum):
+        """Bad Enum class."""
+
+        ONE = "one"
+
+    with pytest.raises(ValueError):
+        _ = ByteEnum(BadEnum, UInt8)
+
+    with pytest.raises(ValueError):
+        _ = ByteEnum(TestEnum, int)

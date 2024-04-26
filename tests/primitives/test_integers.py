@@ -15,7 +15,7 @@ from byteclasses.types.primitives.integers import (
     UInt32,
     UInt64,
     UnderflowError,
-    _FixedInt,
+    _PrimitiveInt,
 )
 from byteclasses.util import is_byteclass, is_byteclass_instance
 
@@ -30,9 +30,9 @@ def test_fixedint_is_byteclass():
 
 
 def test_fixedint_missing_type_char_property():
-    """Test _FixedInt instance with no `_type_char` class attribute."""
+    """Test _PrimitiveInt instance with no `_type_char` class attribute."""
 
-    class InvalidInt(_FixedInt):
+    class InvalidInt(_PrimitiveInt):
         """Invalid Fixed Int Class definition."""
 
         _length = 1
@@ -43,9 +43,9 @@ def test_fixedint_missing_type_char_property():
 
 
 def test_fixedint_missing_length_property():
-    """Test _FixedInt instance with no `_length` class attribute."""
+    """Test _PrimitiveInt instance with no `_length` class attribute."""
 
-    class InvalidInt(_FixedInt):
+    class InvalidInt(_PrimitiveInt):
         """Invalid Fixed Int Class definition."""
 
         _type_char = b"b"
@@ -56,9 +56,9 @@ def test_fixedint_missing_length_property():
 
 
 def test_fixedint_missing_signed_property():
-    """Test _FixedInt instance with no `_signed` class attribute."""
+    """Test _PrimitiveInt instance with no `_signed` class attribute."""
 
-    class InvalidInt(_FixedInt):
+    class InvalidInt(_PrimitiveInt):
         """Invalid Fixed Int Class definition."""
 
         _type_char: bytes = b"b"
@@ -178,7 +178,7 @@ def test_fixedint_str():
 
 
 def test_fixedint_clear_data_with_data_none():
-    """Test _FixedInt clearing data by setting data attribute to None."""
+    """Test _PrimitiveInt clearing data by setting data attribute to None."""
     var = Int8(8)
     assert var == 8
     var.data = None
@@ -186,7 +186,7 @@ def test_fixedint_clear_data_with_data_none():
 
 
 def test_fixedint_set_partial_data():
-    """Test _FixedInt set data with short data."""
+    """Test _PrimitiveInt set data with short data."""
     var = UInt32()
     var.value = var.max
     var.data = b"\x00\x00"
@@ -194,7 +194,7 @@ def test_fixedint_set_partial_data():
 
 
 def test_fixedint_set_oversized_data():
-    """Test _FixedInt set data with oversized data."""
+    """Test _PrimitiveInt set data with oversized data."""
     var = UInt32()
     var.value = var.max
     with pytest.raises(ValueError):
@@ -302,14 +302,14 @@ def test_fixedint_round():
 
 
 def test_fixedint_truncate():
-    """Test _FixedInt __trunc__ method."""
+    """Test _PrimitiveInt __trunc__ method."""
     var1 = Int8(10)
     result = math.trunc(var1)
     assert result == 10
 
 
 def test_fixedint_index():
-    """Test _FixedInt __index__ method."""
+    """Test _PrimitiveInt __index__ method."""
     var1 = Int8(10)
     result = operator.index(var1)
     assert result == 10

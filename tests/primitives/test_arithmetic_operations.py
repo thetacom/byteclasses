@@ -8,7 +8,7 @@ from byteclasses.types.primitives.integers import UInt8, UnderflowError
 
 
 def test_fixedint_add_to_fixedint():
-    """Test add between two _FixedInts."""
+    """Test add between two _PrimitiveInts."""
     var1 = UInt8(0x01)
     var2 = UInt8(0x02)
     result = var1 + var2
@@ -51,7 +51,7 @@ def test_fixedint_radd_to_unsupported():
 
 
 def test_fixedint_add_to_fixedint_with_overflow():
-    """Test add between two _FixedInts with overflow."""
+    """Test add between two _PrimitiveInts with overflow."""
     var1 = UInt8(0xFF)
     var2 = UInt8(0x01)
     with pytest.raises(OverflowError):
@@ -75,7 +75,7 @@ def test_fixedint_radd_to_int_with_overflow():
 
 
 def test_fixedint_sub_from_fixedint():
-    """Test sub between two _FixedInts."""
+    """Test sub between two _PrimitiveInts."""
     var1 = UInt8(0x03)
     var2 = UInt8(0x02)
     result = var1 - var2
@@ -84,7 +84,7 @@ def test_fixedint_sub_from_fixedint():
 
 
 def test_fixedint_sub_from_fixedint_with_underflow():
-    """Test sub between two _FixedInts with underflow error."""
+    """Test sub between two _PrimitiveInts with underflow error."""
     var1 = UInt8(0x03)
     var2 = UInt8(0x02)
     with pytest.raises(UnderflowError):
@@ -126,7 +126,7 @@ def test_fixedint_rsub_with_unsupported_type():
 
 
 def test_fixedint_rsub_from_int_with_underflow():
-    """Test sub between two _FixedInts with underflow."""
+    """Test sub between two _PrimitiveInts with underflow."""
     var1 = 0x00
     var2 = UInt8(0x01)
     with pytest.raises(UnderflowError):
@@ -150,7 +150,7 @@ def test_fixedint_rsub_from_int_with_overflow():
 
 
 def test_fixedint_mul_to_fixedint():
-    """Test mul between two _FixedInts."""
+    """Test mul between two _PrimitiveInts."""
     var1 = UInt8(0x02)
     var2 = UInt8(0x08)
     result = var1 * var2
@@ -202,7 +202,7 @@ def test_fixedint_rmul_to_unsupported():
 
 
 def test_fixedint_mul_to_fixedint_with_overflow():
-    """Test mul between two _FixedInts with overflow."""
+    """Test mul between two _PrimitiveInts with overflow."""
     var1 = UInt8(0xFF)
     var2 = UInt8(0x02)
     with pytest.raises(OverflowError):
@@ -226,7 +226,7 @@ def test_fixedint_rmul_to_int_with_overflow():
 
 
 def test_fixedint_truediv_with_fixedint():
-    """Test truediv between two _FixedInts."""
+    """Test truediv between two _PrimitiveInts."""
     var1 = UInt8(0x10)
     var2 = UInt8(0x08)
     result = var1 / var2
@@ -266,7 +266,7 @@ def test_fixedint_rtruediv_with_unsupported_type():
 
 
 def test_fixedint_div_with_fixedint_with_div_error():
-    """Test div between two _FixedInts with division by zero error."""
+    """Test div between two _PrimitiveInts with division by zero error."""
     var1 = UInt8(0x01)
     var2 = UInt8(0x00)
     with pytest.raises(ZeroDivisionError):
@@ -290,7 +290,7 @@ def test_fixedint_rdiv_with_int_with_div_error():
 
 
 def test_fixedint_mod_with_fixedint():
-    """Test mod between two _FixedInts."""
+    """Test mod between two _PrimitiveInts."""
     var1 = UInt8(0x10)
     var2 = UInt8(0x07)
     result = var1 % var2
@@ -308,7 +308,7 @@ def test_fixedint_mod_with_int():
 
 
 def test_fixedint_mod_with_unsupported():
-    """Test mod between a _FixedInt and an unsupported type."""
+    """Test mod between a _PrimitiveInt and an unsupported type."""
     var1 = UInt8(0x5)
     var2 = "invalid"
     with pytest.raises(TypeError):
@@ -325,7 +325,7 @@ def test_fixedint_rmod_with_int():
 
 
 def test_fixedint_rmod_with_unsupported():
-    """Test reverse mod between a _FixedInt and an unsupported type."""
+    """Test reverse mod between a _PrimitiveInt and an unsupported type."""
     var1 = UInt8(0x5)
     var2 = complex(1, 1)
     with pytest.raises(TypeError):
@@ -333,7 +333,7 @@ def test_fixedint_rmod_with_unsupported():
 
 
 def test_fixedint_mod_with_fixedint_with_div_error():
-    """Test mod between two _FixedInts with div by zero error."""
+    """Test mod between two _PrimitiveInts with div by zero error."""
     var1 = UInt8(0x01)
     var2 = UInt8(0x00)
     with pytest.raises(ZeroDivisionError):
@@ -357,7 +357,7 @@ def test_fixedint_rmod_with_int_with_div_error():
 
 
 def test_fixedint_divmod_with_fixedint():
-    """Test divmod between two _FixedInts."""
+    """Test divmod between two _PrimitiveInts."""
     var1 = UInt8(0x5)
     var2 = UInt8(0x2)
     quotient, remainder = divmod(var1, var2)
@@ -366,7 +366,7 @@ def test_fixedint_divmod_with_fixedint():
 
 
 def test_fixedint_divmod_with_int():
-    """Test divmod between a _FixedInt and an int."""
+    """Test divmod between a _PrimitiveInt and an int."""
     var1 = UInt8(0x5)
     var2 = 0x2
     quotient, remainder = divmod(var1, var2)
@@ -375,7 +375,7 @@ def test_fixedint_divmod_with_int():
 
 
 def test_fixedint_divmod_with_unsupported():
-    """Test divmod between a _FixedInt and an unsupported type."""
+    """Test divmod between a _PrimitiveInt and an unsupported type."""
     var1 = UInt8(0x5)
     var2 = "invalid"
     with pytest.raises(TypeError):
@@ -383,7 +383,7 @@ def test_fixedint_divmod_with_unsupported():
 
 
 def test_fixedint_rdivmod_with_int():
-    """Test reverse divmod between a _FixedInt and an int."""
+    """Test reverse divmod between a _PrimitiveInt and an int."""
     var1 = UInt8(0x2)
     var2 = 0x5
     quotient, remainder = divmod(var2, var1)
@@ -392,7 +392,7 @@ def test_fixedint_rdivmod_with_int():
 
 
 def test_fixedint_rdivmod_with_unsupported():
-    """Test reverse divmod between a _FixedInt and an unsupported type."""
+    """Test reverse divmod between a _PrimitiveInt and an unsupported type."""
     var1 = UInt8(0x5)
     var2 = "invalid"
     with pytest.raises(TypeError):
@@ -400,7 +400,7 @@ def test_fixedint_rdivmod_with_unsupported():
 
 
 def test_fixedint_floordiv_with_fixedint():
-    """Test floordiv between two _FixedInts."""
+    """Test floordiv between two _PrimitiveInts."""
     var1 = UInt8(0x5)
     var2 = UInt8(0x2)
     result = var1 // var2
@@ -408,7 +408,7 @@ def test_fixedint_floordiv_with_fixedint():
 
 
 def test_fixedint_floordiv_with_int():
-    """Test floordiv between a _FixedInt and an int."""
+    """Test floordiv between a _PrimitiveInt and an int."""
     var1 = UInt8(0x5)
     var2 = 0x2
     result = var1 // var2
@@ -416,7 +416,7 @@ def test_fixedint_floordiv_with_int():
 
 
 def test_fixedint_floordiv_with_unsupported():
-    """Test floordiv between a _FixedInt and an unsupported type."""
+    """Test floordiv between a _PrimitiveInt and an unsupported type."""
     var1 = UInt8(0x5)
     var2 = "invalid"
     with pytest.raises(TypeError):
@@ -424,7 +424,7 @@ def test_fixedint_floordiv_with_unsupported():
 
 
 def test_fixedint_rfloordiv_with_int():
-    """Test reverse floordiv between a _FixedInt and an int."""
+    """Test reverse floordiv between a _PrimitiveInt and an int."""
     var1 = UInt8(0x2)
     var2 = 0x5
     result = var2 // var1
@@ -432,7 +432,7 @@ def test_fixedint_rfloordiv_with_int():
 
 
 def test_fixedint_rfloordiv_with_unsupported():
-    """Test reverse floordiv between a _FixedInt and an unsupported type."""
+    """Test reverse floordiv between a _PrimitiveInt and an unsupported type."""
     var1 = UInt8(0x5)
     var2 = "invalid"
     with pytest.raises(TypeError):
@@ -440,7 +440,7 @@ def test_fixedint_rfloordiv_with_unsupported():
 
 
 def test_fixedint_pow_with_fixedint():
-    """Test pow between two _FixedInts."""
+    """Test pow between two _PrimitiveInts."""
     var1 = UInt8(0x04)
     var2 = UInt8(0x02)
     result = var1**var2
@@ -483,7 +483,7 @@ def test_fixedint_rpow_with_unsupported_type():
 
 
 def test_fixedint_pow_with_fixedint_with_overflow():
-    """Test pow between two _FixedInts with overflow."""
+    """Test pow between two _PrimitiveInts with overflow."""
     var1 = UInt8(0xFF)
     var2 = UInt8(0xFF)
     with pytest.raises(OverflowError):
