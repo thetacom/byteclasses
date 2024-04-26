@@ -7,7 +7,7 @@ from ..._enums import ByteOrder
 from ._collection import create_collection
 from ._collection_class_spec import _CollectionClassSpec
 from ._methods import _build_init_method
-from .fixed_size_collection_protocol import FixedSizeCollection
+from .byteclass_collection_protocol import ByteclassCollection
 from .member import _init_members, _member_assign
 
 __all__ = ["union"]
@@ -16,11 +16,11 @@ __all__ = ["union"]
 @overload
 def union(
     cls: None = None, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE
-) -> Callable[[type], FixedSizeCollection]: ...
+) -> Callable[[type], ByteclassCollection]: ...
 
 
 @overload
-def union(cls: type, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE) -> FixedSizeCollection: ...
+def union(cls: type, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE) -> ByteclassCollection: ...
 
 
 def union(  # type: ignore
@@ -28,7 +28,7 @@ def union(  # type: ignore
     /,
     *,
     byte_order: bytes | ByteOrder = ByteOrder.NATIVE,
-) -> FixedSizeCollection | Callable[[type], FixedSizeCollection]:
+) -> ByteclassCollection | Callable[[type], ByteclassCollection]:
     """Return the same class as was passed in.
 
     Fixed length union methods are added to the class.

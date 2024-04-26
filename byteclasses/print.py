@@ -10,8 +10,8 @@ from rich.table import Table  # pylint: disable=E0401
 from rich.text import Text  # pylint: disable=E0401
 
 from .constants import _MEMBERS, _PARAMS
-from .types._fixed_size_type import _FixedSizeType
-from .types.collections.fixed_array import FixedArray
+from .types.collections.byte_array import ByteArray
+from .types.primitives._primitive import _Primitive
 from .util import is_byteclass_collection, is_byteclass_instance, is_byteclass_primitive
 
 if TYPE_CHECKING:
@@ -55,7 +55,7 @@ def byteclass_info(
         "repr()": repr(obj),
         ".data": obj.data,
     }
-    if isinstance(obj, _FixedSizeType):
+    if isinstance(obj, _Primitive):
         properties.update({".value": obj.value})
     for name, val in properties.items():
         table.add_row(Text(name, style="bold"), str(val), style=next(colors))
@@ -75,8 +75,8 @@ def byteclass_table(
     if not is_byteclass_instance(obj):
         raise TypeError("Object is not a byteclass instance.")
     if is_byteclass_collection(obj):
-        if isinstance(obj, FixedArray):
-            fixed_array_table(obj, show_data=show_data, title=title, console=console)
+        if isinstance(obj, ByteArray):
+            byte_array_table(obj, show_data=show_data, title=title, console=console)
         else:
             collection_table(obj, show_data=show_data, title=title, console=console)
     else:
@@ -114,7 +114,7 @@ def collection_table(
     _console.print(table)
 
 
-def fixed_array_table(
+def byte_array_table(
     obj: Any,
     /,
     *,
@@ -123,8 +123,8 @@ def fixed_array_table(
     console: Optional["Console"] = None,
 ) -> None:
     """Print byteclass fixed array in a table."""
-    if not isinstance(obj, FixedArray):
-        raise TypeError("Object is not a byteclass FixedArray.")
+    if not isinstance(obj, ByteArray):
+        raise TypeError("Object is not a byteclass ByteArray.")
     table = Table(title=title) if title else Table(title=obj.__class__.__name__)
     table.add_column("Member")
     table.add_column("Value")
@@ -188,7 +188,7 @@ def byteclass_inspect(
     if not is_byteclass_instance(obj):
         raise TypeError("Object is not a byteclass instance.")
     if is_byteclass_collection(obj):
-        if isinstance(obj, FixedArray):
+        if isinstance(obj, ByteArray):
             print_table_func = _print_byteclass_array_panel
         elif getattr(obj, _PARAMS).type == "structure":
             print_table_func = _print_byteclass_structure_panel
@@ -232,7 +232,7 @@ def _print_byteclass_union_panel(obj, *, byte_width: int, console):
 
 
 def _print_byteclass_array_panel(obj, *, byte_width: int, console):
-    """Print a byteview of FixedArray object data to console."""
+    """Print a byteview of ByteArray object data to console."""
     lines = []
     v_offset_width = len(hex(len(obj))) + 1
     line_length = byte_width * 3 + 4
@@ -366,8 +366,8 @@ def _generate_union_lines(obj, v_offset_width: int, byte_width: int) -> list[str
     return lines
 
 
-def _generate_array_lines(obj: FixedArray, v_offset_width: int, byte_width: int) -> list[str]:  # pylint: disable=R0914
-    """Generate FixedArray data lines from object."""
+def _generate_array_lines(obj: ByteArray, v_offset_width: int, byte_width: int) -> list[str]:  # pylint: disable=R0914
+    """Generate ByteArray data lines from object."""
     member_colors = cycle(COLOR_NAMES)
     lines = []
     curr_offset = 0

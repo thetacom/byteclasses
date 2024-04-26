@@ -114,7 +114,7 @@ repos:
   rev: 1.8.5
   hooks:
   - id: nbqa-isort
-    args: [--profile, black, -l, "120",--float-to-top]
+    args: [--profile=black, --line-length=120]
   - id: nbqa-check-ast
   - id: nbqa-black
   - id: nbqa-pyupgrade

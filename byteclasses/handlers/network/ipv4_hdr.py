@@ -1,6 +1,6 @@
 """IPv4 Header class implemented with byteclasses."""
 
-from byteclasses.types.collections import FixedArray, member, structure, union
+from byteclasses.types.collections import ByteArray, member, structure, union
 from byteclasses.types.primitives.generics import BitField, BitPos
 from byteclasses.types.primitives.integers import UInt8, UInt16, UInt32
 
@@ -31,7 +31,7 @@ class FlagsOff(BitField):
 class IPv4Addr:
     """IPv4 Address."""
 
-    uint8: FixedArray = member(factory=lambda byte_order: FixedArray(4, byte_order=byte_order))  # type: ignore
+    uint8: ByteArray = member(factory=lambda byte_order: ByteArray(4, byte_order=byte_order))  # type: ignore
     uint32: UInt32
 
 

@@ -5,7 +5,7 @@ from struct import calcsize
 from typing import Any, cast
 
 from ..._enums import ByteOrder, TypeChar
-from ...types._fixed_numeric_type import _FixedNumericType
+from ...types.primitives._primitive_number import _PrimitiveNumber
 
 __all__ = [
     "Float16",
@@ -17,7 +17,7 @@ __all__ = [
 ]
 
 
-class _FixedFloat(_FixedNumericType):
+class _FixedFloat(_PrimitiveNumber):
     """Generic Fixed Size Float."""
 
     def __init__(

@@ -5,7 +5,7 @@ from struct import calcsize
 from typing import overload
 
 from ..._enums import ByteOrder, TypeChar
-from .._fixed_size_type import _FixedSizeType
+from ._primitive import _Primitive
 
 MIN_WIDTH = 1
 
@@ -58,7 +58,7 @@ class BitPos:
         return self._idx
 
 
-class BitField(_FixedSizeType):
+class BitField(_Primitive):
     """BitField Fixed Size Class."""
 
     byte_length: int = 1

@@ -7,7 +7,7 @@ from struct import calcsize
 from typing import Any, cast
 
 from ..._enums import ByteOrder, TypeChar
-from ...types._fixed_numeric_type import _FixedNumericType
+from ...types.primitives._primitive_number import _PrimitiveNumber
 
 __all__ = [
     "Int",
@@ -42,7 +42,7 @@ class FixedIntegerDivisionError(OverflowError):
     """Exception raised when an integer divison results in a non integer value."""
 
 
-class _FixedInt(_FixedNumericType):
+class _FixedInt(_PrimitiveNumber):
     """Generic Fixed Size Integer."""
 
     _signed: bool = NotImplemented

@@ -4,7 +4,7 @@ from types import GenericAlias
 from typing import Any
 
 from .constants import _BYTECLASS, _MEMBERS
-from .types._fixed_size_type import _FixedSizeType
+from .types.primitives._primitive import _Primitive
 
 
 def is_byteclass_instance(obj: Any) -> bool:
@@ -31,10 +31,10 @@ def is_byteclass_collection(obj: Any) -> bool:
 
 def is_byteclass_primitive_instance(obj: Any) -> bool:
     """Return True if obj is an instance of a byteclass primitive."""
-    return isinstance(obj, _FixedSizeType)
+    return isinstance(obj, _Primitive)
 
 
 def is_byteclass_primitive(obj: Any) -> bool:
     """Return True if obj is a class or instance of a byteclass primitive."""
     cls = obj if isinstance(obj, type) and not isinstance(obj, GenericAlias) else type(obj)
-    return issubclass(cls, _FixedSizeType)
+    return issubclass(cls, _Primitive)

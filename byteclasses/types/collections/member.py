@@ -7,7 +7,7 @@ from types import GenericAlias, MappingProxyType, MemberDescriptorType
 from typing import TYPE_CHECKING, Any, TypeVar, overload
 
 from ..._enums import ByteOrder
-from ...types._fixed_size_type import _FixedSizeType
+from ...types.primitives._primitive import _Primitive
 from ...util import is_byteclass_collection
 
 if TYPE_CHECKING:
@@ -119,7 +119,7 @@ def member(*, factory: Callable[[Any], MbrT], metadata=None) -> MbrT: ...
 
 
 @overload
-def member(*, factory: Callable[[bytes | ByteOrder], _FixedSizeType], metadata=None) -> _FixedSizeType: ...
+def member(*, factory: Callable[[bytes | ByteOrder], _Primitive], metadata=None) -> _Primitive: ...
 
 
 @overload
@@ -289,6 +289,6 @@ def _get_member(cls: type, a_name: str, a_type: type):
     # For real members, disallow any non fixed types
     if member_.member_type is _MEMBER:
         # Verify that the type is fixed.
-        if not issubclass(member_.type, _FixedSizeType) and not is_byteclass_collection(member_.type):
+        if not issubclass(member_.type, _Primitive) and not is_byteclass_collection(member_.type):
             raise TypeError(f"member {member_.name} has invalid type {member_.type!r}")
     return member_

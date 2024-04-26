@@ -7,7 +7,7 @@ Basic Examples
    characters
    generics
    bitfield
-   fixed_array
+   byte_array
    string
    structure
    union

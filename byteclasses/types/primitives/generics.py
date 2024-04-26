@@ -6,7 +6,7 @@ from struct import calcsize
 from typing import Any
 
 from ..._enums import ByteOrder, TypeChar
-from ...types._fixed_size_type import _FixedSizeType
+from ...types.primitives._primitive import _Primitive
 from .bitfield import BitField, BitField16, BitField32, BitField64, BitPos
 
 __all__ = [
@@ -30,7 +30,7 @@ class Bit(IntEnum):
     TRUE = 1
 
 
-class _FixedSizeGeneric(_FixedSizeType):
+class _ByteclassGeneric(_Primitive):
     """A generic fixed size type."""
 
     def __init__(
@@ -61,28 +61,28 @@ class _FixedSizeGeneric(_FixedSizeType):
         self.data = new_value
 
 
-class Byte(_FixedSizeGeneric):
+class Byte(_ByteclassGeneric):
     """Generic 8-bit Byte Class."""
 
     _type_char: bytes = TypeChar.BYTE.value
     _length: int = calcsize(_type_char)
 
 
-class Word(_FixedSizeGeneric):
+class Word(_ByteclassGeneric):
     """Generic 2-byte Word Class."""
 
     _type_char: bytes = TypeChar.WORD.value
     _length: int = calcsize(_type_char)
 
 
-class DWord(_FixedSizeGeneric):
+class DWord(_ByteclassGeneric):
     """Generic 4-byte Word Class."""
 
     _type_char: bytes = TypeChar.DWORD.value
     _length: int = calcsize(_type_char)
 
 
-class QWord(_FixedSizeGeneric):
+class QWord(_ByteclassGeneric):
     """Generic 8-byte Word Class."""
 
     _type_char: bytes = TypeChar.QWORD.value

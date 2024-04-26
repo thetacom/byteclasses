@@ -1,6 +1,6 @@
 """IPv6 Header class implemented with byteclasses."""
 
-from byteclasses.types.collections import FixedArray, member, structure, union
+from byteclasses.types.collections import ByteArray, member, structure, union
 from byteclasses.types.primitives.generics import BitField, BitPos
 from byteclasses.types.primitives.integers import UInt8, UInt16, UInt32, UInt64
 
@@ -18,9 +18,9 @@ class VTF(BitField):
 class IPv6Addr:
     """IPv6 Address."""
 
-    uint8: FixedArray = member(factory=lambda byte_order: FixedArray(16, byte_order=byte_order))  # type: ignore
-    uint32: UInt32 = member(factory=lambda byte_order: FixedArray(4, UInt32, byte_order=byte_order))  # type: ignore
-    uint64: UInt32 = member(factory=lambda byte_order: FixedArray(2, UInt64, byte_order=byte_order))  # type: ignore
+    uint8: ByteArray = member(factory=lambda byte_order: ByteArray(16, byte_order=byte_order))  # type: ignore
+    uint32: UInt32 = member(factory=lambda byte_order: ByteArray(4, UInt32, byte_order=byte_order))  # type: ignore
+    uint64: UInt32 = member(factory=lambda byte_order: ByteArray(2, UInt64, byte_order=byte_order))  # type: ignore
 
 
 @structure(byte_order=b"!", packed=True)
@@ -41,7 +41,7 @@ class HopByHopExtHdr:
 
     next_hdr: UInt8
     hdr_ext_length: UInt8
-    options: FixedArray = member(factory=lambda byte_order: FixedArray(14, byte_order=byte_order))  # type: ignore
+    options: ByteArray = member(factory=lambda byte_order: ByteArray(14, byte_order=byte_order))  # type: ignore
 
 
 @structure(byte_order=b"!", packed=True)
@@ -52,7 +52,7 @@ class RoutingExtHdr:
     hdr_ext_length: UInt8
     routing_type: UInt8
     segments_left: UInt8
-    type_data: FixedArray = member(factory=lambda byte_order: FixedArray(12, byte_order=byte_order))
+    type_data: ByteArray = member(factory=lambda byte_order: ByteArray(12, byte_order=byte_order))
 
 
 class FragmentBitField(BitField):

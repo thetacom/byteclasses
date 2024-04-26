@@ -3,15 +3,14 @@
 from abc import ABC, abstractmethod
 from collections.abc import ByteString
 from functools import cached_property
-from typing import SupportsBytes
 
-from .._enums import ByteOrder
-from ..constants import _BYTECLASS
+from ..._enums import ByteOrder
+from ...constants import _BYTECLASS
 
 __all__: list[str] = []
 
 
-class _FixedSizeType(ABC, SupportsBytes):
+class _Primitive(ABC):
     """Base class for fixed size types."""
 
     _type_char: bytes = NotImplemented
@@ -136,4 +135,4 @@ class _FixedSizeType(ABC, SupportsBytes):
         """Set instance value."""
 
 
-setattr(_FixedSizeType, _BYTECLASS, True)
+setattr(_Primitive, _BYTECLASS, True)
