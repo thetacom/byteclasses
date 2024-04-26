@@ -7,6 +7,7 @@ Basic Examples
    characters
    generics
    bitfield
+   byte_enum
    byte_array
    string
    structure
