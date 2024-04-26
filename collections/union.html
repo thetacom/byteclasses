@@ -243,12 +243,12 @@
 <p>Similar to a C <code class="docutils literal notranslate"><span class="pre">union</span></code>, each member of a byteclass <code class="docutils literal notranslate"><span class="pre">union</span></code> has an offset of 0 and overlay onto the same underlying data.</p>
 <p>The length of a Union byteclass is determined when the class is created based on its members.</p>
 <p>A Union byteclass can contain both byteclass primitives and other byteclass collections.</p>
-<p>Each Union member has its own <code class="docutils literal notranslate"><span class="pre">byte_order</span></code>. However, the <code class="docutils literal notranslate"><span class="pre">union</span></code> decorator accepts a <code class="docutils literal notranslate"><span class="pre">byte_order</span></code> parameter which is used for any members that rely on a <code class="docutils literal notranslate"><span class="pre">default_factory</span></code> for instantiation.</p>
+<p>Each Union member has its own <code class="docutils literal notranslate"><span class="pre">byte_order</span></code>. However, the <code class="docutils literal notranslate"><span class="pre">union</span></code> decorator accepts a <code class="docutils literal notranslate"><span class="pre">byte_order</span></code> parameter which is used for any members that rely on a <code class="docutils literal notranslate"><span class="pre">factory</span></code> for instantiation.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@union</span><span class="p">(</span><span class="n">byte_order</span><span class="o">=</span><span class="sa">b</span><span class="s2">"@"</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Union1</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""A union byteclass with one member using default factory."""</span>
 
-    <span class="n">a</span><span class="p">:</span> <span class="n">UInt64</span> <span class="o">=</span> <span class="n">member</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">UInt64</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">:</span> <span class="n">UInt64</span> <span class="o">=</span> <span class="n">member</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="n">UInt64</span><span class="p">)</span>
 
 <span class="nd">@union</span>
 <span class="k">class</span> <span class="nc">Union2</span><span class="p">:</span>

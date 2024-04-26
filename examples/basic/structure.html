@@ -236,7 +236,7 @@
   <section id="Structure-Collection">
 <h1 id="examples-basic-structure--page-root">Structure Collection<a class="headerlink" href="#examples-basic-structure--page-root" title="Link to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">ClassVar</span>
@@ -244,7 +244,7 @@
 <span class="kn">from</span> <span class="nn">byteclasses.print</span> <span class="kn">import</span> <span class="n">byteclass_info</span><span class="p">,</span> <span class="n">byteclass_inspect</span>
 <span class="kn">from</span> <span class="nn">byteclasses.types.collections</span> <span class="kn">import</span> <span class="n">FixedSizeCollection</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="n">member</span>
 <span class="kn">from</span> <span class="nn">byteclasses.types.primitives.characters</span> <span class="kn">import</span> <span class="n">UChar</span>
-<span class="kn">from</span> <span class="nn">byteclasses.types.primitives.generics</span> <span class="kn">import</span> <span class="n">Byte</span>
+<span class="kn">from</span> <span class="nn">byteclasses.types.primitives.generics</span> <span class="kn">import</span> <span class="n">Byte</span><span class="p">,</span> <span class="n">BitField</span>
 <span class="kn">from</span> <span class="nn">byteclasses.types.primitives.integers</span> <span class="kn">import</span> <span class="n">Int8</span><span class="p">,</span> <span class="n">UInt8</span><span class="p">,</span> <span class="n">UInt16</span><span class="p">,</span> <span class="n">UInt32</span>
 <span class="kn">from</span> <span class="nn">byteclasses.types.primitives.floats</span> <span class="kn">import</span> <span class="n">Float32</span>
 </pre></div>
@@ -252,7 +252,7 @@
 </div>
 <p>Basic Structure</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@structure</span>
@@ -278,7 +278,7 @@ BasicStructure(var1=UInt8(0), var2=UInt16(770)) 4 bytearray(b'\x00\x01\x02\x03')
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_info</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span>
@@ -289,24 +289,24 @@ BasicStructure(var1=UInt8(0), var2=UInt16(770)) 4 bytearray(b'\x00\x01\x02\x03')
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                Byteclass Info                                 </span>
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold"> Property                  </span>┃<span style="font-weight: bold"> Value                                           </span>┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BasicStructure                                  </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()           </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                            </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_byteclass_collection()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True                                            </span>│
-│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_byteclass_primitive() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> False                                           </span>│
-│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                      </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> BasicStructure -&gt; object                        </span>│
-│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                    </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 4                                               </span>│
-│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                    </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> BasicStructure(var1=UInt8(0), var2=UInt16(770)) </span>│
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BasicStructure(var1=UInt8(0), var2=UInt16(770)) </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                    </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> bytearray(b'\x00\x01\x02\x03')                  </span>│
-└───────────────────────────┴─────────────────────────────────────────────────┘
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                          Byteclass Info                                           </span>
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Property                  </span>┃<span style="font-weight: bold"> Value                                                               </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BasicStructure                                                      </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()           </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_byteclass_collection()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True                                                                </span>│
+│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_byteclass_primitive() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> False                                                               </span>│
+│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                      </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> BasicStructure -&gt; object                                            </span>│
+│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                    </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 4                                                                   </span>│
+│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                    </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> BasicStructure(var1=UInt8(0), var2=UInt16(770))                     </span>│
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BasicStructure(byte_order=b'@',data=bytearray(b'\x00\x01\x02\x03')) </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                    </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> bytearray(b'\x00\x01\x02\x03')                                      </span>│
+└───────────────────────────┴─────────────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span>
@@ -339,7 +339,7 @@ BasicStructure(var1=UInt8(0), var2=UInt16(770)) 4 bytearray(b'\x00\x01\x02\x03')
 </div>
 <p>Packed Basic Structure</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@structure</span><span class="p">(</span><span class="n">packed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -365,7 +365,7 @@ PackedStructure(var1=UInt8(0), var2=UInt16(0)) 3 bytearray(b'\x00\x00\x00')
 </div>
 <p>Simple Structure</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@structure</span><span class="p">(</span><span class="n">byte_order</span><span class="o">=</span><span class="sa">b</span><span class="s2">"!"</span><span class="p">)</span>
@@ -380,7 +380,7 @@ PackedStructure(var1=UInt8(0), var2=UInt16(0)) 3 bytearray(b'\x00\x00\x00')
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_info</span><span class="p">(</span><span class="n">ss1</span><span class="p">)</span>
@@ -391,24 +391,24 @@ PackedStructure(var1=UInt8(0), var2=UInt16(0)) 3 bytearray(b'\x00\x00\x00')
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                                  Byteclass Info                                                  </span>
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold"> Property                  </span>┃<span style="font-weight: bold"> Value                                                                              </span>┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> SimpleStruct                                                                       </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()           </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                               </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_byteclass_collection()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True                                                                               </span>│
-│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_byteclass_primitive() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> False                                                                              </span>│
-│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                      </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> SimpleStruct -&gt; object                                                             </span>│
-│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                    </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 13                                                                                 </span>│
-│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                    </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> SimpleStruct(a=UInt8(0), b=UInt16(0), c=UChar('\x00'), d=Float32(0.0), e=UInt8(0)) </span>│
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> SimpleStruct(a=UInt8(0), b=UInt16(0), c=UChar('\x00'), d=Float32(0.0), e=UInt8(0)) </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                    </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> bytearray(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')                 </span>│
-└───────────────────────────┴────────────────────────────────────────────────────────────────────────────────────┘
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                                  Byteclass Info                                                   </span>
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Property                  </span>┃<span style="font-weight: bold"> Value                                                                               </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> SimpleStruct                                                                        </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()           </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                                </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_byteclass_collection()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True                                                                                </span>│
+│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_byteclass_primitive() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> False                                                                               </span>│
+│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                      </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> SimpleStruct -&gt; object                                                              </span>│
+│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                    </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 13                                                                                  </span>│
+│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                    </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> SimpleStruct(a=UInt8(0), b=UInt16(0), c=UChar('\x00'), d=Float32(0.0), e=UInt8(0))  </span>│
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> SimpleStruct(byte_order=b'!',data=bytearray(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00… </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                    </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> bytearray(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')                  </span>│
+└───────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">ss1</span><span class="p">)</span>
@@ -444,7 +444,7 @@ PackedStructure(var1=UInt8(0), var2=UInt16(0)) 3 bytearray(b'\x00\x00\x00')
 </div>
 <p>Direct data access</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ss1</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\xcd\xcc\x8c</span><span class="s2">?</span><span class="se">\x00</span><span class="s2">"</span>
@@ -452,7 +452,7 @@ PackedStructure(var1=UInt8(0), var2=UInt16(0)) 3 bytearray(b'\x00\x00\x00')
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">ss1</span><span class="p">)</span>
@@ -487,7 +487,7 @@ PackedStructure(var1=UInt8(0), var2=UInt16(0)) 3 bytearray(b'\x00\x00\x00')
 </pre></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ss2</span> <span class="o">=</span> <span class="n">SimpleStruct</span><span class="p">()</span>
@@ -499,7 +499,7 @@ PackedStructure(var1=UInt8(0), var2=UInt16(0)) 3 bytearray(b'\x00\x00\x00')
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">ss2</span><span class="p">)</span>
@@ -535,7 +535,7 @@ PackedStructure(var1=UInt8(0), var2=UInt16(0)) 3 bytearray(b'\x00\x00\x00')
 </div>
 <p>Member Assignment</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ss1</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">endianness</span><span class="p">)</span>
@@ -555,7 +555,7 @@ NET
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">ss1</span><span class="p">)</span>
@@ -591,7 +591,7 @@ NET
 </div>
 <p>Index Assignment</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ss1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">6</span>
@@ -601,7 +601,7 @@ NET
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">ss1</span><span class="p">)</span>
@@ -637,27 +637,26 @@ NET
 </div>
 <p>Nested Collections</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@structure</span>
 <span class="k">class</span> <span class="nc">InnerStruct</span><span class="p">:</span>
-    <span class="n">var0</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">23</span>
+    <span class="n">var1</span><span class="p">:</span> <span class="n">BitField</span>
     <span class="n">var2</span><span class="p">:</span> <span class="n">Byte</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@structure</span><span class="p">(</span><span class="n">byte_order</span><span class="o">=</span><span class="n">ByteOrder</span><span class="o">.</span><span class="n">NATIVE</span><span class="p">,</span> <span class="n">packed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">OuterStruct</span><span class="p">:</span>
-    <span class="n">var3</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">23</span>
-    <span class="n">var4</span><span class="p">:</span> <span class="n">Int8</span>
-    <span class="n">var5</span><span class="p">:</span> <span class="n">UInt32</span>
-    <span class="n">var6</span><span class="p">:</span> <span class="n">Float32</span>
-    <span class="n">var7</span><span class="p">:</span> <span class="n">InnerStruct</span> <span class="o">=</span> <span class="n">member</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">InnerStruct</span><span class="p">)</span>
+    <span class="n">var3</span><span class="p">:</span> <span class="n">Int8</span>
+    <span class="n">var4</span><span class="p">:</span> <span class="n">UInt32</span>
+    <span class="n">var5</span><span class="p">:</span> <span class="n">Float32</span>
+    <span class="n">var6</span><span class="p">:</span> <span class="n">InnerStruct</span> <span class="o">=</span> <span class="n">member</span><span class="p">(</span><span class="n">factory</span><span class="o">=</span><span class="n">InnerStruct</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">"test"</span><span class="p">)</span>
@@ -667,7 +666,7 @@ NET
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[67]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_info</span><span class="p">(</span><span class="n">nested_struct</span><span class="p">)</span>
@@ -687,17 +686,16 @@ NET
 │<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_byteclass_collection()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True                                                                                </span>│
 │<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_byteclass_primitive() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> False                                                                               </span>│
 │<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                      </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> OuterStruct -&gt; object                                                               </span>│
-│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                    </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 10                                                                                  </span>│
-│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                    </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> OuterStruct(var4=Int8(0), var5=UInt32(0), var6=Float32(0.0),                        </span>│
-│<span style="color: #00ffff; text-decoration-color: #00ffff">                           </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> var7=InnerStruct(var2=Byte(data=b'\x00', byte_order=b'@')))                         </span>│
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> OuterStruct(var4=Int8(0), var5=UInt32(0), var6=Float32(0.0),                        </span>│
-│<span style="color: #808080; text-decoration-color: #808080">                           </span>│<span style="color: #808080; text-decoration-color: #808080"> var7=InnerStruct(var2=Byte(data=b'\x00', byte_order=b'@')))                         </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                    </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> bytearray(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')                              </span>│
+│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                    </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 11                                                                                  </span>│
+│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                    </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> OuterStruct(var3=Int8(0), var4=UInt32(0), var5=Float32(0.0),                        </span>│
+│<span style="color: #00ffff; text-decoration-color: #00ffff">                           </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> var6=InnerStruct(byte_order=b'@',data=bytearray(b'\x00\x00')))                      </span>│
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> OuterStruct(byte_order=b'@',data=bytearray(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\… </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                    </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> bytearray(b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')                          </span>│
 └───────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">nested_struct</span><span class="p">)</span>
@@ -711,7 +709,7 @@ NET
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">╭───────────────── Byteclass Inspect ──────────────────╮
 │      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │
 │ ---------------------------------------------------- │
-│ 0x0 <span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #808080; text-decoration-color: #808080">00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ff0000; text-decoration-color: #ff0000">00 00 00 00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #00ff00; text-decoration-color: #00ff00">00 00 00 00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ffff00; text-decoration-color: #ffff00">00</span>                   │
+│ 0x0 <span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #808080; text-decoration-color: #808080">00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ff0000; text-decoration-color: #ff0000">00 00 00 00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #00ff00; text-decoration-color: #00ff00">00 00 00 00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ffff00; text-decoration-color: #ffff00">00 00</span>                │
 ╰──────────────────────────────────────────────────────╯
 </pre></div>
 </div>
@@ -719,20 +717,20 @@ NET
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                              Legend                              </span>
-┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold"> Member </span>┃<span style="font-weight: bold"> Value                                                 </span>┃
-┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">var4  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> 0                                                     </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">var5  </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> 0                                                     </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">var6  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> 0.0                                                   </span>│
-│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">var7  </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> InnerStruct(var2=Byte(data=b'\x00', byte_order=b'@')) </span>│
-└────────┴───────────────────────────────────────────────────────┘
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                            Legend                                             </span>
+┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Member </span>┃<span style="font-weight: bold"> Value                                                                              </span>┃
+┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">var3  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> 0                                                                                  </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">var4  </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> 0                                                                                  </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">var5  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> 0.0                                                                                </span>│
+│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">var6  </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> InnerStruct(var1=BitField(data=b'\x00'), var2=Byte(data=b'\x00', byte_order=b'@')) </span>│
+└────────┴────────────────────────────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
 <p>Member Assignment</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nested_struct</span><span class="o">.</span><span class="n">var4</span> <span class="o">=</span> <span class="mi">1</span>
@@ -740,7 +738,7 @@ NET
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">nested_struct</span><span class="p">)</span>
@@ -754,7 +752,7 @@ NET
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">╭───────────────── Byteclass Inspect ──────────────────╮
 │      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │
 │ ---------------------------------------------------- │
-│ 0x0 <span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #808080; text-decoration-color: #808080">01</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ff0000; text-decoration-color: #ff0000">00 00 00 00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #00ff00; text-decoration-color: #00ff00">00 00 00 00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ffff00; text-decoration-color: #ffff00">00</span>                   │
+│ 0x0 <span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #808080; text-decoration-color: #808080">00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ff0000; text-decoration-color: #ff0000">01 00 00 00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #00ff00; text-decoration-color: #00ff00">00 00 00 00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ffff00; text-decoration-color: #ffff00">00 00</span>                │
 ╰──────────────────────────────────────────────────────╯
 </pre></div>
 </div>
@@ -762,22 +760,22 @@ NET
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                              Legend                              </span>
-┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold"> Member </span>┃<span style="font-weight: bold"> Value                                                 </span>┃
-┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">var4  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> 1                                                     </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">var5  </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> 0                                                     </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">var6  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> 0.0                                                   </span>│
-│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">var7  </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> InnerStruct(var2=Byte(data=b'\x00', byte_order=b'@')) </span>│
-└────────┴───────────────────────────────────────────────────────┘
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                            Legend                                             </span>
+┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Member </span>┃<span style="font-weight: bold"> Value                                                                              </span>┃
+┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">var3  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> 0                                                                                  </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">var4  </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> 1                                                                                  </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">var5  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> 0.0                                                                                </span>│
+│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">var6  </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> InnerStruct(var1=BitField(data=b'\x00'), var2=Byte(data=b'\x00', byte_order=b'@')) </span>│
+└────────┴────────────────────────────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[71]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">nested_struct</span><span class="o">.</span><span class="n">var7</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">nested_struct</span><span class="o">.</span><span class="n">var6</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -788,7 +786,7 @@ NET
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">╭───────────────── Byteclass Inspect ──────────────────╮
 │      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │
 │ ---------------------------------------------------- │
-│ 0x0 <span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #808080; text-decoration-color: #808080">00</span>                                              │
+│ 0x0 <span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #808080; text-decoration-color: #808080">00</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ff0000; text-decoration-color: #ff0000">00</span>                                           │
 ╰──────────────────────────────────────────────────────╯
 </pre></div>
 </div>
@@ -796,25 +794,26 @@ NET
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">       Legend       </span>
-┏━━━━━━━━┳━━━━━━━━━┓
-┃<span style="font-weight: bold"> Member </span>┃<span style="font-weight: bold"> Value   </span>┃
-┡━━━━━━━━╇━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">var2  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> b'\x00' </span>│
-└────────┴─────────┘
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                 Legend                  </span>
+┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Member </span>┃<span style="font-weight: bold"> Value                        </span>┃
+┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">var1  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField(00000000, flags={}) </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">var2  </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> b'\x00'                      </span>│
+└────────┴──────────────────────────────┘
 </pre></div>
 </div>
 <p>Data Attribute Assignment</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nested_struct</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"</span><span class="se">\xf9\xf8\xf7\xf6\xf5\xf4\xf3\xf2\xf1\xf0</span><span class="s2">"</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nested_struct</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"</span><span class="se">\xfa\xf9\xf8\xf7\xf6\xf5\xf4\xf3\xf2\xf1\xf0</span><span class="s2">"</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">nested_struct</span><span class="p">)</span>
@@ -828,7 +827,7 @@ NET
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">╭───────────────── Byteclass Inspect ──────────────────╮
 │      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │
 │ ---------------------------------------------------- │
-│ 0x0 <span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #808080; text-decoration-color: #808080">f9</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ff0000; text-decoration-color: #ff0000">f8 f7 f6 f5</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #00ff00; text-decoration-color: #00ff00">f4 f3 f2 f1</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ffff00; text-decoration-color: #ffff00">f0</span>                   │
+│ 0x0 <span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #808080; text-decoration-color: #808080">fa</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ff0000; text-decoration-color: #ff0000">f9 f8 f7 f6</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #00ff00; text-decoration-color: #00ff00">f5 f4 f3 f2</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ffff00; text-decoration-color: #ffff00">f1 f0</span>                │
 ╰──────────────────────────────────────────────────────╯
 </pre></div>
 </div>
@@ -836,20 +835,20 @@ NET
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                              Legend                              </span>
-┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold"> Member </span>┃<span style="font-weight: bold"> Value                                                 </span>┃
-┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">var4  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> -7                                                    </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">var5  </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> 4126603256                                            </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">var6  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> -2.4060893954673178e+30                               </span>│
-│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">var7  </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> InnerStruct(var2=Byte(data=b'\xf0', byte_order=b'@')) </span>│
-└────────┴───────────────────────────────────────────────────────┘
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                            Legend                                             </span>
+┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Member </span>┃<span style="font-weight: bold"> Value                                                                              </span>┃
+┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">var3  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> -6                                                                                 </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">var4  </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> 4143446265                                                                         </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">var5  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> -9.664127010094224e+30                                                             </span>│
+│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">var6  </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> InnerStruct(var1=BitField(data=b'\xf1'), var2=Byte(data=b'\xf0', byte_order=b'@')) </span>│
+└────────┴────────────────────────────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
 <p>Slice Assignment</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nested_struct</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"</span><span class="se">\x08</span><span class="s2">"</span>
@@ -857,7 +856,7 @@ NET
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[75]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">nested_struct</span><span class="p">)</span>
@@ -871,7 +870,7 @@ NET
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">╭───────────────── Byteclass Inspect ──────────────────╮
 │      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │
 │ ---------------------------------------------------- │
-│ 0x0 <span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #808080; text-decoration-color: #808080">f9</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ff0000; text-decoration-color: #ff0000">f8 08 08 08</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #00ff00; text-decoration-color: #00ff00">f4 f3 f2 f1</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ffff00; text-decoration-color: #ffff00">f0</span>                   │
+│ 0x0 <span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #808080; text-decoration-color: #808080">fa</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ff0000; text-decoration-color: #ff0000">f9 08 08 08</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #00ff00; text-decoration-color: #00ff00">f5 f4 f3 f2</span><span style="color: #c0c0c0; text-decoration-color: #c0c0c0">|</span><span style="color: #ffff00; text-decoration-color: #ffff00">f1 f0</span>                │
 ╰──────────────────────────────────────────────────────╯
 </pre></div>
 </div>
@@ -879,15 +878,15 @@ NET
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                              Legend                              </span>
-┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold"> Member </span>┃<span style="font-weight: bold"> Value                                                 </span>┃
-┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">var4  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> -7                                                    </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">var5  </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> 134744312                                             </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">var6  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> -2.4060893954673178e+30                               </span>│
-│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">var7  </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> InnerStruct(var2=Byte(data=b'\xf0', byte_order=b'@')) </span>│
-└────────┴───────────────────────────────────────────────────────┘
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                            Legend                                             </span>
+┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Member </span>┃<span style="font-weight: bold"> Value                                                                              </span>┃
+┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">var3  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> -6                                                                                 </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">var4  </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> 134744313                                                                          </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">var5  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> -9.664127010094224e+30                                                             </span>│
+│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">var6  </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> InnerStruct(var1=BitField(data=b'\xf1'), var2=Byte(data=b'\xf0', byte_order=b'@')) </span>│
+└────────┴────────────────────────────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
 </section>

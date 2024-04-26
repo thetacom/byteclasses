@@ -247,7 +247,7 @@
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
@@ -258,8 +258,26 @@
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[2], line 3</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">with</span> <span style="color: rgb(0,135,0)">open</span>(<span style="color: rgb(175,0,0)">"</span><span style="color: rgb(175,0,0)">../../../tests/data/hello_world.elf</span><span style="color: rgb(175,0,0)">"</span>, <span style="color: rgb(175,0,0)">"</span><span style="color: rgb(175,0,0)">rb</span><span style="color: rgb(175,0,0)">"</span>) <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> file:
+<span class="ansi-green-intense-fg ansi-bold">      2</span>     data <span style="color: rgb(98,98,98)">=</span> file<span style="color: rgb(98,98,98)">.</span>read()
+<span class="ansi-green-fg">----&gt; 3</span> elf64_hdr <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">ElfHdr64</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> elf64_hdr<span style="color: rgb(98,98,98)">.</span>attach(<span style="color: rgb(0,135,0)">memoryview</span>(data))
+
+File <span class="ansi-green-fg">&lt;string&gt;:6</span>, in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, data, byte_order)</span>
+
+<span class="ansi-red-fg">TypeError</span>: ElfHdr64.&lt;lambda&gt;() got an unexpected keyword argument 'byte_order'
+</pre></div></div>
+</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_info</span><span class="p">(</span><span class="n">elf64_hdr</span><span class="p">)</span>
@@ -290,7 +308,7 @@
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">elf64_hdr</span><span class="p">)</span>
@@ -336,7 +354,7 @@
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">collection_table</span><span class="p">(</span><span class="n">elf64_hdr</span><span class="p">)</span>
@@ -370,7 +388,7 @@
 </pre></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elf64</span> <span class="o">=</span> <span class="n">Elf64</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -378,7 +396,7 @@
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Elf64 Handler"</span><span class="p">)</span>
@@ -433,7 +451,7 @@
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">elf64</span><span class="o">.</span><span class="n">program_table</span><span class="p">)</span>
@@ -467,7 +485,7 @@
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">elf64</span><span class="o">.</span><span class="n">section_table</span><span class="p">)</span>

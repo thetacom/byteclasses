@@ -17,14 +17,14 @@ The length of a Union byteclass is determined when the class is created based on
 
 A Union byteclass can contain both byteclass primitives and other byteclass collections.
 
-Each Union member has its own `byte_order`. However, the `union` decorator accepts a `byte_order` parameter which is used for any members that rely on a `default_factory` for instantiation.
+Each Union member has its own `byte_order`. However, the `union` decorator accepts a `byte_order` parameter which is used for any members that rely on a `factory` for instantiation.
 
 ```python
 @union(byte_order=b"@")
 class Union1:
     """A union byteclass with one member using default factory."""
 
-    a: UInt64 = member(default_factory=UInt64)
+    a: UInt64 = member(factory=UInt64)
 
 @union
 class Union2:
