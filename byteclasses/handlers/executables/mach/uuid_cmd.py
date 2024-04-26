@@ -16,4 +16,4 @@ class UUIDCmd:
 
     cmd: Ptr32
     cmdsize: UInt32
-    uuid: FixedArray = member(default_factory=lambda: FixedArray(16))  # type: ignore
+    uuid: FixedArray = member(factory=lambda byte_order: FixedArray(16))  # type: ignore

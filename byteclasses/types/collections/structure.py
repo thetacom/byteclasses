@@ -8,7 +8,7 @@ from ._collection import create_collection
 from ._collection_class_spec import _CollectionClassSpec
 from ._methods import _build_init_method
 from .fixed_size_collection_protocol import FixedSizeCollection
-from .member import _init_members
+from .member import _init_members, _member_assign
 
 __all__ = ["structure"]
 
@@ -69,8 +69,8 @@ def _build_structure_init_method(
             [
                 f"{spec.self_name}.{member_.name}.offset = collection_length",
                 "collection_length += mbr_len",
+                _member_assign("_length", "collection_length", spec.self_name),
             ]
         )
 
-    body.append(f"{spec.self_name}._collection_init(collection_length)")
     return _build_init_method(spec, body, globals_)

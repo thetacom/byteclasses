@@ -3,7 +3,7 @@
 from collections.abc import ByteString
 from typing import Protocol, runtime_checkable
 
-from ._collection_params import _CollectionParams
+from ._params import _Params
 from .member import Member
 
 __all__ = [
@@ -21,7 +21,7 @@ class FixedSizeCollection(Protocol):
     """Protocol class for fixed size collection types."""
 
     __collection_members__: list[Member]
-    __collection_params__: _CollectionParams
+    __collection_params__: _Params
     data: bytearray
 
     def __call__(self): ...

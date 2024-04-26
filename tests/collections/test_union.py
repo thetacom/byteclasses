@@ -11,10 +11,10 @@ def test_union_init():
     class TestUnion:
         """A test union class."""
 
-        a: UInt64 = UInt64(0)
-        b: UInt32 = UInt32(0)
-        c: UInt16 = UInt16(0)
-        d: UInt8 = UInt8(0)
+        a: UInt64
+        b: UInt32
+        c: UInt16
+        d: UInt8
 
     data = TestUnion()
     assert len(data) == 8

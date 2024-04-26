@@ -29,7 +29,7 @@ class BitField32(BitField):
 class ElfHdr32:
     """32-bit Elf Header Class."""
 
-    e_ident: String = member(default_factory=lambda: String(16))  # type: ignore
+    e_ident: String = member(factory=lambda byte_order: String(16))  # type: ignore
     e_type: UInt16
     e_machine: UInt16
     e_version: UInt32
@@ -49,7 +49,7 @@ class ElfHdr32:
 class ElfHdr64:
     """64-bit Elf Header Class."""
 
-    e_ident: String = member(default_factory=lambda: String(16))  # type: ignore
+    e_ident: String = member(factory=lambda byte_order: String(16))  # type: ignore
     e_type: UInt16
     e_machine: UInt16
     e_version: UInt32

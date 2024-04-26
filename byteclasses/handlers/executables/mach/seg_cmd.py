@@ -20,7 +20,7 @@ class SegCmd32:
 
     cmd: UInt32
     cmdsize: UInt32
-    segname: String = member(default_factory=lambda: String(16))  # type: ignore
+    segname: String = member(factory=lambda byte_order: String(16))  # type: ignore
     vmaddr: Ptr32
     vmsize: UInt32
     fileoff: Ptr32
@@ -37,7 +37,7 @@ class SegCmd64:
 
     cmd: UInt32
     cmdsize: UInt32
-    segname: String = member(default_factory=lambda: String(16))  # type: ignore
+    segname: String = member(factory=lambda byte_order: String(16))  # type: ignore
     vmaddr: Ptr64
     vmsize: UInt64
     fileoff: Ptr64

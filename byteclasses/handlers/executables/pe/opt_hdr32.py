@@ -88,4 +88,4 @@ class OptHdr32:
     size_of_heap_commit: UInt32
     loader_flags: BitField32
     num_of_rva_and_sizes: UInt32
-    data_directory: FixedArray = member(default_factory=lambda: FixedArray(NUM_DIR_ENT, DataDir))  # type: ignore
+    data_directory: FixedArray = member(factory=lambda byte_order: FixedArray(NUM_DIR_ENT, DataDir))  # type: ignore

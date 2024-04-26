@@ -23,7 +23,7 @@ class FlagsOff(BitField):
     """IPv4 Flags BitField."""
 
     byte_length = 2
-    flags = BitPos(0, bit_width=3)
+    pkt_flags = BitPos(0, bit_width=3)
     fragment_offset = BitPos(3, bit_width=13)
 
 
@@ -31,7 +31,7 @@ class FlagsOff(BitField):
 class IPv4Addr:
     """IPv4 Address."""
 
-    uint8: FixedArray = member(default_factory=lambda: FixedArray(4, byte_order=b"!"))  # type: ignore
+    uint8: FixedArray = member(factory=lambda byte_order: FixedArray(4, byte_order=byte_order))  # type: ignore
     uint32: UInt32
 
 

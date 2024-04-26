@@ -4,8 +4,9 @@ import re
 import sys
 from collections.abc import Callable
 from types import GenericAlias, MappingProxyType, MemberDescriptorType
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, TypeVar, overload
 
+from ..._enums import ByteOrder
 from ...types._fixed_size_type import _FixedSizeType
 from ...util import is_byteclass_collection
 
@@ -34,14 +35,6 @@ _MEMBER = _MemberBase("_MEMBER")
 _MEMBER_CLASSVAR = _MemberBase("_MEMBER_CLASSVAR")
 
 
-class _HasDefaultFactoryClass:  # pylint: disable=R0903
-    def __repr__(self):
-        return "<factory>"
-
-
-_HAS_DEFAULT_FACTORY = _HasDefaultFactoryClass()
-
-
 class _MissingType:  # pylint: disable=R0903
     """A sentinel object to detect if a parameter is supplied or not.
 
@@ -50,6 +43,8 @@ class _MissingType:  # pylint: disable=R0903
 
 
 MISSING = _MissingType()
+
+MbrT = TypeVar("MbrT")
 
 
 class Member:  # pylint: disable=R0903
@@ -70,23 +65,20 @@ class Member:  # pylint: disable=R0903
     __slots__ = (
         "name",
         "type",
-        "default",
-        "default_factory",
+        "factory",
         "metadata",
         "member_type",  # Private: not to be used by user code.
     )
 
     def __init__(
         self,
-        default,
-        default_factory,
+        factory,
         metadata,
     ):
         """Initialize a Member object."""
         self.name: str | None = None
         self.type: type | None = None
-        self.default: Any = default
-        self.default_factory: Callable = default_factory
+        self.factory: Callable[[bytes, ByteOrder], Any] = factory
         self.metadata = _EMPTY_METADATA if metadata is None else MappingProxyType(metadata)
         self.member_type: _MemberBase | None = None
 
@@ -96,8 +88,7 @@ class Member:  # pylint: disable=R0903
             "Field("
             f"{self.name=!r},"
             f"{self.type=!r},"
-            f"{self.default=!r},"
-            f"{self.default_factory=!r},"
+            f"{self.factory=!r},"
             f"{self.metadata=!r},"
             f"{self.member_type=}"
             ")"
@@ -115,13 +106,24 @@ class Member:  # pylint: disable=R0903
         with the default value, so the end result is a descriptor that
         had __set_name__ called on it at the right time.
         """
-        func = getattr(type(self.default), "__set_name__", None)
-        if func:
-            # There is a __set_name__ method on the descriptor, call
-            # it.
-            func(self.default, owner, name)
+        func = getattr(self.type, "__set_name__", None)
+        if func and isinstance(func, Callable):
+            # There is a __set_name__ method on the descriptor, call it.
+            func(None, owner, name)  # pylint: disable=E1102
 
     __class_getitem__ = classmethod(GenericAlias)  # type: ignore
+
+
+@overload
+def member(*, factory: Callable[[Any], MbrT], metadata=None) -> MbrT: ...
+
+
+@overload
+def member(*, factory: Callable[[bytes | ByteOrder], _FixedSizeType], metadata=None) -> _FixedSizeType: ...
+
+
+@overload
+def member(*, factory: _MissingType = MISSING, metadata=None) -> Member: ...
 
 
 # This function is used instead of exposing Member creation directly,
@@ -129,22 +131,17 @@ class Member:  # pylint: disable=R0903
 # function whose type depends on its parameters.
 def member(
     *,
-    default=MISSING,
-    default_factory=MISSING,
+    factory=MISSING,
     metadata=None,
-) -> Member:
+) -> Any:
     """Return an object to identify dataclass fields.
 
-    default is the default value of the field.  default_factory is a
-    0-argument function called to initialize a member's value. metadata, if specified,
+    Unlike dataclasses, byteclasses do not accept `default` values.  `factory` is a
+    0-argument function called to initialize a member. metadata, if specified,
     must be a mapping which is stored but not otherwise examined by the fixed
     collection.
-
-    It is an error to specify both default and default_factory.
     """
-    if default is not MISSING and default_factory is not MISSING:
-        raise ValueError("cannot specify both default and default_factory")
-    return Member(default, default_factory, metadata)
+    return Member(factory, metadata)
 
 
 def _member_assign(name: str, value: Any, self_name: str) -> str:
@@ -157,7 +154,7 @@ def _init_members(spec: "_CollectionClassSpec", globals_: dict[str, Any]) -> lis
     """Initialize all class members."""
     body: list[str] = []
     for member_ in spec.members:
-        init_line = _init_member(member_, globals_, spec.self_name)
+        init_line = _init_member(spec, member_, globals_, spec.self_name)
         body.extend(
             [
                 init_line,
@@ -171,6 +168,7 @@ def _init_members(spec: "_CollectionClassSpec", globals_: dict[str, Any]) -> lis
 
 
 def _init_member(
+    spec: "_CollectionClassSpec",
     member_: Member,
     globals_: dict[str, Any],
     self_name: str,
@@ -178,49 +176,17 @@ def _init_member(
     # Return the text of the line in the body of __init__ that will
     # initialize this field.
 
-    default_name = f"_dflt_{member_.name}"
-    if member_.default is not MISSING:
-        globals_[default_name] = member_.default
-        value = member_.name
+    init_name = f"_init_{member_.name}"
+    if member_.factory is not MISSING:
+        globals_[init_name] = member_.factory
     else:
-        if member_.default_factory is not MISSING:
-            globals_[default_name] = member_.default_factory
-        else:
-            # No default factory. Use member type as constructor.
-            globals_[default_name] = member_.type
-        value = f"{default_name}() " f"if {member_.name} is _HAS_DEFAULT_FACTORY " f"else {member_.name}"
+        # No factory. Use member type as constructor.
+        globals_[init_name] = member_.type
+    value = f"{init_name}(byte_order={spec.byte_order})"
     if member_.name is None:
         raise ValueError("Member name cannot be None.")
     # Now, actually generate the member assignment.
     return _member_assign(member_.name, value, self_name)
-
-
-def _init_param(member_: Member) -> str:
-    # Return the __init__ parameter string for this field.  For
-    # example, the equivalent of 'x: int = 3' (except instead of 'int',
-    # reference a variable set to int, and instead of '3', reference a
-    # variable set to 3).
-    if member_.default is not MISSING:
-        # There's a default, this will be the name that's used to look
-        # it up.
-        default = f"=_dflt_{member_.name}"
-    else:
-        # Name used when default factory is provided or inferred.
-        default = "=_HAS_DEFAULT_FACTORY"
-    return f"{member_.name}:_type_{member_.name}{default}"
-
-
-def _is_classvar(a_type, typing) -> bool:
-    """Test is the provided type is a ClassVar.
-
-    This test uses a typing internal class, but it's the best way to test if this
-    is a ClassVar.
-    """
-    return a_type is typing.ClassVar or (
-        type(a_type)  # pylint: disable=unidiomatic-typecheck
-        is typing._GenericAlias  # pylint: disable=protected-access
-        and a_type.__origin__ is typing.ClassVar
-    )
 
 
 def _is_type(
@@ -296,13 +262,17 @@ def _get_member(cls: type, a_name: str, a_type: type):
     to a Member().
     """
     default = getattr(cls, a_name, MISSING)
+
     if isinstance(default, Member):
         member_ = default
+    elif default != MISSING:
+        raise ValueError("Collection member cannot have a default value.")
+    elif isinstance(default, MemberDescriptorType):
+        # This is a member in __slots__, so it has no default value.
+        pass
+        # default = MISSING
     else:
-        if isinstance(default, MemberDescriptorType):
-            # This is a member in __slots__, so it has no default value.
-            default = MISSING
-        member_ = member(default=default)
+        member_ = member()
 
     # Only at this point do we know the name and the type.  Set them.
     member_.name = a_name
@@ -312,44 +282,13 @@ def _get_member(cls: type, a_name: str, a_type: type):
     # going to decide if it's a ClassVar, everything else is just a normal member.
     member_.member_type = _MEMBER
 
-    # In addition to checking for actual types here, also check for
-    # string annotations.  get_type_hints() won't always work for us
-    # (see https://github.com/python/typing/issues/508 for example),
-    # plus it's expensive and would require an eval for every string
-    # annotation.  So, make a best effort to see if this is a ClassVar
-    # using regex's and checking that the thing referenced
-    # is actually of the correct type.
-
-    # For the complete discussion, see https://bugs.python.org/issue33453
-
-    # If typing has not been imported, then it's impossible for any
-    # annotation to be a ClassVar.  So, only look for ClassVar if
-    # typing has been imported by any module (not necessarily cls's
-    # module).
-    typing = sys.modules.get("typing")
-    if typing:
-        if _is_classvar(a_type, typing) or (
-            isinstance(member_.type, str) and _is_type(member_.type, cls, typing, typing.ClassVar, _is_classvar)
-        ):
-            member_.member_type = _MEMBER_CLASSVAR
-
     # Validations for individual fields.  This is delayed until now,
     # instead of in the Field() constructor, since only here do we
     # know the field name, which allows for better error reporting.
-
-    # Special restrictions for ClassVar and InitVar.
-    if member_.member_type is _MEMBER_CLASSVAR:
-        if member_.default_factory is not MISSING:
-            raise TypeError(f"member {member_.name} cannot have a default factory")
 
     # For real members, disallow any non fixed types
     if member_.member_type is _MEMBER:
         # Verify that the type is fixed.
         if not issubclass(member_.type, _FixedSizeType) and not is_byteclass_collection(member_.type):
             raise TypeError(f"member {member_.name} has invalid type {member_.type!r}")
-        # Verify the default is the same type as the field.
-        if member_.default is not MISSING and not isinstance(member_.default, member_.type):
-            raise TypeError(
-                f"member {member_.name} ({type(member_.default)}) default value " f"must be of type {member_.type!r}"
-            )
     return member_
