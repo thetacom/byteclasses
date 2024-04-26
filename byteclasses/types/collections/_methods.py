@@ -6,10 +6,11 @@ from functools import cached_property, singledispatchmethod
 from reprlib import recursive_repr
 from typing import Any, cast
 
+from ..._enums import ByteOrder
 from ._collection_class_spec import _CollectionClassSpec
 from ._util import _tuple_str
 from .fixed_size_collection_protocol import FixedSizeCollectionError
-from .member import _HAS_DEFAULT_FACTORY, MISSING, _init_param, _member_assign
+from .member import MISSING, _member_assign
 
 
 def _create_method(
@@ -51,12 +52,26 @@ def _build_init_method(
 ) -> Callable:
     """Create structure init function."""
     locals_: dict[str, Any] = {f"_type_{member_.name}": member_.type for member_ in spec.members}
-    locals_.update({"MISSING": MISSING, "_HAS_DEFAULT_FACTORY": _HAS_DEFAULT_FACTORY})
-
+    locals_.update({"MISSING": MISSING, "ByteString": ByteString, "ByteOrder": ByteOrder})
+    init_body = [
+        _member_assign("byte_order", "byte_order", spec.self_name),
+        _member_assign("offset", "0", spec.self_name),
+    ]
+    init_body.extend(body)
+    init_body.extend(
+        [
+            # Initialize _data
+            _member_assign("_data", f"memoryview(bytearray({spec.self_name}._length))", spec.self_name),
+            # Attach members to slices of _data memoryview
+            f"{spec.self_name}._attach_members(retain_value=True)",
+            "if data is not None:",
+            f"  {spec.self_name}.data = data",
+        ]
+    )
     return _create_method(
         "__init__",
-        [spec.self_name] + [_init_param(member_) for member_ in spec.members],
-        body,
+        [spec.self_name, "data: ByteString | None = None", f"byte_order: bytes = {spec.byte_order.value!r}"],
+        init_body,
         locals_=locals_,
         globals_=globals_,
         return_type=None,
@@ -92,6 +107,29 @@ def _build_repr_method(spec: _CollectionClassSpec, globals_: dict[str, Any] | No
     locals_ = {"recursive_repr": recursive_repr}
     func = _create_method(
         "__repr__",
+        (spec.self_name,),
+        [
+            "return "
+            + spec.self_name
+            + '.__class__.__qualname__ + f"(byte_order={ '
+            + spec.self_name
+            + ".byte_order},"
+            + "data={"
+            + spec.self_name
+            + '.data!r})"',
+        ],
+        # decorators=["recursive_repr"],
+        globals_=globals_,
+        locals_=locals_,
+    )
+    return func
+
+
+def _build_str_method(spec: _CollectionClassSpec, globals_: dict[str, Any] | None) -> Callable:
+    """Create the __str__ function for a fixed collection class."""
+    locals_ = {"recursive_repr": recursive_repr}
+    func = _create_method(
+        "__str__",
         (spec.self_name,),
         [
             "return "
@@ -167,35 +205,6 @@ def _build_hash_method(
 def _raise_hash_exception(spec: _CollectionClassSpec, __) -> None:
     """Raise an exception to signify that hash function already exists."""
     raise TypeError(f"Cannot overwrite attribute __hash__ " f"in class {spec.base_cls.__name__}")
-
-
-def _build_collection_init_method(
-    spec: _CollectionClassSpec,
-    globals_: dict[str, Any],
-) -> Callable:
-    """Generate a private _collection_init method for the class.
-
-    Initializes common attributes.
-    """
-    locals_ = {
-        "cls": spec.base_cls,
-    }
-    body = [
-        _member_assign("offset", "0", spec.self_name),
-        _member_assign("_length", "length", spec.self_name),
-        # Initialize _data
-        _member_assign("_data", "memoryview(bytearray(length))", spec.self_name),
-        # Attach members to slices of _data memoryview
-        f"{spec.self_name}._attach_members(retain_value=True)",
-    ]
-    return _create_method(
-        "_collection_init",
-        (spec.self_name, "length: int"),
-        body,
-        locals_=locals_,
-        globals_=globals_,
-        return_type=None,
-    )
 
 
 def _build_attach_method(

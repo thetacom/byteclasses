@@ -8,6 +8,6 @@ from ...types.primitives.integers import UInt16
 class EthHdr:
     """Ethernet Header Class."""
 
-    dst_mac: FixedArray = member(default_factory=lambda: FixedArray(6))  # type: ignore
-    src_mac: FixedArray = member(default_factory=lambda: FixedArray(6))  # type: ignore
+    dst_mac: FixedArray = member(factory=lambda byte_order: FixedArray(6))  # type: ignore
+    src_mac: FixedArray = member(factory=lambda byte_order: FixedArray(6))  # type: ignore
     ether_type: UInt16

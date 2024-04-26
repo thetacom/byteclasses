@@ -17,16 +17,16 @@ The length of a Structure byteclass is determined when the class is created base
 
 A Structure byteclass can contain both byteclass primitives and other byteclass collections.
 
-Each Structure member has its own `byte_order`. However, the `structure` decorator accepts a `byte_order` parameter which is used for any members that rely on a `default_factory` for instantiation.
+Each Structure member has its own `byte_order`. However, the `structure` decorator accepts a `byte_order` parameter which is used for any members that rely on a `factory` for instantiation.
 
-> If no member value is specified, the member type annotation is used as a `default_factory`.
+> If no member value is specified, the member type annotation is used as a `factory`.
 
 ```python
 @structure(byte_order=b"@")
 class Structure1:
     """A structure byteclass with one member using default factory."""
 
-    a: UInt64 = member(default_factory=UInt64)
+    a: UInt64 = member(factory=UInt64)
 
 @structure
 class Structure2:

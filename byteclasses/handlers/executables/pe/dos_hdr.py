@@ -50,8 +50,8 @@ class DOSHdr:
     e_cs: UInt16  # Initial (relative) CS value
     e_lfarlc: UInt16  # File address of relocation table
     e_ovno: UInt16  # Overlay number
-    e_res: FixedArray = member(default_factory=lambda: FixedArray(4, UInt16))  # type: ignore
+    e_res: FixedArray = member(factory=lambda byte_order: FixedArray(4, UInt16))  # type: ignore
     e_oemid: UInt16  # OEM identifier (for e_oeminfo)
     e_oeminfo: UInt16  # OEM information; e_oemid specific
-    e_res2: FixedArray = member(default_factory=lambda: FixedArray(10, UInt16))  # type: ignore
+    e_res2: FixedArray = member(factory=lambda byte_order: FixedArray(10, UInt16))  # type: ignore
     e_lfanew: Ptr32  # File address of new exe header

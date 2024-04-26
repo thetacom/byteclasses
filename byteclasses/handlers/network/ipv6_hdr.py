@@ -18,9 +18,9 @@ class VTF(BitField):
 class IPv6Addr:
     """IPv6 Address."""
 
-    uint8: FixedArray = member(default_factory=lambda: FixedArray(16, byte_order=b"!"))  # type: ignore
-    uint32: UInt32 = member(default_factory=lambda: FixedArray(4, UInt32, byte_order=b"!"))  # type: ignore
-    uint64: UInt32 = member(default_factory=lambda: FixedArray(2, UInt64, byte_order=b"!"))  # type: ignore
+    uint8: FixedArray = member(factory=lambda byte_order: FixedArray(16, byte_order=byte_order))  # type: ignore
+    uint32: UInt32 = member(factory=lambda byte_order: FixedArray(4, UInt32, byte_order=byte_order))  # type: ignore
+    uint64: UInt32 = member(factory=lambda byte_order: FixedArray(2, UInt64, byte_order=byte_order))  # type: ignore
 
 
 @structure(byte_order=b"!", packed=True)
@@ -41,7 +41,7 @@ class HopByHopExtHdr:
 
     next_hdr: UInt8
     hdr_ext_length: UInt8
-    options: FixedArray = member(default_factory=lambda: FixedArray(14, byte_order=b"!"))  # type: ignore
+    options: FixedArray = member(factory=lambda byte_order: FixedArray(14, byte_order=byte_order))  # type: ignore
 
 
 @structure(byte_order=b"!", packed=True)
@@ -52,14 +52,14 @@ class RoutingExtHdr:
     hdr_ext_length: UInt8
     routing_type: UInt8
     segments_left: UInt8
-    type_data: FixedArray = member(default_factory=lambda: FixedArray(12, byte_order=b"!"))  # type: ignore
+    type_data: FixedArray = member(factory=lambda byte_order: FixedArray(12, byte_order=byte_order))
 
 
 class FragmentBitField(BitField):
     """IPv6 Fragment Offset and more follows flag bitfield."""
 
     byte_length = 2
-    offset = BitPos(0, bit_width=13)
+    frag_offset = BitPos(0, bit_width=13)
     reserved = BitPos(13, bit_width=2)
     more = BitPos(15)
 

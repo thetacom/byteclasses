@@ -8,7 +8,7 @@ from ._collection import create_collection
 from ._collection_class_spec import _CollectionClassSpec
 from ._methods import _build_init_method
 from .fixed_size_collection_protocol import FixedSizeCollection
-from .member import _init_members
+from .member import _init_members, _member_assign
 
 __all__ = ["union"]
 
@@ -61,7 +61,7 @@ def _build_union_init_method(
         [
             f"member_lengths = {lengths_str}",
             "collection_length = max(member_lengths)",
-            f"{spec.self_name}._collection_init(collection_length)",
+            _member_assign("_length", "collection_length", spec.self_name),
         ]
     )
 

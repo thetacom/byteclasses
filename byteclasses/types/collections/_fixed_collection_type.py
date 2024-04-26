@@ -11,13 +11,11 @@ from ...constants import _BYTECLASS, _MEMBERS, _PARAMS
 from ...util import is_byteclass_collection, is_byteclass_collection_instance
 from .._fixed_size_type import _FixedSizeType
 from ._collection_class_spec import _CollectionClassSpec
-from ._collection_params import _CollectionParams
 from ._methods import (
     _build_attach_members_method,
     _build_attach_method,
     _build_bytes_method,
     _build_cmp_method,
-    _build_collection_init_method,
     _build_data_property,
     _build_delattr_method,
     _build_getitem_method,
@@ -26,8 +24,10 @@ from ._methods import (
     _build_repr_method,
     _build_setattr_method,
     _build_setitem_method,
+    _build_str_method,
     _raise_hash_exception,
 )
+from ._params import _Params
 from ._util import _set_new_attribute, _set_qualname, _tuple_str
 from .fixed_size_collection_protocol import FixedSizeCollection, FixedSizeCollectionError
 from .member import _MEMBER, MISSING, Member, _get_member, _MissingType
@@ -112,9 +112,9 @@ def _process_class(spec: _CollectionClassSpec) -> FixedSizeCollection:
     setattr(
         spec.base_cls,
         _PARAMS,
-        _CollectionParams(spec),
+        _Params(spec),
     )
-    spec.attributes.extend(["offset", "_length", "_data"])
+    spec.attributes.extend(["offset", "byte_order", "_length", "_data"])
     # Find our base classes in reverse MRO order, and exclude
     # ourselves.  In reversed order so that more derived classes
     # override earlier member definitions in base classes.
@@ -176,10 +176,10 @@ def _add_members(spec: _CollectionClassSpec, members_: dict[str, Member]) -> Non
     # We use this to compute members that are added by this class.
     #
     # Members are found from cls_annotations, which is guaranteed to be ordered.
-    # Default values are from class attributes, if a member has a default.  If the
-    # default value is a Member(), then it contains additional info beyond (and
-    # possibly including) the actual default value.  Pseudo-fields like ClassVars
-    # are included, despite the fact that they're not real fields.
+    # Default values are from class attributes, if a member has a default.  Defaults
+    # are only allowed if it is a Member(), then it contains additional info beyond (and
+    # possibly including) the factory.  Pseudo-fields like ClassVars and InitVars are
+    # not supported at this time.
     cls_annotations = spec.base_cls.__dict__.get("__annotations__", {})
 
     # Now find members in our class.  While doing so, perform validations and set
@@ -196,14 +196,8 @@ def _add_members(spec: _CollectionClassSpec, members_: dict[str, Member]) -> Non
         # and is of type 'Member', replace it with the real default.  This is so that
         # normal class introspection sees a real default value, not a Member.
         try:
-            if isinstance(getattr(spec.base_cls, member_.name), Member):
-                if member_.default is MISSING:
-                    # If there's no default, delete the class attribute.
-                    # If we're using a default factory. The class attribute should not
-                    # be set at all in the post-processed class.
-                    delattr(spec.base_cls, member_.name)
-                else:
-                    setattr(spec.base_cls, member_.name, deepcopy(member_.default))
+            if not isinstance(getattr(spec.base_cls, member_.name), Member):
+                raise ValueError("Member's cannot have default values.")
         except AttributeError:
             # Allow missing members to use type annotation as default factory.
             pass
@@ -243,11 +237,11 @@ def _add_methods(spec: _CollectionClassSpec, globals_: dict[str, Any]):
         build_hash_method_ = _build_hash_method
 
     methods: dict[str, Callable | None] = {
-        "_collection_init": _build_collection_init_method,
         "data": _build_data_property,
         "__bytes__": _build_bytes_method,
         "__hash__": build_hash_method_,
         "__len__": _build_len_method,
+        "__str__": _build_str_method,
         "__repr__": _build_repr_method,
         "__getitem__": _build_getitem_method,
         "__setitem__": _build_setitem_method,
@@ -311,7 +305,7 @@ def _set_params(spec: _CollectionClassSpec):
     setattr(
         spec.base_cls,
         _PARAMS,
-        _CollectionParams(spec),
+        _Params(spec),
     )
 
 
