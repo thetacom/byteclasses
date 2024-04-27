@@ -32,17 +32,11 @@ class ByteEnum:
 
     def __str__(self) -> str:
         """Return the string representation of the instance."""
-        try:
-            return self._enum_cls(self.value).name
-        except ValueError:
-            return f"UNKNOWN({hex(self.value)})"
+        return self.name
 
     def __repr__(self) -> str:
         """Return the raw representation of the instance."""
-        try:
-            return f"{self._enum_cls(self.value)!r}"
-        except ValueError:
-            return f"<UNKNOWN: {hex(self.value)}>"
+        return f"<{self._enum_cls.__name__}.{self.name}: {hex(self.value)}>"
 
     def __bytes__(self) -> bytes:
         """Return the byte representation of the instance."""
@@ -73,6 +67,14 @@ class ByteEnum:
         self._int.data = new_data
 
     @property
+    def name(self) -> str:
+        """Return the name of the instance."""
+        try:
+            return self._enum_cls(self.value).name
+        except ValueError:
+            return "UNKNOWN"
+
+    @property
     def value(self) -> int:
         """Return the value of the instance."""
         return self._int.value
@@ -81,6 +83,13 @@ class ByteEnum:
     def value(self, new_value: int) -> None:
         """Set the value of the instance."""
         self._int.value = new_value
+
+    def attach(self, new_data: ByteString, retain_value: bool = True) -> None:
+        """Replace _int data and attach provided memoryview.
+
+        Memoryview length must match byte length of fixed length type.
+        """
+        self._int.attach(new_data, retain_value)
 
 
 setattr(ByteEnum, _BYTECLASS, True)

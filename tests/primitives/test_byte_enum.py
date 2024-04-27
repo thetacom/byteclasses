@@ -35,14 +35,14 @@ def test_byte_enum_creation():
         assert var.value == 0
         assert len(var) == expected_len
         assert str(var) == "ZERO"
-        assert repr(var) == "<TestEnum.ZERO: 0>"
+        assert repr(var) == "<TestEnum.ZERO: 0x0>"
         var.value = 3
-        assert str(var) == "UNKNOWN(0x3)"
-        assert repr(var) == "<UNKNOWN: 0x3>"
+        assert str(var) == "UNKNOWN"
+        assert repr(var) == "<TestEnum.UNKNOWN: 0x3>"
         new_val = var._int.max  # pylint: disable=W0212
         var.value = new_val
         assert str(var) == name
-        assert repr(var) == f"<TestEnum.{name}: {new_val}>"
+        assert repr(var) == f"<TestEnum.{name}: {hex(new_val)}>"
         expected_len *= 2
 
 

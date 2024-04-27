@@ -1,4 +1,4 @@
-# Fixed Size Integers
+# Integer Primitives
 
 | Type | Length (bytes) | Signed | Aliases | Notes |
 |---|:-:|:-:|---|---|
