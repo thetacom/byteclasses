@@ -4,6 +4,7 @@ from enum import Enum, IntEnum
 
 import pytest
 
+from byteclasses import ByteOrder
 from byteclasses.types.primitives.byte_enum import ByteEnum
 from byteclasses.types.primitives.integers import UInt8, UInt16, UInt32, UInt64
 
@@ -59,3 +60,48 @@ def test_byte_enum_creation_invalid_params():
 
     with pytest.raises(ValueError):
         _ = ByteEnum(TestEnum, int)
+
+
+def test_byte_enum_creation_with_data():
+    """Test ByteEnum Creation with data."""
+    var = ByteEnum(TestEnum, UInt8, data=b"\x04")
+    assert var.value == 4
+    assert var.data == b"\x04"
+    assert var.name == "FOUR"
+
+
+def test_byte_enum_bytes_dunder():
+    """Test ByteEnum __bytes__."""
+    var = ByteEnum(TestEnum, UInt8, data=b"\x04")
+    assert bytes(var) == b"\x04"
+
+
+def test_byte_enum_str_dunder():
+    """Test ByteEnum __str__."""
+    var = ByteEnum(TestEnum, UInt8, data=b"\x04")
+    assert str(var) == "FOUR"
+
+
+def test_byte_enum_repr_dunder():
+    """Test ByteEnum __repr__."""
+    var = ByteEnum(TestEnum, UInt8, data=b"\x04")
+    assert repr(var) == "<TestEnum.FOUR: 0x4>"
+
+
+def test_byte_enum_byte_order():
+    """Test ByteEnum byte_order property."""
+    var = ByteEnum(TestEnum, UInt8)
+    assert var.byte_order is ByteOrder.NATIVE
+    var.byte_order = ByteOrder.NET
+    assert var.byte_order is ByteOrder.NET
+
+
+def test_byte_enum_attach():
+    """Test ByteEnum attach."""
+    data = bytearray(b"\x00\x00")
+    var = ByteEnum(TestEnum, UInt16)
+    var.attach(memoryview(data))
+    var.value = TestEnum.UINT16_MAX.value
+    assert data == b"\xff\xff"
+    var.data = b"\xaa\xaa"
+    assert data == b"\xaa\xaa"
