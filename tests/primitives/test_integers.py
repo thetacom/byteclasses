@@ -10,6 +10,9 @@ from byteclasses.types.primitives.integers import (
     Int16,
     Int32,
     Int64,
+    Ptr16,
+    Ptr32,
+    Ptr64,
     UInt8,
     UInt16,
     UInt32,
@@ -680,3 +683,24 @@ def test_uint64_value_to_data():
     assert uint64.data == b"\x01\x00\x00\x00\x00\x00\x00\x00"
     uint64.value = 18446744073709551615
     assert uint64.data == b"\xff\xff\xff\xff\xff\xff\xff\xff"
+
+
+def test_ptr16_instance_properties():
+    """Test Ptr16 instance properties."""
+    ptr = Ptr16(0xFFFF)
+    assert str(ptr) == "0xffff"
+    assert repr(ptr) == "Ptr16(0xffff)"
+
+
+def test_ptr32_instance_properties():
+    """Test Ptr32 instance properties."""
+    ptr = Ptr32(0xFFFFFFFF)
+    assert str(ptr) == "0xffffffff"
+    assert repr(ptr) == "Ptr32(0xffffffff)"
+
+
+def test_ptr64_instance_properties():
+    """Test Ptr64 instance properties."""
+    ptr = Ptr64(0xFFFFFFFFFFFFFFFF)
+    assert str(ptr) == "0xffffffffffffffff"
+    assert repr(ptr) == "Ptr64(0xffffffffffffffff)"
