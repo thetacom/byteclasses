@@ -20,13 +20,13 @@ def is_byteclass(obj: Any) -> bool:
 
 def is_byteclass_collection_instance(obj: Any) -> bool:
     """Return True if obj is an instance of a fixed collection."""
-    return hasattr(type(obj), _MEMBERS)
+    return is_byteclass_instance(obj) and hasattr(type(obj), _MEMBERS)
 
 
 def is_byteclass_collection(obj: Any) -> bool:
     """Return True if obj is a class or instance of a fixed collection."""
     cls = obj if isinstance(obj, type) and not isinstance(obj, GenericAlias) else type(obj)
-    return hasattr(cls, _MEMBERS)
+    return is_byteclass(obj) and hasattr(cls, _MEMBERS)
 
 
 def is_byteclass_primitive_instance(obj: Any) -> bool:
