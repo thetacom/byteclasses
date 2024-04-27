@@ -12,7 +12,7 @@ from rich.text import Text  # pylint: disable=E0401
 from .constants import _MEMBERS, _PARAMS
 from .types.collections.byte_array import ByteArray
 from .types.primitives._primitive import _Primitive
-from .util import is_byteclass_collection, is_byteclass_instance, is_byteclass_primitive
+from .util import is_byteclass_collection_instance, is_byteclass_instance, is_byteclass_primitive_instance
 
 if TYPE_CHECKING:
     from rich.console import Console
@@ -47,8 +47,8 @@ def byteclass_info(
     properties = {
         "type()": obj.__class__.__name__,
         "is_byteclass()": is_byteclass_instance(obj),
-        "is_byteclass_collection()": is_byteclass_collection(obj),
-        "is_byteclass_primitive()": is_byteclass_primitive(obj),
+        "is_collection_instance()": is_byteclass_collection_instance(obj),
+        "is_primitive_instance()": is_byteclass_primitive_instance(obj),
         "mro": " -> ".join([cls.__name__ for cls in obj.__class__.__mro__]),
         "len()": len(obj),
         "str()": str(obj),
@@ -74,7 +74,7 @@ def byteclass_table(
     """Print byteclass instance in a table."""
     if not is_byteclass_instance(obj):
         raise TypeError("Object is not a byteclass instance.")
-    if is_byteclass_collection(obj):
+    if is_byteclass_collection_instance(obj):
         if isinstance(obj, ByteArray):
             byte_array_table(obj, show_data=show_data, title=title, console=console)
         else:
@@ -92,8 +92,8 @@ def collection_table(
     console: Optional["Console"] = None,
 ) -> None:
     """Print byteclass collection in a table."""
-    if not is_byteclass_collection(obj):
-        raise TypeError("Object is not a byteclass collection.")
+    if not is_byteclass_collection_instance(obj):
+        raise TypeError("Object is not a byteclass collection instance.")
     table = Table(title=title) if title else Table(title=obj.__class__.__name__)
     table.add_column("Member")
     table.add_column("Value")
@@ -124,7 +124,7 @@ def byte_array_table(
 ) -> None:
     """Print byteclass fixed array in a table."""
     if not isinstance(obj, ByteArray):
-        raise TypeError("Object is not a byteclass ByteArray.")
+        raise TypeError("Object is not a byteclass ByteArray instance.")
     table = Table(title=title) if title else Table(title=obj.__class__.__name__)
     table.add_column("Member")
     table.add_column("Value")
@@ -187,7 +187,7 @@ def byteclass_inspect(
     """Print byteclass collection in a table."""
     if not is_byteclass_instance(obj):
         raise TypeError("Object is not a byteclass instance.")
-    if is_byteclass_collection(obj):
+    if is_byteclass_collection_instance(obj):
         if isinstance(obj, ByteArray):
             print_table_func = _print_byteclass_array_panel
         elif getattr(obj, _PARAMS).type == "structure":
