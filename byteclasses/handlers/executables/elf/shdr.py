@@ -6,7 +6,8 @@
 
 from enum import IntEnum
 
-from ....types.collections import structure
+from ....types.collections import member, structure
+from ....types.primitives.byte_enum import ByteEnum
 from ....types.primitives.generics import BitField32, BitPos
 from ....types.primitives.integers import Ptr32, Ptr64, UInt32, UInt64
 
@@ -41,7 +42,7 @@ class SHdr32:
     """32-bit Elf Section Header."""
 
     sh_name: UInt32
-    sh_type: UInt32
+    sh_type: ByteEnum = member(factory=lambda byte_order: ByteEnum(SHdrType, UInt32, byte_order=byte_order))
     sh_flags: SBitField32
     sh_addr: Ptr32
     sh_offset: UInt32
@@ -57,7 +58,7 @@ class SHdr64:
     """64-bit Elf Section Header."""
 
     sh_name: UInt32
-    sh_type: UInt32
+    sh_type: ByteEnum = member(factory=lambda byte_order: ByteEnum(SHdrType, UInt32, byte_order=byte_order))
     sh_flags: SBitField64
     sh_addr: Ptr64
     sh_offset: UInt64

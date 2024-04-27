@@ -10,7 +10,6 @@ from typing import Any, cast
 from ..._enums import ByteOrder
 from ...constants import _BYTECLASS, _MEMBERS, _PARAMS
 from ...util import is_byteclass_collection, is_byteclass_collection_instance
-from ..primitives._primitive import _Primitive
 from ._collection_class_spec import _CollectionClassSpec
 from ._methods import (
     _build_attach_members_method,
@@ -31,7 +30,7 @@ from ._methods import (
 from ._params import _Params
 from ._util import _set_new_attribute, _set_qualname, _tuple_str
 from .byteclass_collection_protocol import ByteclassCollection, ByteclassCollectionError
-from .member import _MEMBER, MISSING, Member, _get_member, _MissingType
+from .member import _MEMBER, _SUPPORTED_MBR_TYPES, MISSING, Member, _get_member, _MissingType
 
 __all__ = [
     "ByteclassCollectionError",
@@ -253,7 +252,7 @@ def _add_members(spec: _CollectionClassSpec, members_: dict[str, Member]) -> Non
             if not issubclass(member_.type, spec.allowed_types):
                 raise TypeError(f"{member_.name} ({member_.type}) is not a supported member type.")
         else:
-            if not (is_byteclass_collection(member_.type) or issubclass(member_.type, _Primitive)):
+            if not (is_byteclass_collection(member_.type) or issubclass(member_.type, _SUPPORTED_MBR_TYPES)):
                 raise TypeError(f"{member_.name} ({member_.type}) is not a supported member type.")
     spec.members = member_list
 

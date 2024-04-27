@@ -46,6 +46,10 @@ class ByteEnum:
         """Return instance byte length."""
         return len(self._int)
 
+    def __int__(self) -> int:
+        """Return instance integer value."""
+        return self.value
+
     @property
     def byte_order(self) -> ByteOrder:
         """Return the byte order of the instance."""

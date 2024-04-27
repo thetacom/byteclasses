@@ -1,7 +1,7 @@
 """Elf Program Table Entry."""
 
 from ..._data_handler import _DataHandler
-from .phdr import PHdr32, PHdr64, PHdrType
+from .phdr import PHdr32, PHdr64
 
 __all__ = [
     "PEntry32",
@@ -40,10 +40,7 @@ class PEntry(_DataHandler):
     @property
     def type(self) -> str:
         """Return PEntry Type property."""
-        try:
-            return PHdrType(self.hdr.p_type.value).name
-        except ValueError:
-            return hex(self.hdr.p_type)
+        return self.hdr.p_type.name
 
     @property
     def offset(self) -> str:

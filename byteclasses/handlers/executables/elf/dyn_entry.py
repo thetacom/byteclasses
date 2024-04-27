@@ -6,7 +6,8 @@
 
 from enum import IntEnum
 
-from ....types.collections import structure, union
+from ....types.collections import member, structure, union
+from ....types.primitives.byte_enum import ByteEnum
 from ....types.primitives.integers import Int32, Int64, UInt32, UInt64
 
 __all__ = [
@@ -57,7 +58,7 @@ class DUn32:
 class DynEntry32:
     """32-bit Elf Dynamic Entry."""
 
-    d_tag: Int32
+    d_tag: ByteEnum = member(factory=lambda byte_order: ByteEnum(DynTag, Int32, byte_order=byte_order))
     d_un: DUn32
 
 
@@ -73,5 +74,5 @@ class DUn64:
 class DynEntry64:
     """64-bit Elf Dynamic Entry."""
 
-    d_tag: Int64
+    d_tag: ByteEnum = member(factory=lambda byte_order: ByteEnum(DynTag, Int64, byte_order=byte_order))
     d_un: DUn64
