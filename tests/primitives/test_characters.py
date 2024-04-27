@@ -5,12 +5,26 @@ import pytest
 from byteclasses.types.primitives.characters import UChar
 
 
-def test_uchar_instantiation():
-    """Test UChar instantiation."""
+def test_uchar_creation_no_value():
+    """Test UChar creation."""
     var1 = UChar()
     assert len(var1) == 1
     assert var1.data == b"\x00"
     assert var1.value == "\x00"
+
+
+def test_uchar_creation_with_value():
+    """Test UChar creation with value."""
+    var1 = UChar("A")
+    assert len(var1) == 1
+    assert var1.data == b"\x41"
+    assert var1.value == "A"
+
+
+def test_uchar_creation_with_invalid_value():
+    """Test UChar creation with invalid value."""
+    with pytest.raises(ValueError):
+        _ = UChar("invalid")
 
 
 def test_uchar_str_method():
