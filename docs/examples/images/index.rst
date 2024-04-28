@@ -3,4 +3,4 @@ Image Handlers
 
 .. toctree::
 
-   jpeg
+   jpg

@@ -40,7 +40,7 @@ def test_byte_enum_creation():
         var.value = 3
         assert str(var) == "UNKNOWN"
         assert repr(var) == "<TestEnum.UNKNOWN: 0x3>"
-        new_val = var._int.max  # pylint: disable=W0212
+        new_val = var._var.max  # pylint: disable=W0212
         var.value = new_val
         assert str(var) == name
         assert repr(var) == f"<TestEnum.{name}: {hex(new_val)}>"

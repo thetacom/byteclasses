@@ -1,11 +1,13 @@
 """A fixed size enum class."""
 
 from collections.abc import ByteString
-from enum import Enum
+from enum import Enum, IntEnum
+from typing import Any
 
 from ..._enums import ByteOrder
 from ...constants import _BYTECLASS
-from .integers import _PrimitiveInt
+from ...util import is_byteclass_primitive
+from ._primitive import _Primitive
 
 
 class ByteEnum:
@@ -14,8 +16,8 @@ class ByteEnum:
     def __init__(
         self,
         enum_cls: type[Enum],
-        int_cls: type[_PrimitiveInt],
-        value: int | None = None,
+        var_cls: type[_Primitive],
+        value: Any | None = None,
         /,
         *,
         byte_order: bytes | ByteOrder = ByteOrder.NATIVE,
@@ -23,12 +25,12 @@ class ByteEnum:
     ):
         if not issubclass(enum_cls, Enum):
             raise ValueError("enum_cls must be a subclass of the Enum class.")
-        if not issubclass(int_cls, _PrimitiveInt):
-            raise ValueError("int_cls must be a byteclass integer primitive class.")
         self._enum_cls = enum_cls
-        self._int: _PrimitiveInt = int_cls(value, byte_order=byte_order)
+        if not is_byteclass_primitive(var_cls):
+            raise ValueError("var_cls must be a byteclass primitive class.")
+        self._var: _Primitive = var_cls(value, byte_order=byte_order)
         if data is not None:
-            self._int.data = data
+            self._var.data = data
 
     def __str__(self) -> str:
         """Return the string representation of the instance."""
@@ -36,39 +38,41 @@ class ByteEnum:
 
     def __repr__(self) -> str:
         """Return the raw representation of the instance."""
-        return f"<{self._enum_cls.__name__}.{self.name}: {hex(self.value)}>"
+        if issubclass(self._enum_cls, IntEnum):
+            return f"<{self._enum_cls.__name__}.{self.name}: {hex(self.value)}>"
+        return f"<{self._enum_cls.__name__}.{self.name}: {self.value}>"
 
     def __bytes__(self) -> bytes:
         """Return the byte representation of the instance."""
-        return bytes(self._int)
+        return bytes(self._var)
 
     def __len__(self) -> int:
         """Return instance byte length."""
-        return len(self._int)
+        return len(self._var)
 
     def __int__(self) -> int:
         """Return instance integer value."""
-        return self.value
+        return int(self.value)
 
     @property
     def byte_order(self) -> ByteOrder:
         """Return the byte order of the instance."""
-        return self._int.byte_order
+        return self._var.byte_order
 
     @byte_order.setter
     def byte_order(self, new_byte_order: bytes | ByteOrder) -> None:
         """Set the byte_order of the instance."""
-        self._int.byte_order = ByteOrder(new_byte_order)
+        self._var.byte_order = ByteOrder(new_byte_order)
 
     @property
     def data(self) -> ByteString:
         """Return the byte representation of the instance."""
-        return self._int.data
+        return self._var.data
 
     @data.setter
     def data(self, new_data: bytes | bytearray | None = None) -> None:
         """Set the byte representation of the instance."""
-        self._int.data = new_data
+        self._var.data = new_data
 
     @property
     def name(self) -> str:
@@ -79,21 +83,21 @@ class ByteEnum:
             return "UNKNOWN"
 
     @property
-    def value(self) -> int:
+    def value(self) -> Any:
         """Return the value of the instance."""
-        return self._int.value
+        return self._var.value
 
     @value.setter
-    def value(self, new_value: int) -> None:
+    def value(self, new_value: Any) -> None:
         """Set the value of the instance."""
-        self._int.value = new_value
+        self._var.value = new_value
 
     def attach(self, new_data: ByteString, retain_value: bool = True) -> None:
-        """Replace _int data and attach provided memoryview.
+        """Replace _var data and attach provided memoryview.
 
         Memoryview length must match byte length of fixed length type.
         """
-        self._int.attach(new_data, retain_value)
+        self._var.attach(new_data, retain_value)
 
 
 setattr(ByteEnum, _BYTECLASS, True)
