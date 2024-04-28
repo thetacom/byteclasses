@@ -1,7 +1,7 @@
 """A fixed size enum class."""
 
 from collections.abc import ByteString
-from enum import IntEnum
+from enum import Enum
 
 from ..._enums import ByteOrder
 from ...constants import _BYTECLASS
@@ -13,7 +13,7 @@ class ByteEnum:
 
     def __init__(
         self,
-        enum_cls: type[IntEnum],
+        enum_cls: type[Enum],
         int_cls: type[_PrimitiveInt],
         value: int | None = None,
         /,
@@ -21,8 +21,8 @@ class ByteEnum:
         byte_order: bytes | ByteOrder = ByteOrder.NATIVE,
         data: ByteString | None = None,
     ):
-        if not issubclass(enum_cls, IntEnum):
-            raise ValueError("enum_cls must be a subclass of the IntEnum class.")
+        if not issubclass(enum_cls, Enum):
+            raise ValueError("enum_cls must be a subclass of the Enum class.")
         if not issubclass(int_cls, _PrimitiveInt):
             raise ValueError("int_cls must be a byteclass integer primitive class.")
         self._enum_cls = enum_cls

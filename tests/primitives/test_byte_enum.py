@@ -1,6 +1,6 @@
 """Test suite for ByteEnum class."""
 
-from enum import Enum, IntEnum
+from enum import IntEnum
 
 import pytest
 
@@ -50,7 +50,7 @@ def test_byte_enum_creation():
 def test_byte_enum_creation_invalid_params():
     """Test ByteEnum Creation with invalid params."""
 
-    class BadEnum(Enum):
+    class BadEnum:
         """Bad Enum class."""
 
         ONE = "one"
