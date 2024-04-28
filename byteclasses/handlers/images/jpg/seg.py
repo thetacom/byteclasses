@@ -193,11 +193,21 @@ class Seg:
             length = UInt16(byte_order=ByteOrder.BE)
             length.attach(mv[2:4], retain_value=False)
             self._parts["length"] = length
-            self._parts["payload"] = mv[4 : 2 + length]
+            payload_end = 2 + length
+            self._parts["payload"] = mv[4:payload_end]
+            if self.marker.name is SegTag.SOS.name:
+                # Scan through data to locate next segment
+                for idx in range(payload_end, len(mv)):
+                    if mv[idx] == 0xFF and mv[idx + 1] != 0x00:
+                        next_segment = idx
+                        break
+                self._parts["image_data"] = mv[payload_end:next_segment]
 
     def __len__(self) -> int:
         """Return instance length."""
-        return 2 + int(self._parts.get("length", 0))
+        segment_length = int(self._parts.get("length", 0))
+        image_data_length = len(self._parts.get("image_data", b""))
+        return 2 + segment_length + image_data_length
 
     def __repr__(self) -> str:
         """Return instance raw representation."""

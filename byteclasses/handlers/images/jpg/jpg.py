@@ -15,7 +15,7 @@ class JPG(_DataHandler):
         super().__init__(data)
         segments = []
         offset = 0
-        while offset <= len(data):
+        while offset < len(data):
             seg = Seg(data[offset:])
             segments.append(seg)
             offset += len(seg)
