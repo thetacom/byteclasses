@@ -1,8 +1,8 @@
 """Abstract fixed size type."""
 
-from abc import ABC, abstractmethod
 from collections.abc import ByteString
 from functools import cached_property
+from typing import Any
 
 from ..._enums import ByteOrder
 from ...constants import _BYTECLASS
@@ -10,28 +10,37 @@ from ...constants import _BYTECLASS
 __all__: list[str] = []
 
 
-class _Primitive(ABC):
+class _Primitive:
     """Base class for fixed size types."""
 
     _type_char: bytes = NotImplemented
 
     _length: int = NotImplemented
 
-    def __init__(self, *, byte_order: bytes | ByteOrder, data: ByteString | None = None) -> None:
+    def __init__(
+        self,
+        value: ByteString | None = None,
+        /,
+        *,
+        byte_order: bytes | ByteOrder = ByteOrder.NATIVE,
+        data: ByteString | None = None,
+    ) -> None:
         """Initialize the instance."""
         self.offset = 0
         if self._type_char is NotImplemented:
             raise NotImplementedError(f"{self.__class__.__name__} does not implement '_type_char'")
         if self._length is NotImplemented:
             raise NotImplementedError(f"{self.__class__.__name__} does not implement '_length'")
-        self._byte_order = ByteOrder(byte_order)
-        if data is None:
+        self.byte_order = ByteOrder(byte_order)
+        if value is not None and data is not None:
+            raise ValueError("Cannot specify both value and data parameters.")
+        init_data = value if value else data
+        if init_data is None:
             self._data: bytearray | memoryview = bytearray(len(self))
+        elif isinstance(init_data, (memoryview, bytearray)):
+            self._data = init_data
         else:
-            if isinstance(data, bytes):
-                self._data = bytearray(data)
-            else:
-                self._data = data
+            self._data = bytearray(init_data)
 
     def __getitem__(self, sliced):
         return self._data[sliced]
@@ -125,14 +134,20 @@ class _Primitive(ABC):
             self._data[:] = temp
 
     @property
-    @abstractmethod
-    def value(self):
-        """Get instance value."""
+    def value(self) -> Any:
+        """Return the value of the instance.
+
+        The value property acts as an alias to the data attribute unless overridden.
+        """
+        return self.data
 
     @value.setter
-    @abstractmethod
-    def value(self):
-        """Set instance value."""
+    def value(self, new_value: Any) -> None:
+        """Set the value of the instance.
+
+        The value property acts as an alias to the data attribute unless overridden.
+        """
+        self.data = new_value
 
 
 setattr(_Primitive, _BYTECLASS, True)
