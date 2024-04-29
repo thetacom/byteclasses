@@ -24,6 +24,63 @@ def test_generic_bitfield_creation():
     assert bf.data == b"\x00"
 
 
+def test_generic_bitfield_creation_with_valid_data():
+    """Create generic bitfield with valid data."""
+    bf = BitField(data=b"\xff")
+    assert bf.data == b"\xff"
+    assert all(bf.flags) is True
+
+
+def test_generic_bitfield_creation_with_invalid_data():
+    """Create generic bitfield with invalid data."""
+    with pytest.raises(ValueError):
+        _ = BitField(data="\xff\xff")
+
+
+def test_generic_bitfield_value_property():
+    """Create generic bitfield value property."""
+    bf = BitField(data=b"\xff")
+    assert bf.data == b"\xff"
+    assert isinstance(bf.value, tuple)
+    assert bf.value == tuple(True for _ in range(bf.bit_length))
+
+
+def test_generic_bitfield_value_property_assignment_with_bool():
+    """Create generic bitfield value property assignment with bool."""
+    bf = BitField()
+    assert bf.data == b"\x00"
+    bf.value = True
+    assert bf.data == b"\xff"
+    bf.value = False
+    assert bf.data == b"\x00"
+
+
+def test_generic_bitfield_value_property_assignment_with_dict():
+    """Create generic bitfield value property assignment with dict."""
+    bf = BitField()
+    assert bf.data == b"\x00"
+    bf.value = tuple(True for _ in range(bf.bit_length))
+    assert bf.data == b"\xff"
+    bf.value = tuple(False for _ in range(bf.bit_length))
+    assert bf.data == b"\x00"
+
+
+def test_generic_bitfield_value_property_assignment_with_iterable():
+    """Create generic bitfield value property assignment with iterable."""
+    bf = BitField()
+    bf.value = {1: True, 3: True, 5: True, 7: True}
+    assert bf.data == b"\xaa"
+    bf.value = {1: False, 3: False, 5: False, 7: False}
+    assert bf.data == b"\x00"
+
+
+def test_generic_bitfield_value_property_assignment_with_invalid_type():
+    """Create generic bitfield value property assignment with invalid type."""
+    bf = BitField()
+    with pytest.raises(NotImplementedError):
+        bf.value = "invalid"
+
+
 def test_bitfield_get_bit():
     """Test BitField `get_bit` method."""
     bf = BitField()

@@ -1,6 +1,6 @@
 """BitField Fixed Length Class."""
 
-from collections.abc import ByteString, Sequence
+from collections.abc import ByteString, Iterable, Sequence
 from struct import calcsize
 from typing import overload
 
@@ -136,19 +136,22 @@ class BitField(_Primitive):
         }
 
     @property
-    def value(self) -> list[bool | list[bool]]:
+    def value(self) -> tuple[bool | list[bool], ...]:
         """Return a boolean value list for all bits within BitField."""
-        return [self[idx] for idx in range(self.bit_length)]
+        return tuple(self[idx] for idx in range(self.bit_length))
 
     @value.setter
-    def value(self, new_values: list[bool] | dict[int, bool]):
+    def value(self, new_values: bool | Iterable[bool] | dict[int, bool]):
         """Set BitField values."""
-        if isinstance(new_values, list):
-            for i, val in enumerate(new_values):
-                self[i] = val
+        if isinstance(new_values, bool):
+            for idx in range(self.bit_length):
+                self[idx] = new_values
         elif isinstance(new_values, dict):
-            for key, value in new_values.items():
-                self[key] = value
+            for idx, val in new_values.items():
+                self[int(idx)] = val
+        elif isinstance(new_values, (list, tuple)):
+            for idx, val in enumerate(new_values):
+                self[idx] = val
         else:
             raise NotImplementedError()
 
