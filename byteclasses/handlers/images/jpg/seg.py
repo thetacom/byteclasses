@@ -10,11 +10,18 @@ from enum import Enum, IntEnum
 from typing import Any
 
 from ...._enums import ByteOrder
+from ....types.collections import String, member, structure
 from ....types.primitives.byte_enum import ByteEnum
 from ....types.primitives.generics import Word
-from ....types.primitives.integers import UInt16
+from ....types.primitives.integers import UInt8, UInt16
 
 __all__ = ["Seg", "SegMark", "SegTag"]
+
+
+class App0Ident(Enum):
+    """App 0 Identifier strings."""
+
+    JFIF = "JFIF"
 
 
 class SegMark(IntEnum):
@@ -180,6 +187,65 @@ EMPTY_SECTIONS = (
 )
 
 
+@structure(byte_order=ByteOrder.BE, packed=True)
+class App0Jfif:
+    """JPEG App 0 Segment."""
+
+    identifier: String = member(factory=lambda byte_order: String(5))
+    ver_major: UInt8
+    ver_minor: UInt8
+    density_unit: UInt8
+    width_density: UInt16
+    height_density: UInt16
+    width_thumbnail: UInt8
+    height_thumbnail: UInt8
+
+
+def parse_app0(mv: memoryview) -> App0Jfif | dict[str, Any]:
+    """Parse App0 Segment data."""
+    for idx, val in enumerate(mv):
+        if val == 0x00:
+            identifier_len = idx + 1
+            break
+    identifier = String(identifier_len)
+    identifier.attach(mv[:identifier_len])
+    if identifier.value == App0Ident.JFIF.value:
+        hdr: App0Jfif = App0Jfif()
+        hdr.attach(mv)  # type: ignore
+        return hdr
+    attr: dict[str, Any] = {"identifier": identifier}
+    return attr
+
+
+def parse_app1(mv: memoryview) -> dict[str, Any]:
+    """Parse App1 Segment data."""
+    offset = 0
+    result: dict[str, Any] = {}
+    for idx, val in enumerate(mv):
+        if val == 0x00:
+            identifier_len = idx + 1
+            break
+    identifier = String(identifier_len)
+    identifier.attach(mv[:identifier_len])
+    result["identifier"] = identifier
+    offset += len(identifier)
+    # fields = {"unused": UInt8, "header": Word, "tag_mark": Word}
+    # for field, field_cls in fields.items():
+    #     var = field_cls()
+    #     var_len = len(var)
+    #     var.attach(mv[offset : offset + var_len])
+    #     result[field] = var
+    #     offset += var_len
+
+    return result
+
+
+SEG_MAP = {
+    SegTag.APP0.name: parse_app0,
+    SegTag.APP1.name: parse_app1,
+}
+
+
 class Seg:
     """JPEG Segment."""
 
@@ -194,7 +260,11 @@ class Seg:
             length.attach(mv[2:4], retain_value=False)
             self._parts["length"] = length
             payload_end = 2 + length
-            self._parts["payload"] = mv[4:payload_end]
+            payload = mv[4:payload_end]
+            self._parts["payload"] = payload
+            if self.marker.name in SEG_MAP:
+                hdr = SEG_MAP[self.marker.name](payload)
+                self._parts["hdr"] = hdr
             if self.marker.name is SegTag.SOS.name:
                 # Scan through data to locate next segment
                 for idx in range(payload_end, len(mv)):
