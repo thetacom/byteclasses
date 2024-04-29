@@ -8,6 +8,7 @@ from ..._enums import ByteOrder
 from ...constants import _BYTECLASS
 from ...util import is_byteclass_primitive
 from ._primitive import _Primitive
+from ._primitive_number import _PrimitiveNumber
 
 
 class ByteEnum:
@@ -51,7 +52,12 @@ class ByteEnum:
         return len(self._var)
 
     def __int__(self) -> int:
-        """Return instance integer value."""
+        """Return instance integer value.
+
+        Only supported for numeric variable types (ie. byteclass integers and floats).
+        """
+        if not isinstance(self._var, _PrimitiveNumber):
+            raise TypeError(f"ByteEnum variable type ({self._var.__class__.__name__}) is not numeric.")
         return int(self.value)
 
     @property

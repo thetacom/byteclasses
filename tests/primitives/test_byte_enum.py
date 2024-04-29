@@ -1,11 +1,12 @@
 """Test suite for ByteEnum class."""
 
-from enum import IntEnum
+from enum import Enum, IntEnum
 
 import pytest
 
 from byteclasses import ByteOrder
 from byteclasses.types.primitives.byte_enum import ByteEnum
+from byteclasses.types.primitives.generics import Word
 from byteclasses.types.primitives.integers import UInt8, UInt16, UInt32, UInt64
 
 INT_CLASSES = [UInt8, UInt16, UInt32, UInt64]
@@ -24,6 +25,15 @@ class TestEnum(IntEnum):
     UINT16_MAX = 0xFFFF
     UINT32_MAX = 0xFFFFFFFF
     UINT64_MAX = 0xFFFFFFFFFFFFFFFF
+
+
+class TestEnum2(Enum):
+    """Enum class for use in ByteEnum tests."""
+
+    __test__ = False
+
+    ZERO = b"\x00\x00"
+    ONE = b"\x01\x00"
 
 
 def test_byte_enum_creation():
@@ -86,6 +96,17 @@ def test_byte_enum_repr_dunder():
     """Test ByteEnum __repr__."""
     var = ByteEnum(TestEnum, UInt8, data=b"\x04")
     assert repr(var) == "<TestEnum.FOUR: 0x4>"
+    var = ByteEnum(TestEnum2, Word, data=b"\x01\x00")
+    assert repr(var) == "<TestEnum2.ONE: b'\\x01\\x00'>"
+
+
+def test_byte_enum_int_dunder():
+    """Test ByteEnum __int__."""
+    var = ByteEnum(TestEnum, UInt8, data=b"\x04")
+    assert int(var) == 4
+    var = ByteEnum(TestEnum2, Word, data=b"\x01\x00")
+    with pytest.raises(TypeError):
+        _ = int(var)
 
 
 def test_byte_enum_byte_order():
