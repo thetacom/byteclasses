@@ -1,7 +1,6 @@
 """Member class for fixed size collections."""
 
 import re
-import sys
 from collections.abc import Callable
 from types import GenericAlias, MappingProxyType, MemberDescriptorType
 from typing import TYPE_CHECKING, Any, TypeVar, overload
@@ -88,7 +87,7 @@ class Member:  # pylint: disable=R0903
     def __repr__(self):
         """Return a repr string for this Member."""
         return (
-            "Field("
+            "Member("
             f"{self.name=!r},"
             f"{self.type=!r},"
             f"{self.factory=!r},"
@@ -96,23 +95,6 @@ class Member:  # pylint: disable=R0903
             f"{self.member_type=}"
             ")"
         )
-
-    def __set_name__(self, owner, name):
-        """Set the name of this member.
-
-        This is used to support the PEP 487 __set_name__ protocol in the
-        case where we're using a member that contains a descriptor as a
-        default value.  For details on __set_name__, see
-        https://www.python.org/dev/peps/pep-0487/#implementation-details.
-
-        Note that in _process_class, this Member object is overwritten
-        with the default value, so the end result is a descriptor that
-        had __set_name__ called on it at the right time.
-        """
-        func = getattr(self.type, "__set_name__", None)
-        if func and isinstance(func, Callable):
-            # There is a __set_name__ method on the descriptor, call it.
-            func(None, owner, name)  # pylint: disable=E1102
 
     __class_getitem__ = classmethod(GenericAlias)  # type: ignore
 
@@ -157,7 +139,7 @@ def _init_members(spec: "_CollectionClassSpec", globals_: dict[str, Any]) -> lis
     """Initialize all class members."""
     body: list[str] = []
     for member_ in spec.members:
-        init_line = _init_member(spec, member_, globals_, spec.self_name)
+        init_line = _init_member(spec, member_, globals_)
         body.extend(
             [
                 init_line,
@@ -174,7 +156,6 @@ def _init_member(
     spec: "_CollectionClassSpec",
     member_: Member,
     globals_: dict[str, Any],
-    self_name: str,
 ) -> str:
     # Return the text of the line in the body of __init__ that will
     # initialize this field.
@@ -189,72 +170,7 @@ def _init_member(
     if member_.name is None:
         raise ValueError("Member name cannot be None.")
     # Now, actually generate the member assignment.
-    return _member_assign(member_.name, value, self_name)
-
-
-def _is_type(
-    annotation: str,
-    cls: type,
-    a_module,
-    a_type: type,
-    is_type_predicate: Callable,
-):
-    # Given a type annotation string, does it refer to a_type in
-    # a_module?  For example, when checking that annotation denotes a
-    # ClassVar, then a_module is typing, and a_type is
-    # typing.ClassVar.
-
-    # It's possible to look up a_module given a_type, but it involves
-    # looking in sys.modules (again!), and seems like a waste since
-    # the caller already knows a_module.
-
-    # - annotation is a string type annotation
-    # - cls is the class that this annotation was found in
-    # - a_module is the module we want to match
-    # - a_type is the type in that module we want to match
-    # - is_type_predicate is a function called with (obj, a_module)
-    #   that determines if obj is of the desired type.
-
-    # Since this test does not do a local namespace lookup (and
-    # instead only a module (global) lookup), there are some things it
-    # gets wrong.
-
-    # With string annotations, cv0 will be detected as a ClassVar:
-    #   CV = ClassVar
-    #   @structure|@union|@bitfield
-    #   class C0:
-    #     cv0: CV
-
-    # But in this example cv1 will not be detected as a ClassVar:
-    #   @structure|@union|@bitfield
-    #   class C1:
-    #     CV = ClassVar
-    #     cv1: CV
-
-    # In C1, the code in this function (_is_type) will look up "CV" in
-    # the module and not find it, so it will not consider cv1 as a
-    # ClassVar.  This is a fairly obscure corner case, and the best
-    # way to fix it would be to eval() the string "CV" with the
-    # correct global and local namespaces.  However that would involve
-    # a eval() penalty for every single field of every dataclass
-    # that's defined.  It was judged not worth it.
-
-    match = _MODULE_IDENTIFIER_RE.match(annotation)
-    if match:
-        namespace = None
-        module_name = match.group(1)
-        if not module_name:
-            # No module name, assume the class's module did
-            # "from dataclasses import InitVar".
-            namespace = sys.modules.get(cls.__module__).__dict__
-        else:
-            # Look up module_name in the class's module.
-            module = sys.modules.get(cls.__module__)
-            if module and module.__dict__.get(module_name) is a_module:
-                namespace = sys.modules.get(a_type.__module__).__dict__
-        if namespace and is_type_predicate(namespace.get(match.group(2)), a_module):
-            return True
-    return False
+    return _member_assign(member_.name, value, spec.self_name)
 
 
 def _get_member(cls: type, a_name: str, a_type: type):
@@ -272,8 +188,7 @@ def _get_member(cls: type, a_name: str, a_type: type):
         raise ValueError("Collection member cannot have a default value.")
     elif isinstance(default, MemberDescriptorType):
         # This is a member in __slots__, so it has no default value.
-        pass
-        # default = MISSING
+        default = MISSING
     else:
         member_ = member()
 
