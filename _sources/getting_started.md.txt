@@ -24,8 +24,8 @@ Primitive Types - The primitive types provide the base level elements used to co
 
 Collection Types - Collection types allow you to combine primitives or other collections based on their specified behavior.
 
-* `FixedArray` - A concrete fixed size collection class containing a single primitive type or specified quantity.
-* `String` - A specialized subclass of FixedArray to add string convenience methods.
+* `ByteArray` - A concrete fixed size collection class containing a single primitive type or specified quantity.
+* `String` - A specialized subclass of ByteArray to add string convenience methods.
 * `Structure` - A dynamic byteclass implemented via the `@structure` decorator. Behaves similar to a C `struct`.
 * `Union` - A dynamic byteclass implemented via the `@union` decorator. Behaves similar to a C `union`.
 

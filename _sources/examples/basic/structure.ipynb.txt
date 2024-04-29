@@ -9,18 +9,17 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 49,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
-    "from typing import ClassVar\n",
     "from byteclasses import ByteOrder\n",
     "from byteclasses.print import byteclass_info, byteclass_inspect\n",
-    "from byteclasses.types.collections import FixedSizeCollection, structure, member\n",
+    "from byteclasses.types.collections import ByteclassCollection, member, structure\n",
     "from byteclasses.types.primitives.characters import UChar\n",
-    "from byteclasses.types.primitives.generics import Byte, BitField\n",
-    "from byteclasses.types.primitives.integers import Int8, UInt8, UInt16, UInt32\n",
-    "from byteclasses.types.primitives.floats import Float32"
+    "from byteclasses.types.primitives.floats import Float32\n",
+    "from byteclasses.types.primitives.generics import BitField, Byte\n",
+    "from byteclasses.types.primitives.integers import Int8, UInt8, UInt16, UInt32"
    ]
   },
   {
@@ -32,133 +31,27 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 50,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "BasicStructure(var1=UInt8(0), var2=UInt16(770)) 4 bytearray(b'\\x00\\x01\\x02\\x03')\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
     "@structure\n",
     "class BasicStructure:\n",
     "    \"\"\"A basic structure byteclass.\"\"\"\n",
     "\n",
     "    var1: UInt8\n",
-    "    var2: UInt16\n",
-    "\n",
-    "\n",
+    "    var2: UInt16"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
     "bs = BasicStructure()\n",
     "bs.data = b\"\\x00\\x01\\x02\\x03\"\n",
-    "print(bs, len(bs), bs.data)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 51,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">                                          Byteclass Info                                           </span>\n",
-       "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Property                  </span>┃<span style=\"font-weight: bold\"> Value                                                               </span>┃\n",
-       "┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">type()                   </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> BasicStructure                                                      </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">is_byteclass()           </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> True                                                                </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">is_byteclass_collection()</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> True                                                                </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">is_byteclass_primitive() </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> False                                                               </span>│\n",
-       "│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span><span style=\"color: #0000ff; text-decoration-color: #0000ff; font-weight: bold\">mro                      </span><span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span>│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> BasicStructure -&gt; object                                            </span>│\n",
-       "│<span style=\"color: #ff00ff; text-decoration-color: #ff00ff\"> </span><span style=\"color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold\">len()                    </span><span style=\"color: #ff00ff; text-decoration-color: #ff00ff\"> </span>│<span style=\"color: #ff00ff; text-decoration-color: #ff00ff\"> 4                                                                   </span>│\n",
-       "│<span style=\"color: #00ffff; text-decoration-color: #00ffff\"> </span><span style=\"color: #00ffff; text-decoration-color: #00ffff; font-weight: bold\">str()                    </span><span style=\"color: #00ffff; text-decoration-color: #00ffff\"> </span>│<span style=\"color: #00ffff; text-decoration-color: #00ffff\"> BasicStructure(var1=UInt8(0), var2=UInt16(770))                     </span>│\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">repr()                   </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> BasicStructure(byte_order=b'@',data=bytearray(b'\\x00\\x01\\x02\\x03')) </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">.data                    </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> bytearray(b'\\x00\\x01\\x02\\x03')                                      </span>│\n",
-       "└───────────────────────────┴─────────────────────────────────────────────────────────────────────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m                                          Byteclass Info                                           \u001b[0m\n",
-       "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mProperty                 \u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue                                                              \u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mtype()                   \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90mBasicStructure                                                     \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mis_byteclass()           \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91mTrue                                                               \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mis_byteclass_collection()\u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92mTrue                                                               \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93mis_byteclass_primitive() \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93mFalse                                                              \u001b[0m\u001b[93m \u001b[0m│\n",
-       "│\u001b[94m \u001b[0m\u001b[1;94mmro                      \u001b[0m\u001b[94m \u001b[0m│\u001b[94m \u001b[0m\u001b[94mBasicStructure -> object                                           \u001b[0m\u001b[94m \u001b[0m│\n",
-       "│\u001b[95m \u001b[0m\u001b[1;95mlen()                    \u001b[0m\u001b[95m \u001b[0m│\u001b[95m \u001b[0m\u001b[95m4                                                                  \u001b[0m\u001b[95m \u001b[0m│\n",
-       "│\u001b[96m \u001b[0m\u001b[1;96mstr()                    \u001b[0m\u001b[96m \u001b[0m│\u001b[96m \u001b[0m\u001b[96mBasicStructure(var1=UInt8(0), var2=UInt16(770))                    \u001b[0m\u001b[96m \u001b[0m│\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mrepr()                   \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90mBasicStructure(byte_order=b'@',data=bytearray(b'\\x00\\x01\\x02\\x03'))\u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91m.data                    \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91mbytearray(b'\\x00\\x01\\x02\\x03')                                     \u001b[0m\u001b[91m \u001b[0m│\n",
-       "└───────────────────────────┴─────────────────────────────────────────────────────────────────────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
-    "byteclass_info(bs)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 52,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #808080; text-decoration-color: #808080\">00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|01|</span><span style=\"color: #ff0000; text-decoration-color: #ff0000\">02 03</span>                                     │\n",
-       "╰──────────────────────────────────────────────────────╯\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 \u001b[37m|\u001b[0m\u001b[90m00\u001b[0m\u001b[37m|\u001b[0m\u001b[37m01\u001b[0m\u001b[37m|\u001b[0m\u001b[91m02 03\u001b[0m                                     │\n",
-       "╰──────────────────────────────────────────────────────╯\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">      Legend      </span>\n",
-       "┏━━━━━━━━┳━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Member </span>┃<span style=\"font-weight: bold\"> Value </span>┃\n",
-       "┡━━━━━━━━╇━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">var1  </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> 0     </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">var2  </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> 770   </span>│\n",
-       "└────────┴───────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m      Legend      \u001b[0m\n",
-       "┏━━━━━━━━┳━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mMember\u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue\u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━╇━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mvar1  \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90m0    \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mvar2  \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91m770  \u001b[0m\u001b[91m \u001b[0m│\n",
-       "└────────┴───────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
+    "byteclass_info(bs)\n",
     "byteclass_inspect(bs)"
    ]
   },
@@ -171,28 +64,27 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 53,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "PackedStructure(var1=UInt8(0), var2=UInt16(0)) 3 bytearray(b'\\x00\\x00\\x00')\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
     "@structure(packed=True)\n",
     "class PackedStructure:\n",
     "    \"\"\"A Packed structure byteclass.\"\"\"\n",
     "\n",
     "    var1: UInt8\n",
-    "    var2: UInt16\n",
-    "\n",
-    "\n",
+    "    var2: UInt16"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
     "ps = PackedStructure()\n",
-    "print(ps, len(ps), ps.data)"
+    "byteclass_info(ps)\n",
+    "byteclass_inspect(ps)"
    ]
   },
   {
@@ -204,127 +96,36 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 54,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
     "@structure(byte_order=b\"!\")\n",
-    "class SimpleStruct():\n",
-    "    a:UInt8\n",
-    "    b:UInt16\n",
-    "    c:UChar\n",
-    "    d:Float32\n",
+    "class SimpleStruct:\n",
+    "    a: UInt8\n",
+    "    b: UInt16\n",
+    "    c: UChar\n",
+    "    d: Float32\n",
     "    e: UInt8\n",
-    "ss1: FixedSizeCollection = SimpleStruct()"
+    "\n",
+    "\n",
+    "ss1: ByteclassCollection = SimpleStruct()"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 55,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">                                                  Byteclass Info                                                   </span>\n",
-       "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Property                  </span>┃<span style=\"font-weight: bold\"> Value                                                                               </span>┃\n",
-       "┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">type()                   </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> SimpleStruct                                                                        </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">is_byteclass()           </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> True                                                                                </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">is_byteclass_collection()</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> True                                                                                </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">is_byteclass_primitive() </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> False                                                                               </span>│\n",
-       "│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span><span style=\"color: #0000ff; text-decoration-color: #0000ff; font-weight: bold\">mro                      </span><span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span>│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> SimpleStruct -&gt; object                                                              </span>│\n",
-       "│<span style=\"color: #ff00ff; text-decoration-color: #ff00ff\"> </span><span style=\"color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold\">len()                    </span><span style=\"color: #ff00ff; text-decoration-color: #ff00ff\"> </span>│<span style=\"color: #ff00ff; text-decoration-color: #ff00ff\"> 13                                                                                  </span>│\n",
-       "│<span style=\"color: #00ffff; text-decoration-color: #00ffff\"> </span><span style=\"color: #00ffff; text-decoration-color: #00ffff; font-weight: bold\">str()                    </span><span style=\"color: #00ffff; text-decoration-color: #00ffff\"> </span>│<span style=\"color: #00ffff; text-decoration-color: #00ffff\"> SimpleStruct(a=UInt8(0), b=UInt16(0), c=UChar('\\x00'), d=Float32(0.0), e=UInt8(0))  </span>│\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">repr()                   </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> SimpleStruct(byte_order=b'!',data=bytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00… </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">.data                    </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> bytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00')                  </span>│\n",
-       "└───────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m                                                  Byteclass Info                                                   \u001b[0m\n",
-       "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mProperty                 \u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue                                                                              \u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mtype()                   \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90mSimpleStruct                                                                       \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mis_byteclass()           \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91mTrue                                                                               \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mis_byteclass_collection()\u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92mTrue                                                                               \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93mis_byteclass_primitive() \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93mFalse                                                                              \u001b[0m\u001b[93m \u001b[0m│\n",
-       "│\u001b[94m \u001b[0m\u001b[1;94mmro                      \u001b[0m\u001b[94m \u001b[0m│\u001b[94m \u001b[0m\u001b[94mSimpleStruct -> object                                                             \u001b[0m\u001b[94m \u001b[0m│\n",
-       "│\u001b[95m \u001b[0m\u001b[1;95mlen()                    \u001b[0m\u001b[95m \u001b[0m│\u001b[95m \u001b[0m\u001b[95m13                                                                                 \u001b[0m\u001b[95m \u001b[0m│\n",
-       "│\u001b[96m \u001b[0m\u001b[1;96mstr()                    \u001b[0m\u001b[96m \u001b[0m│\u001b[96m \u001b[0m\u001b[96mSimpleStruct(a=UInt8(0), b=UInt16(0), c=UChar('\\x00'), d=Float32(0.0), e=UInt8(0)) \u001b[0m\u001b[96m \u001b[0m│\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mrepr()                   \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90mSimpleStruct(byte_order=b'!',data=bytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00…\u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91m.data                    \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91mbytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00')                 \u001b[0m\u001b[91m \u001b[0m│\n",
-       "└───────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
+   "outputs": [],
    "source": [
     "byteclass_info(ss1)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 56,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #808080; text-decoration-color: #808080\">00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|00|</span><span style=\"color: #ff0000; text-decoration-color: #ff0000\">00 00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\">00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|00 00 00|</span><span style=\"color: #ffff00; text-decoration-color: #ffff00\">00 00 00 00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #0000ff; text-decoration-color: #0000ff\">00</span>          │\n",
-       "╰──────────────────────────────────────────────────────╯\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 \u001b[37m|\u001b[0m\u001b[90m00\u001b[0m\u001b[37m|\u001b[0m\u001b[37m00\u001b[0m\u001b[37m|\u001b[0m\u001b[91m00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[92m00\u001b[0m\u001b[37m|\u001b[0m\u001b[37m00 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[93m00 00 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[94m00\u001b[0m          │\n",
-       "╰──────────────────────────────────────────────────────╯\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">      Legend      </span>\n",
-       "┏━━━━━━━━┳━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Member </span>┃<span style=\"font-weight: bold\"> Value </span>┃\n",
-       "┡━━━━━━━━╇━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">a     </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> 0     </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">b     </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> 0     </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">c     </span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> \u0000      </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">d     </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> 0.0   </span>│\n",
-       "│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span><span style=\"color: #0000ff; text-decoration-color: #0000ff; font-weight: bold\">e     </span><span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span>│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> 0     </span>│\n",
-       "└────────┴───────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m      Legend      \u001b[0m\n",
-       "┏━━━━━━━━┳━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mMember\u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue\u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━╇━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90ma     \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90m0    \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mb     \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91m0    \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mc     \u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92m\u0000     \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93md     \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93m0.0  \u001b[0m\u001b[93m \u001b[0m│\n",
-       "│\u001b[94m \u001b[0m\u001b[1;94me     \u001b[0m\u001b[94m \u001b[0m│\u001b[94m \u001b[0m\u001b[94m0    \u001b[0m\u001b[94m \u001b[0m│\n",
-       "└────────┴───────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
+   "outputs": [],
    "source": [
     "byteclass_inspect(ss1)"
    ]
@@ -338,7 +139,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 57,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -347,69 +148,16 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 58,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #808080; text-decoration-color: #808080\">00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|00|</span><span style=\"color: #ff0000; text-decoration-color: #ff0000\">00 00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\">00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|00 00 00|</span><span style=\"color: #ffff00; text-decoration-color: #ffff00\">cd cc 8c 3f</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #0000ff; text-decoration-color: #0000ff\">00</span>          │\n",
-       "╰──────────────────────────────────────────────────────╯\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 \u001b[37m|\u001b[0m\u001b[90m00\u001b[0m\u001b[37m|\u001b[0m\u001b[37m00\u001b[0m\u001b[37m|\u001b[0m\u001b[91m00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[92m00\u001b[0m\u001b[37m|\u001b[0m\u001b[37m00 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[93mcd cc 8c 3f\u001b[0m\u001b[37m|\u001b[0m\u001b[94m00\u001b[0m          │\n",
-       "╰──────────────────────────────────────────────────────╯\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">         Legend          </span>\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Member </span>┃<span style=\"font-weight: bold\"> Value        </span>┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">a     </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> 0            </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">b     </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> 0            </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">c     </span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> \u0000             </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">d     </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> -428967904.0 </span>│\n",
-       "│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span><span style=\"color: #0000ff; text-decoration-color: #0000ff; font-weight: bold\">e     </span><span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span>│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> 0            </span>│\n",
-       "└────────┴──────────────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m         Legend          \u001b[0m\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mMember\u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue       \u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90ma     \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90m0           \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mb     \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91m0           \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mc     \u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92m\u0000            \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93md     \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93m-428967904.0\u001b[0m\u001b[93m \u001b[0m│\n",
-       "│\u001b[94m \u001b[0m\u001b[1;94me     \u001b[0m\u001b[94m \u001b[0m│\u001b[94m \u001b[0m\u001b[94m0           \u001b[0m\u001b[94m \u001b[0m│\n",
-       "└────────┴──────────────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
+   "outputs": [],
    "source": [
     "byteclass_inspect(ss1)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 59,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -422,62 +170,9 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 60,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #808080; text-decoration-color: #808080\">01</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|00|</span><span style=\"color: #ff0000; text-decoration-color: #ff0000\">00 02</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\">63</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|00 00 00|</span><span style=\"color: #ffff00; text-decoration-color: #ffff00\">40 80 00 00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #0000ff; text-decoration-color: #0000ff\">00</span>          │\n",
-       "╰──────────────────────────────────────────────────────╯\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 \u001b[37m|\u001b[0m\u001b[90m01\u001b[0m\u001b[37m|\u001b[0m\u001b[37m00\u001b[0m\u001b[37m|\u001b[0m\u001b[91m00 02\u001b[0m\u001b[37m|\u001b[0m\u001b[92m63\u001b[0m\u001b[37m|\u001b[0m\u001b[37m00 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[93m40 80 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[94m00\u001b[0m          │\n",
-       "╰──────────────────────────────────────────────────────╯\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">      Legend      </span>\n",
-       "┏━━━━━━━━┳━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Member </span>┃<span style=\"font-weight: bold\"> Value </span>┃\n",
-       "┡━━━━━━━━╇━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">a     </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> 1     </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">b     </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> 2     </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">c     </span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> c     </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">d     </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> 4.0   </span>│\n",
-       "│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span><span style=\"color: #0000ff; text-decoration-color: #0000ff; font-weight: bold\">e     </span><span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span>│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> 0     </span>│\n",
-       "└────────┴───────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m      Legend      \u001b[0m\n",
-       "┏━━━━━━━━┳━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mMember\u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue\u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━╇━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90ma     \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90m1    \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mb     \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91m2    \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mc     \u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92mc    \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93md     \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93m4.0  \u001b[0m\u001b[93m \u001b[0m│\n",
-       "│\u001b[94m \u001b[0m\u001b[1;94me     \u001b[0m\u001b[94m \u001b[0m│\u001b[94m \u001b[0m\u001b[94m0    \u001b[0m\u001b[94m \u001b[0m│\n",
-       "└────────┴───────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
+   "outputs": [],
    "source": [
     "byteclass_inspect(ss2)"
    ]
@@ -491,17 +186,9 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 61,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "NET\n"
-     ]
-    }
-   ],
+   "outputs": [],
    "source": [
     "print(ss1.a.endianness)\n",
     "ss1.a = 1\n",
@@ -512,62 +199,9 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 62,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #808080; text-decoration-color: #808080\">01</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|00|</span><span style=\"color: #ff0000; text-decoration-color: #ff0000\">00 02</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\">63</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|00 00 00|</span><span style=\"color: #ffff00; text-decoration-color: #ffff00\">40 80 00 00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #0000ff; text-decoration-color: #0000ff\">00</span>          │\n",
-       "╰──────────────────────────────────────────────────────╯\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 \u001b[37m|\u001b[0m\u001b[90m01\u001b[0m\u001b[37m|\u001b[0m\u001b[37m00\u001b[0m\u001b[37m|\u001b[0m\u001b[91m00 02\u001b[0m\u001b[37m|\u001b[0m\u001b[92m63\u001b[0m\u001b[37m|\u001b[0m\u001b[37m00 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[93m40 80 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[94m00\u001b[0m          │\n",
-       "╰──────────────────────────────────────────────────────╯\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">      Legend      </span>\n",
-       "┏━━━━━━━━┳━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Member </span>┃<span style=\"font-weight: bold\"> Value </span>┃\n",
-       "┡━━━━━━━━╇━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">a     </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> 1     </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">b     </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> 2     </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">c     </span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> c     </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">d     </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> 4.0   </span>│\n",
-       "│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span><span style=\"color: #0000ff; text-decoration-color: #0000ff; font-weight: bold\">e     </span><span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span>│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> 0     </span>│\n",
-       "└────────┴───────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m      Legend      \u001b[0m\n",
-       "┏━━━━━━━━┳━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mMember\u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue\u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━╇━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90ma     \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90m1    \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mb     \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91m2    \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mc     \u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92mc    \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93md     \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93m4.0  \u001b[0m\u001b[93m \u001b[0m│\n",
-       "│\u001b[94m \u001b[0m\u001b[1;94me     \u001b[0m\u001b[94m \u001b[0m│\u001b[94m \u001b[0m\u001b[94m0    \u001b[0m\u001b[94m \u001b[0m│\n",
-       "└────────┴───────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
+   "outputs": [],
    "source": [
     "byteclass_inspect(ss1)"
    ]
@@ -581,7 +215,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 63,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -592,62 +226,9 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 64,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #808080; text-decoration-color: #808080\">01</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|06|</span><span style=\"color: #ff0000; text-decoration-color: #ff0000\">07 08</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\">63</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|00 00 00|</span><span style=\"color: #ffff00; text-decoration-color: #ffff00\">40 80 00 00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #0000ff; text-decoration-color: #0000ff\">00</span>          │\n",
-       "╰──────────────────────────────────────────────────────╯\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 \u001b[37m|\u001b[0m\u001b[90m01\u001b[0m\u001b[37m|\u001b[0m\u001b[37m06\u001b[0m\u001b[37m|\u001b[0m\u001b[91m07 08\u001b[0m\u001b[37m|\u001b[0m\u001b[92m63\u001b[0m\u001b[37m|\u001b[0m\u001b[37m00 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[93m40 80 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[94m00\u001b[0m          │\n",
-       "╰──────────────────────────────────────────────────────╯\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">      Legend      </span>\n",
-       "┏━━━━━━━━┳━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Member </span>┃<span style=\"font-weight: bold\"> Value </span>┃\n",
-       "┡━━━━━━━━╇━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">a     </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> 1     </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">b     </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> 1800  </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">c     </span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> c     </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">d     </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> 4.0   </span>│\n",
-       "│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span><span style=\"color: #0000ff; text-decoration-color: #0000ff; font-weight: bold\">e     </span><span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span>│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> 0     </span>│\n",
-       "└────────┴───────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m      Legend      \u001b[0m\n",
-       "┏━━━━━━━━┳━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mMember\u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue\u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━╇━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90ma     \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90m1    \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mb     \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91m1800 \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mc     \u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92mc    \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93md     \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93m4.0  \u001b[0m\u001b[93m \u001b[0m│\n",
-       "│\u001b[94m \u001b[0m\u001b[1;94me     \u001b[0m\u001b[94m \u001b[0m│\u001b[94m \u001b[0m\u001b[94m0    \u001b[0m\u001b[94m \u001b[0m│\n",
-       "└────────┴───────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
+   "outputs": [],
    "source": [
     "byteclass_inspect(ss1)"
    ]
@@ -661,7 +242,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 65,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -673,7 +254,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 66,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -685,119 +266,17 @@
     "    var6: InnerStruct = member(factory=InnerStruct)\n",
     "\n",
     "    def test(self):\n",
-    "        print(\"test\")\n",
-    "\n",
-    "nested_struct = OuterStruct()"
+    "        print(\"test\")"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 67,
+   "execution_count": null,
    "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">                                                  Byteclass Info                                                   </span>\n",
-       "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Property                  </span>┃<span style=\"font-weight: bold\"> Value                                                                               </span>┃\n",
-       "┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">type()                   </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> OuterStruct                                                                         </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">is_byteclass()           </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> True                                                                                </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">is_byteclass_collection()</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> True                                                                                </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">is_byteclass_primitive() </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> False                                                                               </span>│\n",
-       "│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span><span style=\"color: #0000ff; text-decoration-color: #0000ff; font-weight: bold\">mro                      </span><span style=\"color: #0000ff; text-decoration-color: #0000ff\"> </span>│<span style=\"color: #0000ff; text-decoration-color: #0000ff\"> OuterStruct -&gt; object                                                               </span>│\n",
-       "│<span style=\"color: #ff00ff; text-decoration-color: #ff00ff\"> </span><span style=\"color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold\">len()                    </span><span style=\"color: #ff00ff; text-decoration-color: #ff00ff\"> </span>│<span style=\"color: #ff00ff; text-decoration-color: #ff00ff\"> 11                                                                                  </span>│\n",
-       "│<span style=\"color: #00ffff; text-decoration-color: #00ffff\"> </span><span style=\"color: #00ffff; text-decoration-color: #00ffff; font-weight: bold\">str()                    </span><span style=\"color: #00ffff; text-decoration-color: #00ffff\"> </span>│<span style=\"color: #00ffff; text-decoration-color: #00ffff\"> OuterStruct(var3=Int8(0), var4=UInt32(0), var5=Float32(0.0),                        </span>│\n",
-       "│<span style=\"color: #00ffff; text-decoration-color: #00ffff\">                           </span>│<span style=\"color: #00ffff; text-decoration-color: #00ffff\"> var6=InnerStruct(byte_order=b'@',data=bytearray(b'\\x00\\x00')))                      </span>│\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">repr()                   </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> OuterStruct(byte_order=b'@',data=bytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\… </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">.data                    </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> bytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00')                          </span>│\n",
-       "└───────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m                                                  Byteclass Info                                                   \u001b[0m\n",
-       "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mProperty                 \u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue                                                                              \u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mtype()                   \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90mOuterStruct                                                                        \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mis_byteclass()           \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91mTrue                                                                               \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mis_byteclass_collection()\u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92mTrue                                                                               \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93mis_byteclass_primitive() \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93mFalse                                                                              \u001b[0m\u001b[93m \u001b[0m│\n",
-       "│\u001b[94m \u001b[0m\u001b[1;94mmro                      \u001b[0m\u001b[94m \u001b[0m│\u001b[94m \u001b[0m\u001b[94mOuterStruct -> object                                                              \u001b[0m\u001b[94m \u001b[0m│\n",
-       "│\u001b[95m \u001b[0m\u001b[1;95mlen()                    \u001b[0m\u001b[95m \u001b[0m│\u001b[95m \u001b[0m\u001b[95m11                                                                                 \u001b[0m\u001b[95m \u001b[0m│\n",
-       "│\u001b[96m \u001b[0m\u001b[1;96mstr()                    \u001b[0m\u001b[96m \u001b[0m│\u001b[96m \u001b[0m\u001b[96mOuterStruct(var3=Int8(0), var4=UInt32(0), var5=Float32(0.0),                       \u001b[0m\u001b[96m \u001b[0m│\n",
-       "│\u001b[96m                           \u001b[0m│\u001b[96m \u001b[0m\u001b[96mvar6=InnerStruct(byte_order=b'@',data=bytearray(b'\\x00\\x00')))                     \u001b[0m\u001b[96m \u001b[0m│\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mrepr()                   \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90mOuterStruct(byte_order=b'@',data=bytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\…\u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91m.data                    \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91mbytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00')                         \u001b[0m\u001b[91m \u001b[0m│\n",
-       "└───────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
+   "outputs": [],
    "source": [
-    "byteclass_info(nested_struct)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 68,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #808080; text-decoration-color: #808080\">00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #ff0000; text-decoration-color: #ff0000\">00 00 00 00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\">00 00 00 00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #ffff00; text-decoration-color: #ffff00\">00 00</span>                │\n",
-       "╰──────────────────────────────────────────────────────╯\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 \u001b[37m|\u001b[0m\u001b[90m00\u001b[0m\u001b[37m|\u001b[0m\u001b[91m00 00 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[92m00 00 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[93m00 00\u001b[0m                │\n",
-       "╰──────────────────────────────────────────────────────╯\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">                                            Legend                                             </span>\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Member </span>┃<span style=\"font-weight: bold\"> Value                                                                              </span>┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">var3  </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> 0                                                                                  </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">var4  </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> 0                                                                                  </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">var5  </span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> 0.0                                                                                </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">var6  </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> InnerStruct(var1=BitField(data=b'\\x00'), var2=Byte(data=b'\\x00', byte_order=b'@')) </span>│\n",
-       "└────────┴────────────────────────────────────────────────────────────────────────────────────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m                                            Legend                                             \u001b[0m\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mMember\u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue                                                                             \u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mvar3  \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90m0                                                                                 \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mvar4  \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91m0                                                                                 \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mvar5  \u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92m0.0                                                                               \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93mvar6  \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93mInnerStruct(var1=BitField(data=b'\\x00'), var2=Byte(data=b'\\x00', byte_order=b'@'))\u001b[0m\u001b[93m \u001b[0m│\n",
-       "└────────┴────────────────────────────────────────────────────────────────────────────────────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
+    "nested_struct = OuterStruct()\n",
+    "byteclass_info(nested_struct)\n",
     "byteclass_inspect(nested_struct)"
    ]
   },
@@ -810,126 +289,12 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 69,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
-    "nested_struct.var4 = 1"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 70,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #808080; text-decoration-color: #808080\">00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #ff0000; text-decoration-color: #ff0000\">01 00 00 00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\">00 00 00 00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #ffff00; text-decoration-color: #ffff00\">00 00</span>                │\n",
-       "╰──────────────────────────────────────────────────────╯\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 \u001b[37m|\u001b[0m\u001b[90m00\u001b[0m\u001b[37m|\u001b[0m\u001b[91m01 00 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[92m00 00 00 00\u001b[0m\u001b[37m|\u001b[0m\u001b[93m00 00\u001b[0m                │\n",
-       "╰──────────────────────────────────────────────────────╯\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">                                            Legend                                             </span>\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Member </span>┃<span style=\"font-weight: bold\"> Value                                                                              </span>┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">var3  </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> 0                                                                                  </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">var4  </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> 1                                                                                  </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">var5  </span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> 0.0                                                                                </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">var6  </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> InnerStruct(var1=BitField(data=b'\\x00'), var2=Byte(data=b'\\x00', byte_order=b'@')) </span>│\n",
-       "└────────┴────────────────────────────────────────────────────────────────────────────────────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m                                            Legend                                             \u001b[0m\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mMember\u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue                                                                             \u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mvar3  \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90m0                                                                                 \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mvar4  \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91m1                                                                                 \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mvar5  \u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92m0.0                                                                               \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93mvar6  \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93mInnerStruct(var1=BitField(data=b'\\x00'), var2=Byte(data=b'\\x00', byte_order=b'@'))\u001b[0m\u001b[93m \u001b[0m│\n",
-       "└────────┴────────────────────────────────────────────────────────────────────────────────────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
-    "byteclass_inspect(nested_struct)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 71,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #808080; text-decoration-color: #808080\">00</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #ff0000; text-decoration-color: #ff0000\">00</span>                                           │\n",
-       "╰──────────────────────────────────────────────────────╯\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 \u001b[37m|\u001b[0m\u001b[90m00\u001b[0m\u001b[37m|\u001b[0m\u001b[91m00\u001b[0m                                           │\n",
-       "╰──────────────────────────────────────────────────────╯\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">                 Legend                  </span>\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Member </span>┃<span style=\"font-weight: bold\"> Value                        </span>┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">var1  </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> BitField(00000000, flags={}) </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">var2  </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> b'\\x00'                      </span>│\n",
-       "└────────┴──────────────────────────────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m                 Legend                  \u001b[0m\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mMember\u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue                       \u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mvar1  \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90mBitField(00000000, flags={})\u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mvar2  \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91mb'\\x00'                     \u001b[0m\u001b[91m \u001b[0m│\n",
-       "└────────┴──────────────────────────────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
+    "nested_struct.var4 = 1\n",
+    "byteclass_inspect(nested_struct)\n",
     "byteclass_inspect(nested_struct.var6)"
    ]
   },
@@ -942,70 +307,11 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 72,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
-    "nested_struct.data = b\"\\xfa\\xf9\\xf8\\xf7\\xf6\\xf5\\xf4\\xf3\\xf2\\xf1\\xf0\""
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 73,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #808080; text-decoration-color: #808080\">fa</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #ff0000; text-decoration-color: #ff0000\">f9 f8 f7 f6</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\">f5 f4 f3 f2</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #ffff00; text-decoration-color: #ffff00\">f1 f0</span>                │\n",
-       "╰──────────────────────────────────────────────────────╯\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 \u001b[37m|\u001b[0m\u001b[90mfa\u001b[0m\u001b[37m|\u001b[0m\u001b[91mf9 f8 f7 f6\u001b[0m\u001b[37m|\u001b[0m\u001b[92mf5 f4 f3 f2\u001b[0m\u001b[37m|\u001b[0m\u001b[93mf1 f0\u001b[0m                │\n",
-       "╰──────────────────────────────────────────────────────╯\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">                                            Legend                                             </span>\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Member </span>┃<span style=\"font-weight: bold\"> Value                                                                              </span>┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">var3  </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> -6                                                                                 </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">var4  </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> 4143446265                                                                         </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">var5  </span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> -9.664127010094224e+30                                                             </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">var6  </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> InnerStruct(var1=BitField(data=b'\\xf1'), var2=Byte(data=b'\\xf0', byte_order=b'@')) </span>│\n",
-       "└────────┴────────────────────────────────────────────────────────────────────────────────────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m                                            Legend                                             \u001b[0m\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mMember\u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue                                                                             \u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mvar3  \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90m-6                                                                                \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mvar4  \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91m4143446265                                                                        \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mvar5  \u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92m-9.664127010094224e+30                                                            \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93mvar6  \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93mInnerStruct(var1=BitField(data=b'\\xf1'), var2=Byte(data=b'\\xf0', byte_order=b'@'))\u001b[0m\u001b[93m \u001b[0m│\n",
-       "└────────┴────────────────────────────────────────────────────────────────────────────────────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
+    "nested_struct.data = b\"\\xfa\\xf9\\xf8\\xf7\\xf6\\xf5\\xf4\\xf3\\xf2\\xf1\\xf0\"\n",
     "byteclass_inspect(nested_struct)"
    ]
   },
@@ -1018,70 +324,11 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 74,
+   "execution_count": null,
    "metadata": {},
    "outputs": [],
    "source": [
-    "nested_struct[2:5] = b\"\\x08\""
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 75,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #808080; text-decoration-color: #808080\">fa</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #ff0000; text-decoration-color: #ff0000\">f9 08 08 08</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #00ff00; text-decoration-color: #00ff00\">f5 f4 f3 f2</span><span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">|</span><span style=\"color: #ffff00; text-decoration-color: #ffff00\">f1 f0</span>                │\n",
-       "╰──────────────────────────────────────────────────────╯\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "╭───────────────── Byteclass Inspect ──────────────────╮\n",
-       "│      00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f │\n",
-       "│ ---------------------------------------------------- │\n",
-       "│ 0x0 \u001b[37m|\u001b[0m\u001b[90mfa\u001b[0m\u001b[37m|\u001b[0m\u001b[91mf9 08 08 08\u001b[0m\u001b[37m|\u001b[0m\u001b[92mf5 f4 f3 f2\u001b[0m\u001b[37m|\u001b[0m\u001b[93mf1 f0\u001b[0m                │\n",
-       "╰──────────────────────────────────────────────────────╯\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"font-style: italic\">                                            Legend                                             </span>\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃<span style=\"font-weight: bold\"> Member </span>┃<span style=\"font-weight: bold\"> Value                                                                              </span>┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│<span style=\"color: #808080; text-decoration-color: #808080\"> </span><span style=\"color: #808080; text-decoration-color: #808080; font-weight: bold\">var3  </span><span style=\"color: #808080; text-decoration-color: #808080\"> </span>│<span style=\"color: #808080; text-decoration-color: #808080\"> -6                                                                                 </span>│\n",
-       "│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span><span style=\"color: #ff0000; text-decoration-color: #ff0000; font-weight: bold\">var4  </span><span style=\"color: #ff0000; text-decoration-color: #ff0000\"> </span>│<span style=\"color: #ff0000; text-decoration-color: #ff0000\"> 134744313                                                                          </span>│\n",
-       "│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">var5  </span><span style=\"color: #00ff00; text-decoration-color: #00ff00\"> </span>│<span style=\"color: #00ff00; text-decoration-color: #00ff00\"> -9.664127010094224e+30                                                             </span>│\n",
-       "│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span><span style=\"color: #ffff00; text-decoration-color: #ffff00; font-weight: bold\">var6  </span><span style=\"color: #ffff00; text-decoration-color: #ffff00\"> </span>│<span style=\"color: #ffff00; text-decoration-color: #ffff00\"> InnerStruct(var1=BitField(data=b'\\xf1'), var2=Byte(data=b'\\xf0', byte_order=b'@')) </span>│\n",
-       "└────────┴────────────────────────────────────────────────────────────────────────────────────┘\n",
-       "</pre>\n"
-      ],
-      "text/plain": [
-       "\u001b[3m                                            Legend                                             \u001b[0m\n",
-       "┏━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n",
-       "┃\u001b[1m \u001b[0m\u001b[1mMember\u001b[0m\u001b[1m \u001b[0m┃\u001b[1m \u001b[0m\u001b[1mValue                                                                             \u001b[0m\u001b[1m \u001b[0m┃\n",
-       "┡━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩\n",
-       "│\u001b[90m \u001b[0m\u001b[1;90mvar3  \u001b[0m\u001b[90m \u001b[0m│\u001b[90m \u001b[0m\u001b[90m-6                                                                                \u001b[0m\u001b[90m \u001b[0m│\n",
-       "│\u001b[91m \u001b[0m\u001b[1;91mvar4  \u001b[0m\u001b[91m \u001b[0m│\u001b[91m \u001b[0m\u001b[91m134744313                                                                         \u001b[0m\u001b[91m \u001b[0m│\n",
-       "│\u001b[92m \u001b[0m\u001b[1;92mvar5  \u001b[0m\u001b[92m \u001b[0m│\u001b[92m \u001b[0m\u001b[92m-9.664127010094224e+30                                                            \u001b[0m\u001b[92m \u001b[0m│\n",
-       "│\u001b[93m \u001b[0m\u001b[1;93mvar6  \u001b[0m\u001b[93m \u001b[0m│\u001b[93m \u001b[0m\u001b[93mInnerStruct(var1=BitField(data=b'\\xf1'), var2=Byte(data=b'\\xf0', byte_order=b'@'))\u001b[0m\u001b[93m \u001b[0m│\n",
-       "└────────┴────────────────────────────────────────────────────────────────────────────────────┘\n"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    }
-   ],
-   "source": [
+    "nested_struct[2:5] = b\"\\x08\"\n",
     "byteclass_inspect(nested_struct)"
    ]
   }
@@ -1104,7 +351,6 @@
    "pygments_lexer": "ipython3",
    "version": "3.11.9"
   },
-  "orig_nbformat": 4,
   "vscode": {
    "interpreter": {
     "hash": "557d07237cea0a23e1b53fe2d85e0da343a1f271fee6abb399e030b4f4b9db4a"

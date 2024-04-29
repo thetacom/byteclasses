@@ -59,7 +59,7 @@
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="FixeArray Collection" href="fixed_array.html" />
+    <link rel="next" title="&lt;no title&gt;" href="byte_enum.html" />
     <link rel="prev" title="Generic Primitives" href="generics.html" />
   
    
@@ -218,7 +218,14 @@
               <div class="md-sidebar__inner">
                 
 <nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">"Contents"</label>
   <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#examples-basic-bitfield--page-root" class="md-nav__link">BitField Primitive</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#Bulk-Value-Assignment" class="md-nav__link">Bulk Value Assignment</a>
+        </li></ul>
+            </nav>
+        </li>
     
 <li class="md-nav__item"><a class="md-nav__extra_link" href="../../_sources/examples/basic/bitfield.ipynb.txt">Show Source</a> </li>
 
@@ -235,7 +242,6 @@
             
   <section id="BitField-Primitive">
 <h1 id="examples-basic-bitfield--page-root">BitField Primitive<a class="headerlink" href="#examples-basic-bitfield--page-root" title="Link to this heading">¶</a></h1>
-<p>Importing BitField class</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -245,7 +251,6 @@
 </pre></div>
 </div>
 </div>
-<p>Generic BitFields</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -272,21 +277,21 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                                  Byteclass Info                                                   </span>
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold"> Property                  </span>┃<span style="font-weight: bold"> Value                                                                               </span>┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField                                                                            </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()           </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                                </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_byteclass_collection()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False                                                                               </span>│
-│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_byteclass_primitive() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> True                                                                                </span>│
-│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                      </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> BitField -&gt; _FixedSizeType -&gt; ABC -&gt; SupportsBytes -&gt; Protocol -&gt; Generic -&gt; object </span>│
-│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                    </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 1                                                                                   </span>│
-│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                    </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> BitField(11111111, flags={})                                                        </span>│
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField(data=b'\xff')                                                              </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                    </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> b'\xff'                                                                             </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">.value                   </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> [True, True, True, True, True, True, True, True]                                    </span>│
-└───────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                Byteclass Info                                 </span>
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Property                 </span>┃<span style="font-weight: bold"> Value                                            </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField                                         </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()          </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                             </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_collection_instance()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False                                            </span>│
+│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_primitive_instance() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> True                                             </span>│
+│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                     </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> BitField -&gt; _Primitive -&gt; object                 </span>│
+│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                   </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 1                                                </span>│
+│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                   </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> BitField(11111111, flags={})                     </span>│
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField(data=b'\xff')                           </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                   </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> b'\xff'                                          </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">.value                  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> (True, True, True, True, True, True, True, True) </span>│
+└──────────────────────────┴──────────────────────────────────────────────────┘
 </pre></div>
 </div>
 <div class="nboutput docutils container">
@@ -317,22 +322,21 @@
 </div>
 <div class="output_area rendered_html docutils container">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                                  Byteclass Info                                                   </span>
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold"> Property                  </span>┃<span style="font-weight: bold"> Value                                                                               </span>┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField16                                                                          </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()           </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                                </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_byteclass_collection()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False                                                                               </span>│
-│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_byteclass_primitive() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> True                                                                                </span>│
-│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                      </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> BitField16 -&gt; BitField -&gt; _FixedSizeType -&gt; ABC -&gt; SupportsBytes -&gt; Protocol -&gt;     </span>│
-│<span style="color: #0000ff; text-decoration-color: #0000ff">                           </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> Generic -&gt; object                                                                   </span>│
-│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                    </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 2                                                                                   </span>│
-│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                    </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> BitField16(1111111111111111, flags={})                                              </span>│
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField16(data=b'\xff\xff')                                                        </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                    </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> b'\xff\xff'                                                                         </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">.value                   </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> [True, True, True, True, True, True, True, True, True, True, True, True, True,      </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00">                           </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True]                                                                   </span>│
-└───────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Property                 </span>┃<span style="font-weight: bold"> Value                                                                                </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField16                                                                           </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()          </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                                 </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_collection_instance()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False                                                                                </span>│
+│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_primitive_instance() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> True                                                                                 </span>│
+│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                     </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> BitField16 -&gt; BitField -&gt; _Primitive -&gt; object                                       </span>│
+│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                   </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 2                                                                                    </span>│
+│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                   </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> BitField16(1111111111111111, flags={})                                               </span>│
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField16(data=b'\xff\xff')                                                         </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                   </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> b'\xff\xff'                                                                          </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">.value                  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> (True, True, True, True, True, True, True, True, True, True, True, True, True, True, </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00">                          </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True)                                                                          </span>│
+└──────────────────────────┴──────────────────────────────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
 <div class="nboutput docutils container">
@@ -363,23 +367,22 @@
 </div>
 <div class="output_area rendered_html docutils container">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                                  Byteclass Info                                                   </span>
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold"> Property                  </span>┃<span style="font-weight: bold"> Value                                                                               </span>┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField32                                                                          </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()           </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                                </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_byteclass_collection()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False                                                                               </span>│
-│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_byteclass_primitive() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> True                                                                                </span>│
-│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                      </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> BitField32 -&gt; BitField -&gt; _FixedSizeType -&gt; ABC -&gt; SupportsBytes -&gt; Protocol -&gt;     </span>│
-│<span style="color: #0000ff; text-decoration-color: #0000ff">                           </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> Generic -&gt; object                                                                   </span>│
-│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                    </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 4                                                                                   </span>│
-│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                    </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> BitField32(11111111111111111111111111111111, flags={})                              </span>│
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField32(data=b'\xff\xff\xff\xff')                                                </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                    </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> b'\xff\xff\xff\xff'                                                                 </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">.value                   </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> [True, True, True, True, True, True, True, True, True, True, True, True, True,      </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00">                           </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True, True, True, True, True, True, True, True, True, True, True, </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00">                           </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True, True]                                                       </span>│
-└───────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Property                 </span>┃<span style="font-weight: bold"> Value                                                                                </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField32                                                                           </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()          </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                                 </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_collection_instance()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False                                                                                </span>│
+│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_primitive_instance() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> True                                                                                 </span>│
+│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                     </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> BitField32 -&gt; BitField -&gt; _Primitive -&gt; object                                       </span>│
+│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                   </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 4                                                                                    </span>│
+│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                   </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> BitField32(11111111111111111111111111111111, flags={})                               </span>│
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField32(data=b'\xff\xff\xff\xff')                                                 </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                   </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> b'\xff\xff\xff\xff'                                                                  </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">.value                  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> (True, True, True, True, True, True, True, True, True, True, True, True, True, True, </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00">                          </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True, True, True, True, True, True, True, True, True, True, True,  </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00">                          </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True)                                                              </span>│
+└──────────────────────────┴──────────────────────────────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
 <div class="nboutput docutils container">
@@ -410,26 +413,25 @@
 </div>
 <div class="output_area rendered_html docutils container">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                                  Byteclass Info                                                   </span>
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold"> Property                  </span>┃<span style="font-weight: bold"> Value                                                                               </span>┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField64                                                                          </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()           </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                                </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_byteclass_collection()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False                                                                               </span>│
-│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_byteclass_primitive() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> True                                                                                </span>│
-│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                      </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> BitField64 -&gt; BitField -&gt; _FixedSizeType -&gt; ABC -&gt; SupportsBytes -&gt; Protocol -&gt;     </span>│
-│<span style="color: #0000ff; text-decoration-color: #0000ff">                           </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> Generic -&gt; object                                                                   </span>│
-│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                    </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 8                                                                                   </span>│
-│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                    </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> BitField64(1111111111111111111111111111111111111111111111111111111111111111,        </span>│
-│<span style="color: #00ffff; text-decoration-color: #00ffff">                           </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> flags={})                                                                           </span>│
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField64(data=b'\xff\xff\xff\xff\xff\xff\xff\xff')                                </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                    </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> b'\xff\xff\xff\xff\xff\xff\xff\xff'                                                 </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">.value                   </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> [True, True, True, True, True, True, True, True, True, True, True, True, True,      </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00">                           </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True, True, True, True, True, True, True, True, True, True, True, </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00">                           </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True, True, True, True, True, True, True, True, True, True, True, </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00">                           </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True, True, True, True, True, True, True, True, True, True, True, </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00">                           </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True, True, True, True, True, True]                               </span>│
-└───────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Property                 </span>┃<span style="font-weight: bold"> Value                                                                                </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField64                                                                           </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()          </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                                 </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_collection_instance()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False                                                                                </span>│
+│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_primitive_instance() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> True                                                                                 </span>│
+│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                     </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> BitField64 -&gt; BitField -&gt; _Primitive -&gt; object                                       </span>│
+│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                   </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 8                                                                                    </span>│
+│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                   </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> BitField64(1111111111111111111111111111111111111111111111111111111111111111,         </span>│
+│<span style="color: #00ffff; text-decoration-color: #00ffff">                          </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> flags={})                                                                            </span>│
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> BitField64(data=b'\xff\xff\xff\xff\xff\xff\xff\xff')                                 </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                   </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> b'\xff\xff\xff\xff\xff\xff\xff\xff'                                                  </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">.value                  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> (True, True, True, True, True, True, True, True, True, True, True, True, True, True, </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00">                          </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True, True, True, True, True, True, True, True, True, True, True,  </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00">                          </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True, True, True, True, True, True, True, True, True, True, True,  </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00">                          </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True, True, True, True, True, True, True, True, True, True, True,  </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00">                          </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> True, True, True, True, True, True, True, True)                                      </span>│
+└──────────────────────────┴──────────────────────────────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
 <div class="nboutput docutils container">
@@ -512,7 +514,7 @@ BitField(11100001, flags={})
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">bf</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">bf</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">bf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">bf</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">bf</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">bf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -524,9 +526,100 @@ BitField(11100001, flags={})
 True False True
 </pre></div></div>
 </div>
+<section id="Bulk-Value-Assignment">
+<h2 id="Bulk-Value-Assignment">Bulk Value Assignment<a class="headerlink" href="#Bulk-Value-Assignment" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Data assignment</p></li>
+</ol>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bf</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"</span><span class="se">\x00</span><span class="s2">"</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+BitField(00000000, flags={})
+</pre></div></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Value assignment with <code class="docutils literal notranslate"><span class="pre">boolean</span></code> will set all bits in bitfield to the boolean value.</p></li>
+</ol>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bf</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bf</span><span class="p">)</span>
+<span class="n">bf</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+BitField(11111111, flags={})
+BitField(00000000, flags={})
+</pre></div></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Value assignment with <code class="docutils literal notranslate"><span class="pre">dict[int,</span> <span class="pre">bool]</span></code> will assign the boolean value of given key using the key as the bit index.</p></li>
+</ol>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bf</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bf</span><span class="p">)</span>
+<span class="n">bf</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+BitField(10101010, flags={})
+BitField(00000000, flags={})
+</pre></div></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Value assignment with <code class="docutils literal notranslate"><span class="pre">Iterable[bool]</span></code> will assign boolean values to bits starting at idx 0 and continuing until the iterable is exhausted.</p></li>
+</ol>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bf</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bf</span><span class="p">)</span>
+<span class="n">bf</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+BitField(11110000, flags={})
+BitField(00000000, flags={})
+</pre></div></div>
+</div>
 <p>Subclassing the <code class="docutils literal notranslate"><span class="pre">BitField</span></code> class allows multi-byte bitfields and named bit positions.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MultiBitField</span><span class="p">(</span><span class="n">BitField</span><span class="p">):</span>
@@ -537,7 +630,7 @@ True False True
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mbf</span> <span class="o">=</span> <span class="n">MultiBitField</span><span class="p">()</span>
@@ -545,7 +638,7 @@ True False True
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_info</span><span class="p">(</span><span class="n">mbf</span><span class="p">)</span>
@@ -557,26 +650,25 @@ True False True
 </div>
 <div class="output_area rendered_html docutils container">
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-style: italic">                                                  Byteclass Info                                                   </span>
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃<span style="font-weight: bold"> Property                  </span>┃<span style="font-weight: bold"> Value                                                                               </span>┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> MultiBitField                                                                       </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()           </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                                </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_byteclass_collection()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False                                                                               </span>│
-│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_byteclass_primitive() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> True                                                                                </span>│
-│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                      </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> MultiBitField -&gt; BitField -&gt; _FixedSizeType -&gt; ABC -&gt; SupportsBytes -&gt; Protocol -&gt;  </span>│
-│<span style="color: #0000ff; text-decoration-color: #0000ff">                           </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> Generic -&gt; object                                                                   </span>│
-│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                    </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 2                                                                                   </span>│
-│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                    </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> MultiBitField(0000000000000000, flags={'first': 0, 'last': False})                  </span>│
-│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                   </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> MultiBitField(data=b'\x00\x00')                                                     </span>│
-│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                    </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> b'\x00\x00'                                                                         </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">.value                   </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> [False, False, False, False, False, False, False, False, False, False, False,       </span>│
-│<span style="color: #00ff00; text-decoration-color: #00ff00">                           </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False, False, False, False, False]                                                  </span>│
-└───────────────────────────┴─────────────────────────────────────────────────────────────────────────────────────┘
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> Property                 </span>┃<span style="font-weight: bold"> Value                                                                                </span>┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">type()                  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> MultiBitField                                                                        </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">is_byteclass()          </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> True                                                                                 </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">is_collection_instance()</span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False                                                                                </span>│
+│<span style="color: #ffff00; text-decoration-color: #ffff00"> </span><span style="color: #ffff00; text-decoration-color: #ffff00; font-weight: bold">is_primitive_instance() </span><span style="color: #ffff00; text-decoration-color: #ffff00"> </span>│<span style="color: #ffff00; text-decoration-color: #ffff00"> True                                                                                 </span>│
+│<span style="color: #0000ff; text-decoration-color: #0000ff"> </span><span style="color: #0000ff; text-decoration-color: #0000ff; font-weight: bold">mro                     </span><span style="color: #0000ff; text-decoration-color: #0000ff"> </span>│<span style="color: #0000ff; text-decoration-color: #0000ff"> MultiBitField -&gt; BitField -&gt; _Primitive -&gt; object                                    </span>│
+│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span><span style="color: #ff00ff; text-decoration-color: #ff00ff; font-weight: bold">len()                   </span><span style="color: #ff00ff; text-decoration-color: #ff00ff"> </span>│<span style="color: #ff00ff; text-decoration-color: #ff00ff"> 2                                                                                    </span>│
+│<span style="color: #00ffff; text-decoration-color: #00ffff"> </span><span style="color: #00ffff; text-decoration-color: #00ffff; font-weight: bold">str()                   </span><span style="color: #00ffff; text-decoration-color: #00ffff"> </span>│<span style="color: #00ffff; text-decoration-color: #00ffff"> MultiBitField(0000000000000000, flags={'first': 0, 'last': False})                   </span>│
+│<span style="color: #808080; text-decoration-color: #808080"> </span><span style="color: #808080; text-decoration-color: #808080; font-weight: bold">repr()                  </span><span style="color: #808080; text-decoration-color: #808080"> </span>│<span style="color: #808080; text-decoration-color: #808080"> MultiBitField(data=b'\x00\x00')                                                      </span>│
+│<span style="color: #ff0000; text-decoration-color: #ff0000"> </span><span style="color: #ff0000; text-decoration-color: #ff0000; font-weight: bold">.data                   </span><span style="color: #ff0000; text-decoration-color: #ff0000"> </span>│<span style="color: #ff0000; text-decoration-color: #ff0000"> b'\x00\x00'                                                                          </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00"> </span><span style="color: #00ff00; text-decoration-color: #00ff00; font-weight: bold">.value                  </span><span style="color: #00ff00; text-decoration-color: #00ff00"> </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> (False, False, False, False, False, False, False, False, False, False, False, False, </span>│
+│<span style="color: #00ff00; text-decoration-color: #00ff00">                          </span>│<span style="color: #00ff00; text-decoration-color: #00ff00"> False, False, False, False)                                                          </span>│
+└──────────────────────────┴──────────────────────────────────────────────────────────────────────────────────────┘
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">byteclass_inspect</span><span class="p">(</span><span class="n">mbf</span><span class="p">)</span>
@@ -608,7 +700,7 @@ True False True
 </div>
 <p>Named bits can be used to get or set the bit position specified when instantiating the <code class="docutils literal notranslate"><span class="pre">BitPos</span></code> class member.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mbf</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="kc">True</span>
@@ -616,8 +708,8 @@ True False True
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mbf</span><span class="p">,</span> <span class="n">mbf</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">mbf</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
@@ -625,6 +717,16 @@ True False True
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MultiBitField(1000000000000001, flags={'first': 1, 'last': True}) 1 True
+{'first': 1, 'last': True}
+</pre></div></div>
+</div>
+</section>
 </section>
 
 
@@ -651,12 +753,12 @@ True False True
             </a>
           
           
-            <a href="fixed_array.html" title="FixeArray Collection"
+            <a href="byte_enum.html" title="&lt;no title&gt;"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> "Next" </span> FixeArray Collection </span>
+                class="md-footer-nav__direction"> "Next" </span> &lt;no title&gt; </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
