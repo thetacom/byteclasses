@@ -8,21 +8,21 @@ Implements interfaces that attempt to adhere to the following specifications:
 """
 
 import math
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from collections.abc import ByteString
 from numbers import Integral, Number, Real
 from struct import pack, unpack
 from typing import Any, TypeVar
 
-from .._enums import ByteOrder
-from ..types._fixed_size_type import _FixedSizeType
+from ..._enums import ByteOrder
+from ...types.primitives._primitive import _Primitive
 
 __all__: list[str] = []
 
 ValType = TypeVar("ValType")  # pylint: disable=C0103
 
 
-class _FixedNumericType(_FixedSizeType):
+class _PrimitiveNumber(_Primitive, ABC):
     """Base class for fixed size numeric types."""
 
     def __init__(
@@ -37,10 +37,7 @@ class _FixedNumericType(_FixedSizeType):
             raise ValueError("Cannot specify both value and data arguments.")
         super().__init__(byte_order=byte_order, data=data)
         if value is not None:
-            if isinstance(value, _FixedNumericType):
-                self.value = value.value
-            else:
-                self.value = value
+            self.value = value
 
     def __str__(self) -> str:
         """Return the numeric representation of the instance."""
@@ -62,7 +59,7 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Complex interface.
         """
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return self.value + other.value
         if isinstance(other, Real):
             return self.value + other
@@ -103,7 +100,7 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Complex interface.
         """
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return self.value == other.value
         if isinstance(other, Real):
             return self.value == other
@@ -114,7 +111,7 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Real interface.
         """
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return divmod(self.value, other.value)
         if isinstance(other, Real):
             return divmod(self.value, other)
@@ -145,7 +142,7 @@ class _FixedNumericType(_FixedSizeType):
 
     def __floordiv__(self, other: Any):
         """Return the floor division of the instance and other."""
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return self.value // other.value
         if isinstance(other, Integral):
             return self.value // other
@@ -159,7 +156,7 @@ class _FixedNumericType(_FixedSizeType):
 
     def __ge__(self, other: Any):
         """Return True if the instance is greater than or equal to other."""
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return self.value >= other.value
         if isinstance(other, Real):
             return self.value >= other
@@ -167,7 +164,7 @@ class _FixedNumericType(_FixedSizeType):
 
     def __gt__(self, other: Any):
         """Return True if the instance is greater than other."""
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return self.value > other.value
         if isinstance(other, Real):
             return self.value > other
@@ -185,7 +182,7 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Real interface.
         """
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return self.value <= other.value
         if isinstance(other, Real):
             return self.value <= other
@@ -196,7 +193,7 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Real interface.
         """
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return self.value < other.value
         if isinstance(other, Real):
             return self.value < other
@@ -207,7 +204,7 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Real interface.
         """
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return self.value % other.value
         if isinstance(other, Real):
             return self.value % other
@@ -227,7 +224,7 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Complex interface.
         """
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return self.value * other.value
         if isinstance(other, Real):
             return self.value * other
@@ -263,7 +260,7 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Complex interface.
         """
-        if isinstance(exponent, _FixedNumericType):
+        if isinstance(exponent, _PrimitiveNumber):
             return self.value**exponent.value
         if isinstance(exponent, int):
             return self.value**exponent
@@ -290,7 +287,7 @@ class _FixedNumericType(_FixedSizeType):
 
         Satisfies Complex interface.
         """
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return self.value - other.value
         if isinstance(other, Real):
             return self.value - other
@@ -312,7 +309,7 @@ class _FixedNumericType(_FixedSizeType):
 
         self / other: Should promote to float when necessary.
         """
-        if isinstance(other, _FixedNumericType):
+        if isinstance(other, _PrimitiveNumber):
             return self.value / other.value
         if isinstance(other, Real):
             return self.value / other
@@ -344,7 +341,7 @@ class _FixedNumericType(_FixedSizeType):
 
     def _set_value(self, new_value: Any, val_cls: type) -> None:
         """Set the value of the instance."""
-        if isinstance(new_value, _FixedNumericType):
+        if isinstance(new_value, _PrimitiveNumber):
             value_ = val_cls(new_value.value)
         elif isinstance(new_value, Number):
             value_ = val_cls(new_value)

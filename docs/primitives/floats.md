@@ -1,4 +1,4 @@
-# Fixed Size Floats
+# Float Primitives
 
 | Type | Length (bytes) | Aliases | Notes |
 |---|:-:|---|---|

@@ -3,7 +3,7 @@
 from functools import cached_property
 
 from ..._data_handler import _DataHandler
-from .elf_hdr import ElfHdr32, ElfHdr64, ElfMachine, ElfType, ElfVersion
+from .elf_hdr import ElfHdr32, ElfHdr64
 from .pentry import PEntry32, PEntry64
 from .sentry import SEntry32, SEntry64
 
@@ -40,26 +40,17 @@ class Elf(_DataHandler):
     @property
     def type(self) -> str:
         """Return Elf Type property."""
-        try:
-            return ElfType(self.hdr.e_type.value).name
-        except ValueError:
-            return hex(self.hdr.e_type)
+        return self.hdr.e_type.name
 
     @property
     def machine(self) -> str:
         """Return Elf Machine property."""
-        try:
-            return ElfMachine(self.hdr.e_machine.value).name
-        except ValueError:
-            return hex(self.hdr.e_machine)
+        return self.hdr.e_machine.name
 
     @property
     def version(self) -> str:
         """Return Elf Version property."""
-        try:
-            return ElfVersion(self.hdr.e_version.value).name
-        except ValueError:
-            return hex(self.hdr.e_version)
+        return self.hdr.e_version.name
 
     @property
     def flags(self) -> dict[str, bool | int]:

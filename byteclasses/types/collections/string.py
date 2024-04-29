@@ -3,11 +3,11 @@
 from collections.abc import ByteString
 
 from ..primitives.characters import UChar
-from .fixed_array import FixedArray
+from .byte_array import ByteArray
 
 
-class String(FixedArray):
-    """A fixed size string collection based on FixedArray.
+class String(ByteArray):
+    """A fixed size string collection based on ByteArray.
 
     Collection members are UChar primitives and are interpreted with a `utf-8` encoding.
     """

@@ -1,13 +1,13 @@
-"""Fixed Size Type Protocol Classes."""
+"""Byteclass Primitive Protocol Classes."""
 
 from typing import Protocol, runtime_checkable
 
-__all__ = ["FixedSizeType"]
+__all__ = ["ByteclassPrimitive"]
 
 
 @runtime_checkable
-class FixedSizeType(Protocol):
-    """Protocol class for fixed size types."""
+class ByteclassPrimitive(Protocol):
+    """Protocol class for primitive types."""
 
     def __call__(self): ...
     def __len__(self) -> int: ...

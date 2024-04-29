@@ -13,7 +13,7 @@ This library is designed for creating custom Python data classes with builtin st
 ## Byte Classes
 
 - Collections
-  - FixedArray
+  - ByteArray
   - String
   - Structure
   - Union

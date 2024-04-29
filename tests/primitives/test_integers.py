@@ -10,12 +10,15 @@ from byteclasses.types.primitives.integers import (
     Int16,
     Int32,
     Int64,
+    Ptr16,
+    Ptr32,
+    Ptr64,
     UInt8,
     UInt16,
     UInt32,
     UInt64,
     UnderflowError,
-    _FixedInt,
+    _PrimitiveInt,
 )
 from byteclasses.util import is_byteclass, is_byteclass_instance
 
@@ -30,9 +33,9 @@ def test_fixedint_is_byteclass():
 
 
 def test_fixedint_missing_type_char_property():
-    """Test _FixedInt instance with no `_type_char` class attribute."""
+    """Test _PrimitiveInt instance with no `_type_char` class attribute."""
 
-    class InvalidInt(_FixedInt):
+    class InvalidInt(_PrimitiveInt):
         """Invalid Fixed Int Class definition."""
 
         _length = 1
@@ -43,9 +46,9 @@ def test_fixedint_missing_type_char_property():
 
 
 def test_fixedint_missing_length_property():
-    """Test _FixedInt instance with no `_length` class attribute."""
+    """Test _PrimitiveInt instance with no `_length` class attribute."""
 
-    class InvalidInt(_FixedInt):
+    class InvalidInt(_PrimitiveInt):
         """Invalid Fixed Int Class definition."""
 
         _type_char = b"b"
@@ -56,9 +59,9 @@ def test_fixedint_missing_length_property():
 
 
 def test_fixedint_missing_signed_property():
-    """Test _FixedInt instance with no `_signed` class attribute."""
+    """Test _PrimitiveInt instance with no `_signed` class attribute."""
 
-    class InvalidInt(_FixedInt):
+    class InvalidInt(_PrimitiveInt):
         """Invalid Fixed Int Class definition."""
 
         _type_char: bytes = b"b"
@@ -78,6 +81,13 @@ def test_fixedint_create_with_value():
     """Test integer instantiation with value."""
     var = Int8(123)
     assert var == 123
+
+
+def test_fixedint_create_with_fixedint_value():
+    """Test integer instantiation with fixedintvalue."""
+    var1 = Int8(123)
+    var2 = Int16(var1)
+    assert var2 == 123
 
 
 def test_fixedint_create_with_bytes():
@@ -171,6 +181,22 @@ def test_fixedint_attach_data_bytes():
     assert int2.value == 0x34
 
 
+def test_fixedint_attach_data_too_few_bytes():
+    """Test attaching external data with too few bytes to integer."""
+    test_data = b"\x00"
+    var = Int16()
+    with pytest.raises(ValueError):
+        var.attach(test_data)
+
+
+def test_fixedint_attach_data_unsupported_type():
+    """Test attaching external data with unsupported type."""
+    bad_data = "no"
+    var = Int16()
+    with pytest.raises(TypeError):
+        var.attach(bad_data)
+
+
 def test_fixedint_str():
     """Test integer __str__ method."""
     var = Int8(8)
@@ -178,7 +204,7 @@ def test_fixedint_str():
 
 
 def test_fixedint_clear_data_with_data_none():
-    """Test _FixedInt clearing data by setting data attribute to None."""
+    """Test _PrimitiveInt clearing data by setting data attribute to None."""
     var = Int8(8)
     assert var == 8
     var.data = None
@@ -186,7 +212,7 @@ def test_fixedint_clear_data_with_data_none():
 
 
 def test_fixedint_set_partial_data():
-    """Test _FixedInt set data with short data."""
+    """Test _PrimitiveInt set data with short data."""
     var = UInt32()
     var.value = var.max
     var.data = b"\x00\x00"
@@ -194,7 +220,7 @@ def test_fixedint_set_partial_data():
 
 
 def test_fixedint_set_oversized_data():
-    """Test _FixedInt set data with oversized data."""
+    """Test _PrimitiveInt set data with oversized data."""
     var = UInt32()
     var.value = var.max
     with pytest.raises(ValueError):
@@ -302,17 +328,30 @@ def test_fixedint_round():
 
 
 def test_fixedint_truncate():
-    """Test _FixedInt __trunc__ method."""
+    """Test _PrimitiveInt __trunc__ method."""
     var1 = Int8(10)
     result = math.trunc(var1)
     assert result == 10
 
 
 def test_fixedint_index():
-    """Test _FixedInt __index__ method."""
+    """Test _PrimitiveInt __index__ method."""
     var1 = Int8(10)
     result = operator.index(var1)
     assert result == 10
+
+
+def test_fixedint_getitem_dunder():
+    """Test _PrimitiveInt __getitem__ method."""
+    var = UInt16(data=b"\x00\xff")
+    assert var[1] == 0xFF
+
+
+def test_fixedint_setitem_dunder():
+    """Test _PrimitiveInt __setitem__ method."""
+    var = UInt16(data=b"\x00\xff")
+    var[0] = 0xAA
+    assert var.data == b"\xaa\xff"
 
 
 # Check attributes of each fixed size integer
@@ -680,3 +719,24 @@ def test_uint64_value_to_data():
     assert uint64.data == b"\x01\x00\x00\x00\x00\x00\x00\x00"
     uint64.value = 18446744073709551615
     assert uint64.data == b"\xff\xff\xff\xff\xff\xff\xff\xff"
+
+
+def test_ptr16_instance_properties():
+    """Test Ptr16 instance properties."""
+    ptr = Ptr16(0xFFFF)
+    assert str(ptr) == "0xffff"
+    assert repr(ptr) == "Ptr16(0xffff)"
+
+
+def test_ptr32_instance_properties():
+    """Test Ptr32 instance properties."""
+    ptr = Ptr32(0xFFFFFFFF)
+    assert str(ptr) == "0xffffffff"
+    assert repr(ptr) == "Ptr32(0xffffffff)"
+
+
+def test_ptr64_instance_properties():
+    """Test Ptr64 instance properties."""
+    ptr = Ptr64(0xFFFFFFFFFFFFFFFF)
+    assert str(ptr) == "0xffffffffffffffff"
+    assert repr(ptr) == "Ptr64(0xffffffffffffffff)"

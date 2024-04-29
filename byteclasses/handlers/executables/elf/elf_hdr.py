@@ -7,6 +7,7 @@
 from enum import IntEnum
 
 from ....types.collections import String, member, structure
+from ....types.primitives.byte_enum import ByteEnum
 from ....types.primitives.generics import BitField
 from ....types.primitives.integers import Ptr32, Ptr64, UInt16, UInt32
 
@@ -30,9 +31,9 @@ class ElfHdr32:
     """32-bit Elf Header Class."""
 
     e_ident: String = member(factory=lambda byte_order: String(16))  # type: ignore
-    e_type: UInt16
-    e_machine: UInt16
-    e_version: UInt32
+    e_type: ByteEnum = member(factory=lambda byte_order: ByteEnum(ElfType, UInt16, byte_order=byte_order))
+    e_machine: ByteEnum = member(factory=lambda byte_order: ByteEnum(ElfMachine, UInt16, byte_order=byte_order))
+    e_version: ByteEnum = member(factory=lambda byte_order: ByteEnum(ElfVersion, UInt32, byte_order=byte_order))
     e_entry: Ptr32
     e_phoff: Ptr32
     e_shoff: Ptr32
@@ -50,9 +51,9 @@ class ElfHdr64:
     """64-bit Elf Header Class."""
 
     e_ident: String = member(factory=lambda byte_order: String(16))  # type: ignore
-    e_type: UInt16
-    e_machine: UInt16
-    e_version: UInt32
+    e_type: ByteEnum = member(factory=lambda byte_order: ByteEnum(ElfType, UInt16, byte_order=byte_order))
+    e_machine: ByteEnum = member(factory=lambda byte_order: ByteEnum(ElfMachine, UInt16, byte_order=byte_order))
+    e_version: ByteEnum = member(factory=lambda byte_order: ByteEnum(ElfVersion, UInt32, byte_order=byte_order))
     e_entry: Ptr64
     e_phoff: Ptr64
     e_shoff: Ptr64

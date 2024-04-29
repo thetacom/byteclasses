@@ -1,6 +1,6 @@
 """Ethernet Header implemented with byteclasses."""
 
-from ...types.collections import FixedArray, member, structure
+from ...types.collections import ByteArray, member, structure
 from ...types.primitives.integers import UInt16
 
 
@@ -8,6 +8,6 @@ from ...types.primitives.integers import UInt16
 class EthHdr:
     """Ethernet Header Class."""
 
-    dst_mac: FixedArray = member(factory=lambda byte_order: FixedArray(6))  # type: ignore
-    src_mac: FixedArray = member(factory=lambda byte_order: FixedArray(6))  # type: ignore
+    dst_mac: ByteArray = member(factory=lambda byte_order: ByteArray(6))  # type: ignore
+    src_mac: ByteArray = member(factory=lambda byte_order: ByteArray(6))  # type: ignore
     ether_type: UInt16

@@ -7,7 +7,7 @@ from struct import calcsize
 from typing import Any, cast
 
 from ..._enums import ByteOrder, TypeChar
-from ...types._fixed_numeric_type import _FixedNumericType
+from ...types.primitives._primitive_number import _PrimitiveNumber
 
 __all__ = [
     "Int",
@@ -42,7 +42,7 @@ class FixedIntegerDivisionError(OverflowError):
     """Exception raised when an integer divison results in a non integer value."""
 
 
-class _FixedInt(_FixedNumericType):
+class _PrimitiveInt(_PrimitiveNumber):
     """Generic Fixed Size Integer."""
 
     _signed: bool = NotImplemented
@@ -93,7 +93,7 @@ class _FixedInt(_FixedNumericType):
 
     def __and__(self, other: Any):
         """Return the bitwise AND of the instance and other."""
-        if isinstance(other, _FixedInt):
+        if isinstance(other, _PrimitiveInt):
             return self.value & other.value
         if isinstance(other, int):
             return self.value & other
@@ -126,7 +126,7 @@ class _FixedInt(_FixedNumericType):
 
         Satisfies the Integral interface.
         """
-        if isinstance(other, _FixedInt):
+        if isinstance(other, _PrimitiveInt):
             return self.value << other.value
         if isinstance(other, Integral):
             return self.value << other
@@ -146,7 +146,7 @@ class _FixedInt(_FixedNumericType):
 
         Satisfies the Integral interface.
         """
-        if isinstance(other, _FixedInt):
+        if isinstance(other, _PrimitiveInt):
             return self.value | other.value
         if isinstance(other, Integral):
             return self.value | other
@@ -164,7 +164,7 @@ class _FixedInt(_FixedNumericType):
 
         Satisfies the Integral interface.
         """
-        if isinstance(other, _FixedInt):
+        if isinstance(other, _PrimitiveInt):
             return self.value >> other.value
         if isinstance(other, Integral):
             return self.value >> other
@@ -185,7 +185,7 @@ class _FixedInt(_FixedNumericType):
 
     def __xor__(self, other: Any):
         """Return the bitwise XOR of the instance and other."""
-        if isinstance(other, _FixedInt):
+        if isinstance(other, _PrimitiveInt):
             return self.value ^ other.value
         if isinstance(other, Integral):
             return self.value ^ other
@@ -212,7 +212,7 @@ class _FixedInt(_FixedNumericType):
         return value
 
 
-class Int8(_FixedInt):
+class Int8(_PrimitiveInt):
     """8-bit signed integer."""
 
     _type_char: bytes = TypeChar.INT8.value
@@ -223,7 +223,7 @@ class Int8(_FixedInt):
 SChar = Int8
 
 
-class UInt8(_FixedInt):
+class UInt8(_PrimitiveInt):
     """8-bit unsigned integer."""
 
     _type_char: bytes = TypeChar.UINT8.value
@@ -234,7 +234,7 @@ class UInt8(_FixedInt):
 UChar = UInt8
 
 
-class Int16(_FixedInt):
+class Int16(_PrimitiveInt):
     """16-bit signed integer."""
 
     _type_char: bytes = TypeChar.INT16.value
@@ -245,7 +245,7 @@ class Int16(_FixedInt):
 Short = Int16
 
 
-class UInt16(_FixedInt):
+class UInt16(_PrimitiveInt):
     """16-bit unsigned integer."""
 
     _type_char: bytes = TypeChar.UINT16.value
@@ -271,7 +271,7 @@ class Ptr16(UInt16):
         return f"{self.__class__.__name__}({hex(self.value)})"
 
 
-class Int32(_FixedInt):
+class Int32(_PrimitiveInt):
     """32-bit signed integer."""
 
     _type_char: bytes = TypeChar.INT32.value
@@ -282,7 +282,7 @@ class Int32(_FixedInt):
 Int = Int32
 
 
-class UInt32(_FixedInt):
+class UInt32(_PrimitiveInt):
     """32-bit unsigned integer."""
 
     _type_char: bytes = TypeChar.UINT32.value
@@ -308,7 +308,7 @@ class Ptr32(UInt32):
         return f"{self.__class__.__name__}({hex(self.value)})"
 
 
-class Long(_FixedInt):
+class Long(_PrimitiveInt):
     """32-bit signed long integer."""
 
     _type_char: bytes = TypeChar.LONG.value
@@ -316,7 +316,7 @@ class Long(_FixedInt):
     _signed: bool = True
 
 
-class ULong(_FixedInt):
+class ULong(_PrimitiveInt):
     """32-bit unsigned long integer."""
 
     _type_char: bytes = TypeChar.ULONG.value
@@ -324,7 +324,7 @@ class ULong(_FixedInt):
     _signed: bool = False
 
 
-class Int64(_FixedInt):
+class Int64(_PrimitiveInt):
     """64-bit signed integer."""
 
     _type_char: bytes = TypeChar.INT64.value
@@ -335,7 +335,7 @@ class Int64(_FixedInt):
 LongLong = Int64
 
 
-class UInt64(_FixedInt):
+class UInt64(_PrimitiveInt):
     """64-bit unsigned integer."""
 
     _type_char: bytes = TypeChar.UINT64.value

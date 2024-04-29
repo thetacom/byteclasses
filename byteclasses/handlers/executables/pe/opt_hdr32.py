@@ -1,7 +1,7 @@
 """PE Optional Header Class."""
 
 # pylint: disable=R0801
-from ....types.collections import FixedArray, member, structure
+from ....types.collections import ByteArray, member, structure
 from ....types.primitives.bitfield import BitField16, BitField32
 from ....types.primitives.generics import Word
 from ....types.primitives.integers import Ptr32, UInt8, UInt16, UInt32
@@ -88,4 +88,4 @@ class OptHdr32:
     size_of_heap_commit: UInt32
     loader_flags: BitField32
     num_of_rva_and_sizes: UInt32
-    data_directory: FixedArray = member(factory=lambda byte_order: FixedArray(NUM_DIR_ENT, DataDir))  # type: ignore
+    data_directory: ByteArray = member(factory=lambda byte_order: ByteArray(NUM_DIR_ENT, DataDir))  # type: ignore

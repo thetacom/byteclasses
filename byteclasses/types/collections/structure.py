@@ -7,7 +7,7 @@ from ..._enums import ByteOrder
 from ._collection import create_collection
 from ._collection_class_spec import _CollectionClassSpec
 from ._methods import _build_init_method
-from .fixed_size_collection_protocol import FixedSizeCollection
+from .byteclass_collection_protocol import ByteclassCollection
 from .member import _init_members, _member_assign
 
 __all__ = ["structure"]
@@ -16,13 +16,13 @@ __all__ = ["structure"]
 @overload
 def structure(
     cls: None = None, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE, packed: bool = False
-) -> Callable[[type], FixedSizeCollection]: ...
+) -> Callable[[type], ByteclassCollection]: ...
 
 
 @overload
 def structure(
     cls: type, /, *, byte_order: bytes | ByteOrder = ByteOrder.NATIVE, packed: bool = False
-) -> FixedSizeCollection: ...
+) -> ByteclassCollection: ...
 
 
 def structure(  # type: ignore
@@ -31,7 +31,7 @@ def structure(  # type: ignore
     *,
     byte_order: bytes | ByteOrder = ByteOrder.NATIVE,
     packed: bool = False,
-) -> FixedSizeCollection | Callable[[type], FixedSizeCollection]:
+) -> ByteclassCollection | Callable[[type], ByteclassCollection]:
     """Return the same class as was passed in.
 
     Fixed length structure methods are added to the class.

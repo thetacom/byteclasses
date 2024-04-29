@@ -9,7 +9,7 @@ from typing import Any, cast
 from ..._enums import ByteOrder
 from ._collection_class_spec import _CollectionClassSpec
 from ._util import _tuple_str
-from .fixed_size_collection_protocol import FixedSizeCollectionError
+from .byteclass_collection_protocol import ByteclassCollectionError
 from .member import MISSING, _member_assign
 
 
@@ -147,14 +147,14 @@ def _build_str_method(spec: _CollectionClassSpec, globals_: dict[str, Any] | Non
 
 def _build_del_attr(spec: _CollectionClassSpec, globals_: dict[str, Any]) -> Callable:
     """Create the __delattr__ function for a fixed collection class."""
-    locals_ = {"cls": spec.base_cls, "FixedSizeCollectionError": FixedSizeCollectionError}
+    locals_ = {"cls": spec.base_cls, "ByteclassCollectionError": ByteclassCollectionError}
     members_str = "(" + ",".join(repr(member_.name) for member_ in spec.members) + ",)"
     return _create_method(
         "__delattr__",
         (spec.self_name, "name"),
         (
             f"if type({spec.self_name}) is cls or name in {members_str}:",
-            ' raise FixedSizeCollectionError(f"cannot delete member {name!r}")',
+            ' raise ByteclassCollectionError(f"cannot delete member {name!r}")',
             f"super(cls, {spec.self_name}).__delattr__(name)",
         ),
         locals_=locals_,
@@ -366,7 +366,7 @@ def _build_getitem_method(
         (spec.self_name, "key: int | slice"),
         body,
         globals_=globals_,
-        return_type="int | ByteString | _FixedSizeType",
+        return_type="int | ByteString | _Primitive",
     )
 
 

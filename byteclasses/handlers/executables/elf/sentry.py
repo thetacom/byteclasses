@@ -1,7 +1,7 @@
 """Elf Section Table Entry."""
 
 from ..._data_handler import _DataHandler
-from .shdr import SHdr32, SHdr64, SHdrType
+from .shdr import SHdr32, SHdr64
 
 __all__ = [
     "SEntry32",
@@ -46,10 +46,7 @@ class SEntry(_DataHandler):
     @property
     def type(self) -> str:
         """Return SEntry Type property."""
-        try:
-            return SHdrType(self.hdr.sh_type.value).name
-        except ValueError:
-            return hex(self.hdr.sh_type)
+        return self.hdr.sh_type.name
 
     @property
     def flags(self):

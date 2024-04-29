@@ -4,7 +4,7 @@
 [llvm::MachO Namespace Reference](https://llvm.org/doxygen/namespacellvm_1_1MachO.html)
 """
 
-from ....types.collections import FixedArray, member, structure
+from ....types.collections import ByteArray, member, structure
 from ....types.primitives.integers import Ptr32, UInt32
 
 __all__ = ["UUIDCmd"]
@@ -16,4 +16,4 @@ class UUIDCmd:
 
     cmd: Ptr32
     cmdsize: UInt32
-    uuid: FixedArray = member(factory=lambda byte_order: FixedArray(16))  # type: ignore
+    uuid: ByteArray = member(factory=lambda byte_order: ByteArray(16))  # type: ignore

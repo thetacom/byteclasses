@@ -134,7 +134,7 @@ def test_fixedint_left_shift_overflow():
 
 
 def test_fixedint_lshift_with_fixedint():
-    """Test _FixedInt binary left shift."""
+    """Test _PrimitiveInt binary left shift."""
     var1 = UInt8(1)
     var2 = UInt8(1)
     result = var1 << var2
@@ -142,28 +142,28 @@ def test_fixedint_lshift_with_fixedint():
 
 
 def test_fixedint_lshift_with_unsupported():
-    """Test _FixedInt binary left shift."""
+    """Test _PrimitiveInt binary left shift."""
     var1 = UInt8(1)
     with pytest.raises(TypeError):
         _ = var1 << "unsupported"
 
 
 def test_fixedint_rlshift_with_int():
-    """Test _FixedInt binary reverse left shift."""
+    """Test _PrimitiveInt binary reverse left shift."""
     var1 = UInt8(1)
     result = 1 << var1
     assert result == 2
 
 
 def test_fixedint_rlshift_with_unsupported():
-    """Test _FixedInt binary reverse left shift."""
+    """Test _PrimitiveInt binary reverse left shift."""
     var1 = UInt8(1)
     with pytest.raises(TypeError):
         _ = "unsupported" << var1
 
 
 def test_fixedint_right_shift():
-    """Test right shift of _FixedInt."""
+    """Test right shift of _PrimitiveInt."""
     integer = UInt8(0x01)
     result = integer >> 1
     assert isinstance(result, Integral)
@@ -171,14 +171,14 @@ def test_fixedint_right_shift():
 
 
 def test_fixedint_rshift_with_int():
-    """Test _FixedInt binary right shift."""
+    """Test _PrimitiveInt binary right shift."""
     var1 = UInt8(2)
     result = var1 >> 1
     assert result == 1
 
 
 def test_fixedint_rshift_with_fixedint():
-    """Test _FixedInt binary right shift."""
+    """Test _PrimitiveInt binary right shift."""
     var1 = UInt8(2)
     var2 = UInt8(1)
     result = var1 >> var2
@@ -193,21 +193,21 @@ def test_uint8_rshift_with_unsupported():
 
 
 def test_fixeding_rrshift_with_int():
-    """Test _FixedInt binary reverse right shift."""
+    """Test _PrimitiveInt binary reverse right shift."""
     var1 = UInt8(1)
     result = 2 >> var1
     assert result == 1
 
 
 def test_fixedint_rrshift_with_unsupported():
-    """Test _FixedInt binary reverse right shift."""
+    """Test _PrimitiveInt binary reverse right shift."""
     var1 = UInt8(1)
     with pytest.raises(TypeError):
         _ = "unsupported" >> var1
 
 
 def test_fixedint_eq_with_fixedint():
-    """Test equality between two _FixedInts."""
+    """Test equality between two _PrimitiveInts."""
     integer1 = UInt8(0x01)
     integer2 = UInt8(0x03)
     result = integer1 == integer2
@@ -221,7 +221,7 @@ def test_fixedint_eq_with_fixedint():
 
 
 def test_fixedint_eq_with_int():
-    """Test equality between _FixedInt and int."""
+    """Test equality between _PrimitiveInt and int."""
     integer = UInt8(0x01)
     result = integer == 0x03
     assert isinstance(result, bool)
@@ -233,7 +233,7 @@ def test_fixedint_eq_with_int():
 
 
 def test_fixedint_ne_with_fixedint():
-    """Test inequality between two _FixedInts."""
+    """Test inequality between two _PrimitiveInts."""
     integer1 = UInt8(0x01)
     integer2 = UInt8(0x03)
     result = integer1 != integer2
@@ -247,7 +247,7 @@ def test_fixedint_ne_with_fixedint():
 
 
 def test_fixedint_ne_with_int():
-    """Test inequality between _FixedInt and int."""
+    """Test inequality between _PrimitiveInt and int."""
     integer = UInt8(0x01)
     result = integer != 0x03
     assert isinstance(result, bool)
@@ -259,7 +259,7 @@ def test_fixedint_ne_with_int():
 
 
 def test_fixedint_lt_with_fixed_int():
-    """Test less than between two _FixedInts."""
+    """Test less than between two _PrimitiveInts."""
     integer1 = UInt8(0x01)
     integer2 = UInt8(0x03)
     result = integer1 < integer2
@@ -273,7 +273,7 @@ def test_fixedint_lt_with_fixed_int():
 
 
 def test_fixedint_lt_with_int():
-    """Test less than between _FixedInt and int."""
+    """Test less than between _PrimitiveInt and int."""
     integer = UInt8(0x01)
     result = integer < 0x03
     assert isinstance(result, bool)
@@ -285,14 +285,14 @@ def test_fixedint_lt_with_int():
 
 
 def test_fixedint_lt_with_unsupported():
-    """Test less than between _FixedInt and an unsupported type."""
+    """Test less than between _PrimitiveInt and an unsupported type."""
     integer = UInt8(0x01)
     with pytest.raises(TypeError):
         _ = integer < "invalid"
 
 
 def test_fixedint_le_with_fixedint():
-    """Test less than or equal between two _FixedInts."""
+    """Test less than or equal between two _PrimitiveInts."""
     integer1 = UInt8(0x01)
     integer2 = UInt8(0x03)
     result = integer1 <= integer2
@@ -306,7 +306,7 @@ def test_fixedint_le_with_fixedint():
 
 
 def test_fixedint_le_with_int():
-    """Test less than or equal between _FixedInt and int."""
+    """Test less than or equal between _PrimitiveInt and int."""
     integer = UInt8(0x01)
     result = integer <= 0x03
     assert isinstance(result, bool)
@@ -318,14 +318,14 @@ def test_fixedint_le_with_int():
 
 
 def test_fixedint_le_with_unsupported():
-    """Test less than or equal between _FixedInt and an unsupported type."""
+    """Test less than or equal between _PrimitiveInt and an unsupported type."""
     integer = UInt8(0x01)
     with pytest.raises(TypeError):
         _ = integer <= "invalid"
 
 
 def test_fixedint_gt_with_fixedint():
-    """Test greater than between two _FixedInts."""
+    """Test greater than between two _PrimitiveInts."""
     integer1 = UInt8(0x01)
     integer2 = UInt8(0x03)
     result = integer1 > integer2
@@ -339,7 +339,7 @@ def test_fixedint_gt_with_fixedint():
 
 
 def test_fixedint_gt_with_int():
-    """Test greater than between _FixedInt and int."""
+    """Test greater than between _PrimitiveInt and int."""
     integer = UInt8(0x01)
     result = integer > 0x03
     assert isinstance(result, bool)
@@ -351,14 +351,14 @@ def test_fixedint_gt_with_int():
 
 
 def test_fixedint_gt_with_unsupported():
-    """Test greater than between _FixedInt and an unsupported type."""
+    """Test greater than between _PrimitiveInt and an unsupported type."""
     integer = UInt8(0x01)
     with pytest.raises(TypeError):
         _ = integer > "invalid"
 
 
 def test_fixedint_ge_with_fixedint():
-    """Test greater than or equal between two _FixedInts."""
+    """Test greater than or equal between two _PrimitiveInts."""
     integer1 = UInt8(0x01)
     integer2 = UInt8(0x03)
     result = integer1 >= integer2
@@ -372,7 +372,7 @@ def test_fixedint_ge_with_fixedint():
 
 
 def test_fixedint_ge_with_int():
-    """Test greater than or equal between _FixedInt and int."""
+    """Test greater than or equal between _PrimitiveInt and int."""
     integer = UInt8(0x01)
     result = integer >= 0x03
     assert isinstance(result, bool)
@@ -384,7 +384,7 @@ def test_fixedint_ge_with_int():
 
 
 def test_fixedint_ge_with_unsupported():
-    """Test greater than or equal between _FixedInt and an unsupported type."""
+    """Test greater than or equal between _PrimitiveInt and an unsupported type."""
     integer = UInt8(0x01)
     with pytest.raises(TypeError):
         _ = integer >= "invalid"

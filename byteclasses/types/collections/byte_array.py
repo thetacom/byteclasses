@@ -1,24 +1,24 @@
 """Fixed length byte array types for binary data."""
 
-from collections.abc import ByteString, Iterable, Iterator
+from collections.abc import ByteString, Iterator
 from numbers import Number
 from typing import overload
 
 from ..._enums import ByteOrder
 from ...constants import _BYTECLASS, _MEMBERS
-from ...types._fixed_numeric_type import _FixedNumericType
-from ...types._fixed_size_type import _FixedSizeType
+from ...types.primitives._primitive import _Primitive
+from ...types.primitives._primitive_number import _PrimitiveNumber
 from ...util import is_byteclass, is_byteclass_collection
 from ..primitives.integers import UInt8
 
 
-class FixedArray:
-    """An fixed length array of a fixed length item."""
+class ByteArray:
+    """An fixed length array of a byteclass primitives."""
 
     def __init__(
         self,
         item_count: int,
-        item_type: type = UInt8,
+        item_type: type[_Primitive] = UInt8,
         /,
         *,
         byte_order: bytes | ByteOrder = ByteOrder.NATIVE,
@@ -39,7 +39,7 @@ class FixedArray:
                 f"Invalid item type {item_type.__name__}({item_type.__class__.__name__}): Must be a Byteclass type."
             )
         if is_byteclass_collection(item_type):
-            self._items: tuple[_FixedSizeType] = tuple(item_type() for _ in range(item_count))
+            self._items: tuple[_Primitive, ...] = tuple(item_type() for _ in range(item_count))
         else:
             self._items = tuple(item_type(byte_order=self._byte_order) for _ in range(item_count))
         item_instance = self._items[0]
@@ -54,6 +54,10 @@ class FixedArray:
         self._attach_members()
 
     def __repr__(self) -> str:
+        """Return raw representation of fixed array."""
+        return f"{self.__class__.__name__}({len(self._items)}, {self._items[0].__class__.__name__})"
+
+    def __str__(self) -> str:
         """Return string representation of fixed array."""
         return str(self._items)
 
@@ -70,25 +74,28 @@ class FixedArray:
         return iter(self._items)
 
     @overload
-    def __getitem__(self, key: int) -> _FixedSizeType: ...
+    def __getitem__(self, key: int) -> _Primitive: ...
 
     @overload
-    def __getitem__(self, key: slice) -> tuple[_FixedSizeType]: ...
+    def __getitem__(self, key: slice) -> tuple[_Primitive]: ...
 
-    def __getitem__(self, key: int | slice) -> _FixedSizeType | tuple[_FixedSizeType]:
+    def __getitem__(self, key: int | slice) -> _Primitive | tuple[_Primitive, ...]:
         """Implement getitem descriptor."""
         if isinstance(key, (int, slice)):
             return self._items[key]
-        return NotImplemented
+        raise NotImplementedError
 
-    def __setitem__(self, key: int | slice, value: ByteString | int | _FixedSizeType) -> None:  # pylint: disable=R0912
+    def __setitem__(self, key: int | slice, value: ByteString | int | _Primitive) -> None:  # pylint: disable=R0912
         """Implement setitem descriptor."""
         if isinstance(key, int):
             item = self._items[key]
-            if isinstance(value, Number) and isinstance(item, _FixedNumericType):
+            if isinstance(value, Number) and isinstance(item, _PrimitiveNumber):
                 self._items[key].value = value
-            elif isinstance(value, _FixedSizeType) and type(self._items[key] == type(value)):
-                self._items[key].data = value.data
+            elif isinstance(value, _Primitive) and type(self._items[key] == type(value)):
+                try:
+                    self._items[key].value = value.value
+                except (TypeError, ValueError):
+                    self._items[key].data = value.data
             elif isinstance(value, (bytes, bytearray)):
                 self._items[key].data = value
             else:
@@ -96,25 +103,28 @@ class FixedArray:
         elif isinstance(key, slice):
             step = 1 if key.step is None else key.step
             if key.start is None:
-                start = 0 if step > 0 else self._length - 1
+                start = 0 if step > 0 else self.item_count - 1
             else:
                 start = key.start
             if key.stop is None:
-                stop = self._length if step > 0 else -1
+                stop = self.item_count if step > 0 else -1
             else:
                 stop = key.stop
+            value_idx = 0
             for i in range(start, stop, step):
                 item = self._items[i]
-                if isinstance(value, Number) and isinstance(item, _FixedNumericType):
+                if isinstance(value, Number) and isinstance(item, _PrimitiveNumber):
                     item.value = value
-                elif isinstance(item, _FixedNumericType) and isinstance(value, Iterable):
-                    item.value = value[i]
-                elif isinstance(value, _FixedSizeType) and type(self._items[i] == type(value)):
-                    item.data = value.data
                 elif isinstance(value, (bytes, bytearray)):
                     item.data = value
+                elif isinstance(item, _PrimitiveNumber) and isinstance(value, (list, tuple)):
+                    item.value = value[value_idx]
+                    value_idx += 1
+                elif isinstance(value, _Primitive) and len(item) == len(value):
+                    item.data = value.data
                 else:
                     raise NotImplementedError
+
         else:
             raise NotImplementedError
 
@@ -156,5 +166,5 @@ class FixedArray:
             self._items[i].attach(self._data[idx : idx + item_length], retain_value)
 
 
-setattr(FixedArray, _BYTECLASS, True)
-setattr(FixedArray, _MEMBERS, [])
+setattr(ByteArray, _BYTECLASS, True)
+setattr(ByteArray, _MEMBERS, [])

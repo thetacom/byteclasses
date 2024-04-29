@@ -7,17 +7,17 @@ from ._params import _Params
 from .member import Member
 
 __all__ = [
-    "FixedSizeCollectionError",
-    "FixedSizeCollection",
+    "ByteclassCollectionError",
+    "ByteclassCollection",
 ]
 
 
-class FixedSizeCollectionError(AttributeError):
+class ByteclassCollectionError(AttributeError):
     """Raised when an invalid operation is performed on a fixed size collection."""
 
 
 @runtime_checkable
-class FixedSizeCollection(Protocol):
+class ByteclassCollection(Protocol):
     """Protocol class for fixed size collection types."""
 
     __collection_members__: list[Member]
