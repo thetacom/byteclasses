@@ -83,6 +83,13 @@ def test_fixedint_create_with_value():
     assert var == 123
 
 
+def test_fixedint_create_with_fixedint_value():
+    """Test integer instantiation with fixedintvalue."""
+    var1 = Int8(123)
+    var2 = Int16(var1)
+    assert var2 == 123
+
+
 def test_fixedint_create_with_bytes():
     """Test integer instantiation with bytes."""
     var = Int8(data=b"\x7f")
@@ -172,6 +179,22 @@ def test_fixedint_attach_data_bytes():
     assert test_data == b"\x00\x00\x00"
     assert int1.value == 0x12
     assert int2.value == 0x34
+
+
+def test_fixedint_attach_data_too_few_bytes():
+    """Test attaching external data with too few bytes to integer."""
+    test_data = b"\x00"
+    var = Int16()
+    with pytest.raises(ValueError):
+        var.attach(test_data)
+
+
+def test_fixedint_attach_data_unsupported_type():
+    """Test attaching external data with unsupported type."""
+    bad_data = "no"
+    var = Int16()
+    with pytest.raises(TypeError):
+        var.attach(bad_data)
 
 
 def test_fixedint_str():
@@ -316,6 +339,19 @@ def test_fixedint_index():
     var1 = Int8(10)
     result = operator.index(var1)
     assert result == 10
+
+
+def test_fixedint_getitem_dunder():
+    """Test _PrimitiveInt __getitem__ method."""
+    var = UInt16(data=b"\x00\xff")
+    assert var[1] == 0xFF
+
+
+def test_fixedint_setitem_dunder():
+    """Test _PrimitiveInt __setitem__ method."""
+    var = UInt16(data=b"\x00\xff")
+    var[0] = 0xAA
+    assert var.data == b"\xaa\xff"
 
 
 # Check attributes of each fixed size integer

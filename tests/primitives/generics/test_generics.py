@@ -48,6 +48,19 @@ def test_byte_init_with_invalid_value():
         _ = Byte("invalid")
 
 
+def test_byte_get_value():
+    """Test Byte get value."""
+    byte = Byte(data=b"\x01")
+    assert byte.value == b"\x01"
+
+
+def test_byte_set_value():
+    """Test Byte set value."""
+    byte = Byte()
+    byte.value = b"\x01"
+    assert byte.value == b"\x01"
+
+
 def test_word_primitive():
     """Test Word primitive."""
 

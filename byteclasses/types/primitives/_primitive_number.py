@@ -8,7 +8,7 @@ Implements interfaces that attempt to adhere to the following specifications:
 """
 
 import math
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from collections.abc import ByteString
 from numbers import Integral, Number, Real
 from struct import pack, unpack
@@ -22,7 +22,7 @@ __all__: list[str] = []
 ValType = TypeVar("ValType")  # pylint: disable=C0103
 
 
-class _PrimitiveNumber(_Primitive):
+class _PrimitiveNumber(_Primitive, ABC):
     """Base class for fixed size numeric types."""
 
     def __init__(
@@ -37,10 +37,7 @@ class _PrimitiveNumber(_Primitive):
             raise ValueError("Cannot specify both value and data arguments.")
         super().__init__(byte_order=byte_order, data=data)
         if value is not None:
-            if isinstance(value, _PrimitiveNumber):
-                self.value = value.value
-            else:
-                self.value = value
+            self.value = value
 
     def __str__(self) -> str:
         """Return the numeric representation of the instance."""

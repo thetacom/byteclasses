@@ -42,8 +42,11 @@ class _Primitive:
         else:
             self._data = bytearray(init_data)
 
-    def __getitem__(self, sliced):
-        return self._data[sliced]
+    def __getitem__(self, slice_):
+        return self._data[slice_]
+
+    def __setitem__(self, slice_, value) -> None:
+        self._data[slice_] = value
 
     def __bytes__(self) -> bytes:
         """Return the byte representation of the instance."""
@@ -116,18 +119,18 @@ class _Primitive:
 
         Memoryview length must match byte length of fixed length type.
         """
+        if not isinstance(new_data, (bytes, bytearray, memoryview)):
+            raise TypeError(f"Unsupported data type ({type(new_data)})")
         data_len = len(new_data)
         self_len = len(self)
         if data_len != self_len:
             raise ValueError(f"Data length ({data_len} bytes) must be {self_len} bytes.")
+        if isinstance(new_data, bytes):
+            new_data = bytearray(new_data)
         if isinstance(new_data, memoryview):
             mv: memoryview = new_data
-        elif isinstance(new_data, bytearray):
-            mv = memoryview(new_data)
-        elif isinstance(new_data, bytes):
-            mv = memoryview(bytearray(new_data))
         else:
-            raise TypeError(f"Unsupported data type ({type(new_data)})")
+            mv = memoryview(new_data)
         temp = self._data
         self._data = mv
         if retain_value:
