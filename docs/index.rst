@@ -1,7 +1,12 @@
 Welcome to Byteclasses's documentation!
 =======================================
 
-A Python package for handling binary data using dataclass like classes.
+.. image:: imgs/byteclasses.png
+   :scale: 25 %
+   :alt: Byteclasses Logo
+   :align: center
+
+A Python package that simplifies handling binary data.
 
 .. toctree::
    :maxdepth: 2

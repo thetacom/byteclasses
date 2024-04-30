@@ -19,6 +19,8 @@ Primitive Types - The primitive types provide the base level elements used to co
   * `Float16` (`Half`), `Float32` (`Float`), `Float64` (`Double`)
 * `characters` - Single byte character classes.
   * `UChar` (`Char`), `SChar`
+* Special - Special purpose byteclasses
+  * `ByteEnum`
 
 ## `collections`
 
@@ -34,5 +36,4 @@ Collection Types - Collection types allow you to combine primitives or other col
 Byteclasses can be attached to any bytes like external data.
 Use the byteclass `.attach(data)` method to connect a `memoryview` of the external data to the internal data attribute of the byteclass instance.
 > The length of the `memoryview` must match the length of the item it is being attached to.
-
-> If a `bytes` or `bytearray` object is passed to `attach`, a `bytearray` `memoryview` will be created. If you intend for byteclasses to all interact with a single data instance, create a `memoryview` of your data and pass to appropriate slice of the `memoryview` to `attach`.
+> If a `bytes` or `bytearray` object is passed to `attach`, a `bytearray` `memoryview` will be created. If you intend for multiple byteclass objects to all interact with a single data instance, create a `memoryview` of your data and pass to appropriate slice of the `memoryview` to `attach`.

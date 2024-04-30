@@ -1,4 +1,4 @@
-# ByteEnum Primitive
+# ByteEnums
 
 A `ByteEnum` is an adapter class that allows you to map an `IntEnum` class to a `byteclass` integer class such as `UInt8`.
 

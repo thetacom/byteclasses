@@ -19,6 +19,8 @@
 
 ![Logo](docs/imgs/byteclasses.png)
 
+A python package designed to ease data manipulation tasks and improve efficiency when handling binary data.
+
 ## Installation
 
 ```console
@@ -27,7 +29,7 @@
 
 ## Description
 
-Byteclasses is designed for creating and managing blobs of binary data using convenient wrapper classes. These wrapper classes automatically pack and unpack data values.
+Byteclasses provides a variety of convenience wrapper classes to simplify data handling. These wrapper classes automatically pack and unpack data values.
 
 Additionally, certains types, such as byteclass integers, impose type specific constraints. For example, assigning the value 256 to a `UInt8` will raise an `OverflowError` exception.
 
