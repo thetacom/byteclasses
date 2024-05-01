@@ -2,7 +2,7 @@
 
 import pytest
 
-from byteclasses.types.collections.string import String
+from byteclasses.types import String
 
 NULL_BYTE = b"\x00"
 

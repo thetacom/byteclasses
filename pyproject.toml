@@ -4,10 +4,11 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "byteclasses"
-version = "0.6.0"
+version = "0.7.0"
 description = "A python package designed to ease data manipulation tasks and improve efficiency when handling binary data."
 keywords = ["struct", "structures", "binary", "blobs", "raw", "bytes", "dataclasses", "union", "reverse-engineering"]
 repository = "https://github.com/thetacom/byteclasses"
+documentation = "https://io.thetacom.info/byteclasses"
 authors = ["Justin C <justin@thetacom.info>"]
 readme = "README.md"
 license = "MIT"

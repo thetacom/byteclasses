@@ -5,7 +5,7 @@ import operator
 
 import pytest
 
-from byteclasses.types.primitives.integers import (
+from byteclasses.types import (
     Int8,
     Int16,
     Int32,
@@ -18,8 +18,8 @@ from byteclasses.types.primitives.integers import (
     UInt32,
     UInt64,
     UnderflowError,
-    _PrimitiveInt,
 )
+from byteclasses.types.primitives.integers import _PrimitiveInt
 from byteclasses.util import is_byteclass, is_byteclass_instance
 
 

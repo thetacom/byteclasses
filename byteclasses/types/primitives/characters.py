@@ -1,4 +1,4 @@
-"""Fixed Size Character Primitives."""
+"""Primitive Byteclass Character Types Module."""
 
 from struct import calcsize
 

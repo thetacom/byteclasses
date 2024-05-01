@@ -3,9 +3,9 @@
 import pytest
 
 from byteclasses import ByteOrder
+from byteclasses.types import UInt8, member
 from byteclasses.types.collections._collection_class_spec import _CollectionClassSpec
-from byteclasses.types.collections.member import Member, _get_member, _init_member, member
-from byteclasses.types.primitives.integers import UInt8
+from byteclasses.types.collections.member import Member, _get_member, _init_member
 
 
 class TestBaseClass:

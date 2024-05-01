@@ -1,8 +1,6 @@
 """TCP Header implemented with byteclasses."""
 
-from byteclasses.types.collections import structure
-from byteclasses.types.primitives.generics import BitField, BitPos
-from byteclasses.types.primitives.integers import UInt16, UInt32
+from ...types import BitField, BitPos, UInt16, UInt32, structure
 
 
 class OffFlag(BitField):
@@ -10,7 +8,7 @@ class OffFlag(BitField):
 
     byte_length = 2
     data_offset = BitPos(0, bit_width=4)
-    flags = BitPos(4, bit_width=12)
+    tcp_flags = BitPos(4, bit_width=12)
 
 
 @structure(byte_order=b"!", packed=True)

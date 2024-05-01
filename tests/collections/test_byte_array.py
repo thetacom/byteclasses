@@ -4,10 +4,7 @@ from collections.abc import Iterator
 
 import pytest
 
-from byteclasses.types.collections.byte_array import ByteArray
-from byteclasses.types.collections.structure import structure
-from byteclasses.types.primitives.generics import Word
-from byteclasses.types.primitives.integers import UInt8, UInt16, UInt32
+from byteclasses.types import ByteArray, UInt8, UInt16, UInt32, Word, structure
 
 NULL_BYTE = b"\x00"
 

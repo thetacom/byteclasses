@@ -6,10 +6,7 @@
 
 from enum import IntEnum
 
-from ....types.collections import structure
-from ....types.primitives.bitfield import BitField32, mask2bitpos
-from ....types.primitives.generics import DWord
-from ....types.primitives.integers import Int32, UInt32
+from ....types import BitField32, DWord, Int32, UInt32, mask2bitpos, structure
 
 __all__ = [
     "MachFlags32",

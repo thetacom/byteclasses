@@ -60,8 +60,7 @@ The `ByteArray` and `String` collections can be instantiated directly using the 
 ## Simple Byteclass Structure Example
 
 ```python
-from byteclasses.types.collections import structure
-from byteclasses.types.primitives.integer import UInt8, UInt32
+from byteclasses.types import structure, UInt8, UInt32
 
 @structure
 class MyStruct:
