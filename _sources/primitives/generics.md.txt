@@ -1,4 +1,4 @@
-# Generic Primitives
+# Generics
 
 The value attribute for generics is an alias to their data attribute.
 

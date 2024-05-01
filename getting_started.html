@@ -273,6 +273,11 @@ to make handling, parsing, and interpreting raw data a simpler and more inuititi
 <li><p><code class="docutils literal notranslate"><span class="pre">UChar</span></code> (<code class="docutils literal notranslate"><span class="pre">Char</span></code>), <code class="docutils literal notranslate"><span class="pre">SChar</span></code></p></li>
 </ul>
 </li>
+<li><p>Special - Special purpose byteclasses</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ByteEnum</span></code></p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="collections">
@@ -290,10 +295,8 @@ to make handling, parsing, and interpreting raw data a simpler and more inuititi
 <p>Byteclasses can be attached to any bytes like external data.
 Use the byteclass <code class="docutils literal notranslate"><span class="pre">.attach(data)</span></code> method to connect a <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> of the external data to the internal data attribute of the byteclass instance.</p>
 <blockquote>
-<div><p>The length of the <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> must match the length of the item it is being attached to.</p>
-</div></blockquote>
-<blockquote>
-<div><p>If a <code class="docutils literal notranslate"><span class="pre">bytes</span></code> or <code class="docutils literal notranslate"><span class="pre">bytearray</span></code> object is passed to <code class="docutils literal notranslate"><span class="pre">attach</span></code>, a <code class="docutils literal notranslate"><span class="pre">bytearray</span></code> <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> will be created. If you intend for byteclasses to all interact with a single data instance, create a <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> of your data and pass to appropriate slice of the <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> to <code class="docutils literal notranslate"><span class="pre">attach</span></code>.</p>
+<div><p>The length of the <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> must match the length of the item it is being attached to.
+If a <code class="docutils literal notranslate"><span class="pre">bytes</span></code> or <code class="docutils literal notranslate"><span class="pre">bytearray</span></code> object is passed to <code class="docutils literal notranslate"><span class="pre">attach</span></code>, a <code class="docutils literal notranslate"><span class="pre">bytearray</span></code> <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> will be created. If you intend for multiple byteclass objects to all interact with a single data instance, create a <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> of your data and pass to appropriate slice of the <code class="docutils literal notranslate"><span class="pre">memoryview</span></code> to <code class="docutils literal notranslate"><span class="pre">attach</span></code>.</p>
 </div></blockquote>
 </section>
 </section>

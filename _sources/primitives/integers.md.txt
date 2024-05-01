@@ -1,4 +1,4 @@
-# Integer Primitives
+# Integers
 
 | Type | Length (bytes) | Signed | Aliases | Notes |
 |---|:-:|:-:|---|---|

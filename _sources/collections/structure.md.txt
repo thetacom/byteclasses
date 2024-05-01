@@ -1,4 +1,4 @@
-# Structure
+# `structure`
 
 A Structure is a dynamic byteclass created using the `@structure` decorator.
 

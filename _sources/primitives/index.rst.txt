@@ -12,3 +12,4 @@ Each primitive ``byteclass`` has a fixed ``byte_length`` with a configurable ``b
    floats
    characters
    bitfields
+   byte_enum
