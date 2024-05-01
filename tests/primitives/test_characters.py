@@ -2,7 +2,7 @@
 
 import pytest
 
-from byteclasses.types.primitives.characters import UChar
+from byteclasses.types import UChar
 
 
 def test_uchar_creation_no_value():

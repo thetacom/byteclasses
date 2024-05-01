@@ -1,4 +1,4 @@
-"""Fixed length floating point types."""
+"""Primitive Byteclass Float Types Module."""
 
 from collections.abc import ByteString
 from struct import calcsize

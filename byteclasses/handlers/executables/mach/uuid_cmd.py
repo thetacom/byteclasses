@@ -4,8 +4,7 @@
 [llvm::MachO Namespace Reference](https://llvm.org/doxygen/namespacellvm_1_1MachO.html)
 """
 
-from ....types.collections import ByteArray, member, structure
-from ....types.primitives.integers import Ptr32, UInt32
+from ....types import ByteArray, Ptr32, UInt32, member, structure
 
 __all__ = ["UUIDCmd"]
 

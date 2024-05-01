@@ -325,7 +325,7 @@ def _generate_structure_lines(obj, v_offset_width: int, byte_width: int) -> list
             part2_len = mbr_len - part1_len
             data_str += f"[{FILL_COLOR}]|[/{FILL_COLOR}]" + _data_str(member.data[:part1_len], color)
             lines.append(_generate_data_line(data_str, (curr_offset // byte_width) * byte_width, v_offset_width))
-            data_str = _data_str(member.data[part1_len:], color)
+            data_str = " " + _data_str(member.data[part1_len:], color)
             curr_offset += mbr_len
             line_offset = part2_len
     if data_str:

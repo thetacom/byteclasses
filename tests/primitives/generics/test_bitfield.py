@@ -2,7 +2,8 @@
 
 import pytest
 
-from byteclasses.types.primitives.bitfield import BitField, BitPos, bitpos2mask, mask2bitpos
+from byteclasses.types import BitField, BitPos
+from byteclasses.types.primitives.bitfield import bitpos2mask, mask2bitpos
 
 
 class TestBitField(BitField):

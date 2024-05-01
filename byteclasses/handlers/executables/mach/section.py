@@ -3,9 +3,7 @@
 [llvm::MachO Namespace Reference](https://llvm.org/doxygen/namespacellvm_1_1MachO.html)
 """
 
-from ....types.collections import String, member, structure
-from ....types.primitives.generics import BitField32
-from ....types.primitives.integers import Ptr32, Ptr64, UInt32, UInt64
+from ....types import BitField32, Ptr32, Ptr64, String, UInt32, UInt64, member, structure
 
 __all__ = [
     "Section32",

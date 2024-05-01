@@ -2,7 +2,7 @@
 
 import pytest
 
-from byteclasses.types.primitives.generics import Bit, Byte, DWord, QWord, Word
+from byteclasses.types import Bit, Byte, DWord, QWord, Word
 
 DATA_BYTE = b"\x00"
 

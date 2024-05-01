@@ -1,4 +1,4 @@
-"""A fixed size enum class."""
+"""Primitive Byteclass ByteEnum Type Module."""
 
 from collections.abc import ByteString
 from enum import Enum, IntEnum

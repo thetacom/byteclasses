@@ -1,11 +1,10 @@
-"""Fixed Size Integer Types."""
+"""Primitive Byteclass Generic Types Module."""
 
 from enum import IntEnum
 from struct import calcsize
 
 from ..._enums import TypeChar
 from ...types.primitives._primitive import _Primitive
-from .bitfield import BitField, BitField16, BitField32, BitField64, BitPos
 
 __all__ = [
     "Bit",
@@ -13,11 +12,6 @@ __all__ = [
     "DWord",
     "QWord",
     "Word",
-    "BitField",
-    "BitField16",
-    "BitField32",
-    "BitField64",
-    "BitPos",
 ]
 
 

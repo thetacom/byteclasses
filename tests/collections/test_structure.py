@@ -3,8 +3,7 @@
 import pytest
 
 from byteclasses._enums import ByteOrder
-from byteclasses.types.collections import member, structure
-from byteclasses.types.primitives.integers import Int16, UInt8, UInt64
+from byteclasses.types import Int16, UInt8, UInt64, member, structure
 
 
 def test_structure_creation_with_member_default():

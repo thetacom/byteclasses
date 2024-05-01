@@ -4,7 +4,7 @@ from numbers import Integral
 
 import pytest
 
-from byteclasses.types.primitives.integers import UInt8, UnderflowError
+from byteclasses.types import UInt8, UnderflowError
 
 
 def test_fixedint_add_to_fixedint():

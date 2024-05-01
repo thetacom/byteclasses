@@ -4,7 +4,7 @@ from numbers import Integral
 
 import pytest
 
-from byteclasses.types.primitives.integers import UInt8
+from byteclasses.types import UInt8
 
 
 def test_fixedint_and_with_fixed_int():

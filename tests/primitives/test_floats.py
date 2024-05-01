@@ -2,7 +2,7 @@
 
 import pytest
 
-from byteclasses.types.primitives.floats import Double, Float, Float16, Float32, Float64, Half
+from byteclasses.types import Double, Float, Float16, Float32, Float64, Half
 
 
 def test_float16():

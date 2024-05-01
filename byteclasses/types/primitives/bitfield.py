@@ -1,4 +1,4 @@
-"""BitField Fixed Length Class."""
+"""Primitive Byteclass BitField Type Module."""
 
 from collections.abc import ByteString, Iterable, Sequence
 from struct import calcsize

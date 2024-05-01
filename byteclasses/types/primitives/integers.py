@@ -1,4 +1,4 @@
-"""Fixed Size Integer Types."""
+"""Primitive Byteclass Integer Types Module."""
 
 from collections.abc import ByteString
 from functools import cached_property
@@ -11,26 +11,24 @@ from ...types.primitives._primitive_number import _PrimitiveNumber
 
 __all__ = [
     "Int",
-    "Int8",
-    "SChar",
-    "UInt8",
-    "UChar",
     "Int16",
-    "Short",
-    "UInt16",
-    "Ptr16",
-    "UShort",
     "Int32",
-    "UInt32",
-    "UInt",
-    "Ptr32",
-    "Long",
-    "ULong",
     "Int64",
-    "UInt64",
-    "Ptr64",
+    "Int8",
+    "Long",
     "LongLong",
+    "Ptr16",
+    "Ptr32",
+    "Ptr64",
+    "Short",
+    "UInt",
+    "UInt16",
+    "UInt32",
+    "UInt64",
+    "UInt8",
+    "ULong",
     "ULongLong",
+    "UShort",
 ]
 
 
@@ -220,18 +218,12 @@ class Int8(_PrimitiveInt):
     _signed: bool = True
 
 
-SChar = Int8
-
-
 class UInt8(_PrimitiveInt):
     """8-bit unsigned integer."""
 
     _type_char: bytes = TypeChar.UINT8.value
     _length: int = calcsize(_type_char)
     _signed: bool = False
-
-
-UChar = UInt8
 
 
 class Int16(_PrimitiveInt):

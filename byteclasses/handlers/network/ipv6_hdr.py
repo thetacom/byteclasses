@@ -1,7 +1,7 @@
 """IPv6 Header class implemented with byteclasses."""
 
 from byteclasses.types.collections import ByteArray, member, structure, union
-from byteclasses.types.primitives.generics import BitField, BitPos
+from byteclasses.types.primitives.bitfield import BitField, BitPos
 from byteclasses.types.primitives.integers import UInt8, UInt16, UInt32, UInt64
 
 

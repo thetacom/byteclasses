@@ -6,10 +6,7 @@
 
 from enum import IntEnum
 
-from ....types.collections import String, member, structure
-from ....types.primitives.byte_enum import ByteEnum
-from ....types.primitives.generics import BitField
-from ....types.primitives.integers import Ptr32, Ptr64, UInt16, UInt32
+from ....types import BitField, ByteEnum, Ptr32, Ptr64, String, UInt16, UInt32, member, structure
 
 __all__ = [
     "ElfHdr32",

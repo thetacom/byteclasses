@@ -1,7 +1,6 @@
 """Unit tests for byteclasses union collection types."""
 
-from byteclasses.types.collections.union import union
-from byteclasses.types.primitives.integers import UInt8, UInt16, UInt32, UInt64
+from byteclasses.types import UInt8, UInt16, UInt32, UInt64, union
 
 
 def test_union_init():

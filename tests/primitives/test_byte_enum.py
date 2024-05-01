@@ -5,9 +5,7 @@ from enum import Enum, IntEnum
 import pytest
 
 from byteclasses import ByteOrder
-from byteclasses.types.primitives.byte_enum import ByteEnum
-from byteclasses.types.primitives.generics import Word
-from byteclasses.types.primitives.integers import UInt8, UInt16, UInt32, UInt64
+from byteclasses.types import ByteEnum, UInt8, UInt16, UInt32, UInt64, Word
 
 INT_CLASSES = [UInt8, UInt16, UInt32, UInt64]
 
