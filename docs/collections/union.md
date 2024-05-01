@@ -1,4 +1,4 @@
-# Union
+# `union`
 
 A Union is a dynamic byteclass created using the `@union` decorator.
 

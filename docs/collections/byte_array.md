@@ -1,4 +1,4 @@
-# ByteArray
+# `ByteArray`
 
 Fixed size arrays provide a concrete class that accepts an instance of a byteclass and a qty during instantiation.
 

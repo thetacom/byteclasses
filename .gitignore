@@ -8,3 +8,4 @@ dist
 .coverage
 docs/_build/*
 public
+*.psd

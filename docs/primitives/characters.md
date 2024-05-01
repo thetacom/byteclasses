@@ -1,4 +1,4 @@
-# Fixed Size Characters
+# Characters
 
 | Type | Length (bytes) | Signed | Aliases | Notes |
 |---|:-:|:-:|---|---|
