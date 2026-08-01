@@ -86,15 +86,7 @@ class Member:  # pylint: disable=R0903
 
     def __repr__(self):
         """Return a repr string for this Member."""
-        return (
-            "Member("
-            f"{self.name=!r},"
-            f"{self.type=!r},"
-            f"{self.factory=!r},"
-            f"{self.metadata=!r},"
-            f"{self.member_type=}"
-            ")"
-        )
+        return f"Member({self.name=!r},{self.type=!r},{self.factory=!r},{self.metadata=!r},{self.member_type=})"
 
     __class_getitem__ = classmethod(GenericAlias)  # type: ignore
 

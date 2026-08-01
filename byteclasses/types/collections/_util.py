@@ -1,4 +1,4 @@
-""""Utility functions."""
+""" "Utility functions."""
 
 from collections.abc import Iterable
 from types import FunctionType
@@ -16,7 +16,7 @@ def _tuple_str(obj_name: str, members_: Iterable[Member]) -> str:
     if not members_:
         return "(,)"
     # Note the trailing comma, needed if this turns out to be a 1-tuple.
-    return f'({",".join([f"{obj_name}.{member_.name}" for member_ in members_])},)'
+    return f"({','.join([f'{obj_name}.{member_.name}' for member_ in members_])},)"
 
 
 def _set_qualname(cls, func):

@@ -1,0 +1,39 @@
+[tools]
+pandoc = "latest"
+python = "3.12"
+uv = "latest"
+
+[tasks.sync]
+description = "Create or update the locked development environment"
+run = "uv sync --python 3.12 --locked --all-extras"
+
+[tasks.format]
+description = "Format the project"
+run = "uv run ruff format byteclasses tests"
+
+[tasks.lint]
+description = "Run lint and formatting checks"
+run = """
+uv run ruff check byteclasses tests
+uv run ruff format --check byteclasses tests
+"""
+
+[tasks.typecheck]
+description = "Run static type checks"
+run = "uv run mypy byteclasses"
+
+[tasks.test]
+description = "Run the test suite"
+run = "uv run pytest"
+
+[tasks.docs]
+description = "Build the documentation"
+run = "uv run sphinx-build -W -b html docs docs/_build/html"
+
+[tasks.build]
+description = "Build source and wheel distributions"
+run = "uv build"
+
+[tasks.verify]
+description = "Run all repository checks"
+depends = ["lint", "typecheck", "test", "docs", "build"]

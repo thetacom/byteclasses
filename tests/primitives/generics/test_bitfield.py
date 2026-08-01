@@ -146,7 +146,7 @@ def test_bitfield_set_bit_values_with_index_slice():
     """Set bit values with index slice."""
     bf = BitField()
     bf[:] = True
-    assert bf.data == b"\xFF"
+    assert bf.data == b"\xff"
     bf.data = b"\x00"
     bf[::2] = True
     assert bf.data == b"\x55"
@@ -169,7 +169,7 @@ def test_bitfield_set_bit_values_with_index_slice_and_sequence():
     """Set bit values with index slice and sequence."""
     bf = BitField()
     bf[:] = [True, True, True, True, True, True, True, True]
-    assert bf.data == b"\xFF"
+    assert bf.data == b"\xff"
     bf.data = b"\x00"
     bf[::2] = [True, True, True, True, True, True, True, True]
     assert bf.data == b"\x55"
@@ -248,7 +248,7 @@ def test_custom_bitfield_creation():
 
 def test_bitfield_init_with_data():
     """Test BitField instantiation with data."""
-    init_data = b"\xFF"
+    init_data = b"\xff"
     bf = BitField(data=init_data)
     assert bf.data == init_data
 
@@ -363,7 +363,7 @@ def test_bitfield_get_wide_bitpos():
         lower = BitPos(0, bit_width=4)
         upper = BitPos(4, bit_width=4)
 
-    cbf = CustomBitField(data=b"\xF0")
+    cbf = CustomBitField(data=b"\xf0")
     assert cbf.data == b"\xf0"
     assert bin(cbf.data[0]) == "0b11110000"
     assert cbf.lower == 0

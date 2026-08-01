@@ -204,7 +204,7 @@ def _build_hash_method(
 
 def _raise_hash_exception(spec: _CollectionClassSpec, __) -> None:
     """Raise an exception to signify that hash function already exists."""
-    raise TypeError(f"Cannot overwrite attribute __hash__ " f"in class {spec.base_cls.__name__}")
+    raise TypeError(f"Cannot overwrite attribute __hash__ in class {spec.base_cls.__name__}")
 
 
 def _build_attach_method(

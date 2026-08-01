@@ -1,4 +1,4 @@
-""""Fixed Size Collection Protocol."""
+""" "Fixed Size Collection Protocol."""
 
 from collections.abc import ByteString
 from typing import Protocol, runtime_checkable

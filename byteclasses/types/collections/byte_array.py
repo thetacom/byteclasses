@@ -91,7 +91,7 @@ class ByteArray:
             item = self._items[key]
             if isinstance(value, Number) and isinstance(item, _PrimitiveNumber):
                 self._items[key].value = value
-            elif isinstance(value, _Primitive) and type(self._items[key] == type(value)):
+            elif isinstance(value, _Primitive):
                 try:
                     self._items[key].value = value.value
                 except (TypeError, ValueError):

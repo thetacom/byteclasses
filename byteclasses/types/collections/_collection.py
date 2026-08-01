@@ -164,7 +164,7 @@ def _process_class(spec: _CollectionClassSpec) -> ByteclassCollection:
             # Check to ensure the base class is of the same fixed collection type.
             if base_params.type != spec.collection_type:
                 raise TypeError(
-                    f"{spec.collection_type} type fixed collection cannot inherit " f"from {base_params.type} type"
+                    f"{spec.collection_type} type fixed collection cannot inherit from {base_params.type} type"
                 )
             for member_ in base_members.values():
                 members_[member_.name] = member_
@@ -175,7 +175,7 @@ def _process_class(spec: _CollectionClassSpec) -> ByteclassCollection:
     # Verify that the calling constructor provided all required attributes.
     if not all(name in spec.methods.keys() for name in required_attributes):
         raise TypeError(
-            f"{spec.collection_type} constructor did not provide all required attributes: " f"{required_attributes}"
+            f"{spec.collection_type} constructor did not provide all required attributes: {required_attributes}"
         )
     # Construct and attach fixed collection type specific methods to the class.
     _add_methods(spec, globals_)

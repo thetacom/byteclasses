@@ -64,12 +64,12 @@ class EthFrame(_DataHandler):
     @property
     def dst_mac(self) -> str:
         """Return dst mac address."""
-        return f"{':'.join([hex(val)[2:].rjust(2,'0') for val in self.hdr.dst_mac])}"
+        return f"{':'.join([hex(val)[2:].rjust(2, '0') for val in self.hdr.dst_mac])}"
 
     @property
     def src_mac(self) -> str:
         """Return src mac address."""
-        return f"{':'.join([hex(val)[2:].rjust(2,'0') for val in self.hdr.src_mac])}"
+        return f"{':'.join([hex(val)[2:].rjust(2, '0') for val in self.hdr.src_mac])}"
 
     @property
     def type(self) -> str:

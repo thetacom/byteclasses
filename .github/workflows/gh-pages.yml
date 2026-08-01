@@ -2,60 +2,32 @@ name: GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   build-docs:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.10"]
-    permissions:
-      contents: write
-    defaults:
-      run:
-        shell: bash
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-version }}
-        architecture: x64
-    - name: Install and configure Poetry
-      uses: snok/install-poetry@v1
-      with:
-        virtualenvs-in-project: true
-        virtualenvs-path: .venv
-        installer-parallel: true
-    - name: Load cached venv
-      id: cached-dependencies
-      uses: actions/cache@v4
-      with:
-        path: .venv
-        key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
-    - run: poetry --version
-    - name: Install os dependencies
-      run: sudo apt-get install -y pandoc
-    - name: Install package dependencies
-      if: steps.cached-dependencies.outputs.cache-hit != 'true'
-      run: poetry install --no-interaction --no-root
-    - name: Install project
-      run: poetry install --no-interaction
-    - name: Build
-      run: |
-        source $VENV
-        make docs
-        mv ./docs/_build/html ./public
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v4
-      if: github.ref == 'refs/heads/main'
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v9
+        with:
+          enable-cache: true
+      - uses: jdx/mise-action@v4
+      - run: uv sync --locked --all-extras
+      - run: uv run sphinx-build -W -b html docs docs/_build/html
+      - run: mv docs/_build/html public
+      - uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
